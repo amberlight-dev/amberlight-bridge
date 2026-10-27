@@ -1,0 +1,52 @@
+{
+  "fill": {
+    "solid": "srgb:0.03922,0.05882,0.09020,1.00000"
+  },
+  "groups": [
+    {
+      "layers": [
+        {
+          "glass": true,
+          "image-name": "node.png",
+          "name": "node"
+        },
+        {
+          "glass": true,
+          "image-name": "arch.png",
+          "name": "arch",
+          "fill-specializations": [
+            {
+              "appearance": "tinted",
+              "value": {
+                "solid": "srgb:1.00000,1.00000,1.00000,1.00000"
+              }
+            }
+          ]
+        },
+        {
+          "glass": true,
+          "image-name": "horizon.png",
+          "name": "horizon",
+          "opacity-specializations": [
+            {
+              "appearance": "tinted",
+              "value": 0.7
+            }
+          ]
+        }
+      ],
+      "shadow": {
+        "kind": "none",
+        "opacity": 0
+      },
+      "specular": true,
+      "translucency": {
+        "enabled": true,
+        "value": 0.15
+      }
+    }
+  ],
+  "supported-platforms": {
+    "squares": "shared"
+  }
+}
