@@ -114,7 +114,7 @@ final class Board {
             ]]
         } else {
             var decision: JSON = ["behavior": body["decision"] as? String == "allow" ? "allow" : "deny"]
-            if decision["behavior"] as? String == "deny" { decision["message"] = "In Amberlight abgelehnt." }
+            if decision["behavior"] as? String == "deny" { decision["message"] = String(localized: "In Amberlight abgelehnt.") }
             question.result = ["hookSpecificOutput": ["hookEventName": "PermissionRequest", "decision": decision]]
         }
         question.wake()
@@ -340,9 +340,9 @@ final class Board {
     private static func questionItems(kind: String, payload: JSON) -> [JSON] {
         if kind == "permission" {
             return [[
-                "header": "Freigabe",
-                "text": "\(payload["tool_name"] as? String ?? "Werkzeug") ausführen?",
-                "options": [["label": "Erlauben"], ["label": "Ablehnen"]],
+                "header": String(localized: "Freigabe"),
+                "text": String(localized: "\(payload["tool_name"] as? String ?? String(localized: "Werkzeug")) ausführen?"),
+                "options": [["label": String(localized: "Erlauben")], ["label": String(localized: "Ablehnen")]],
                 "multiSelect": false,
             ]]
         }

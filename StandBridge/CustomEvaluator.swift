@@ -28,7 +28,7 @@ nonisolated enum CustomEvaluator {
             scope.placeholders = editing
             result.root = CustomLayout.resolve(layout, scope: scope)
         }
-        if value == nil, result.points.isEmpty, definition.display.layout == nil { result.error = "Wert nicht gefunden" }
+        if value == nil, result.points.isEmpty, definition.display.layout == nil { result.error = String(localized: "Wert nicht gefunden") }
         return result
     }
 

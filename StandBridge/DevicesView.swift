@@ -13,7 +13,7 @@ struct DevicesView: View {
                 if let contact = model.server?.lastClient {
                     LabeledContent("Adresse", value: contact.host)
                 }
-                LabeledContent("Anordnung", value: model.layout.revision == 0 ? "noch nicht übernommen" : "Revision \(model.layout.revision)")
+                LabeledContent("Anordnung", value: model.layout.revision == 0 ? String(localized: "noch nicht übernommen") : String(localized: "Revision \(model.layout.revision)"))
             }
 
             if let server = model.server, let link = model.pairingLink {
@@ -26,7 +26,7 @@ struct DevicesView: View {
                             .accessibilityLabel("QR-Code zum Koppeln")
                         VStack(alignment: .leading, spacing: 10) {
                             if model.tokenRenewed {
-                                StatusLabel(text: "Neuer, längerer Kopplungscode – iPhone bitte neu koppeln", symbol: "exclamationmark.triangle.fill", tint: .yellow)
+                                StatusLabel(text: String(localized: "Neuer, längerer Kopplungscode – iPhone bitte neu koppeln"), symbol: "exclamationmark.triangle.fill", tint: .yellow)
                             }
                             Text("Gekoppelt wird nur über diesen QR-Code: In der Amberlight-App beim Einrichten oder unter Einstellungen „Neu koppeln“ wählen und scannen.")
                                 .foregroundStyle(.secondary)
@@ -57,11 +57,11 @@ struct ConnectionLabel: View {
 
     var body: some View {
         if let contact, contact.isOnline(now: now) {
-            StatusLabel(text: "iPhone verbunden", symbol: "circle.fill", tint: .green)
+            StatusLabel(text: String(localized: "iPhone verbunden"), symbol: "circle.fill", tint: .green)
         } else if let contact {
-            StatusLabel(text: "Zuletzt \(contact.at.formatted(.relative(presentation: .named)))", symbol: "circle", tint: .secondary)
+            StatusLabel(text: String(localized: "Zuletzt \(contact.at.formatted(.relative(presentation: .named)))"), symbol: "circle", tint: .secondary)
         } else {
-            StatusLabel(text: "Noch kein iPhone seit dem Start", symbol: "circle.dashed", tint: .secondary)
+            StatusLabel(text: String(localized: "Noch kein iPhone seit dem Start"), symbol: "circle.dashed", tint: .secondary)
         }
     }
 }
@@ -71,8 +71,8 @@ struct ServerStatusLabel: View {
 
     var body: some View {
         switch status {
-        case .running: StatusLabel(text: "Läuft", symbol: "checkmark.circle.fill", tint: .green)
-        case .starting: StatusLabel(text: "Startet …", symbol: "hourglass", tint: .secondary)
+        case .running: StatusLabel(text: String(localized: "Läuft"), symbol: "checkmark.circle.fill", tint: .green)
+        case .starting: StatusLabel(text: String(localized: "Startet …"), symbol: "hourglass", tint: .secondary)
         case .failed(let reason): StatusLabel(text: reason, symbol: "exclamationmark.triangle.fill", tint: .yellow)
         }
     }

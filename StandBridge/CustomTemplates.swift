@@ -43,9 +43,9 @@ struct CustomTemplate: Identifiable {
     static let mocoPlaceholder = "FIRMA"
     private static let mocoBase = "https://\(mocoPlaceholder).mocoapp.com/api/v1"
     private static let mocoInputs: [Input] = [
-        .subdomain(label: "MOCO-Subdomain", pattern: "https://{}.mocoapp.com/api/v1", prompt: "deine-firma"),
-        .secret(label: "API-Key", prompt: "MOCO → Profil → Integrationen"),
-        .query(name: "user_id", label: "Benutzer-ID", prompt: "leer = alle Mitarbeitenden"),
+        .subdomain(label: "MOCO-Subdomain", pattern: "https://{}.mocoapp.com/api/v1", prompt: String(localized: "deine-firma")),
+        .secret(label: "API-Key", prompt: String(localized: "MOCO → Profil → Integrationen")),
+        .query(name: "user_id", label: "Benutzer-ID", prompt: String(localized: "leer = alle Mitarbeitenden")),
     ]
     private static let mocoDaySample = """
     [{"id":1,"date":"{day-0}","hours":2.5,"timer_started_at":null,"project":{"name":"Relaunch"}},
@@ -72,8 +72,8 @@ struct CustomTemplate: Identifiable {
     }
 
     static let mocoToday = CustomTemplate(
-        id: "moco-today", group: "MOCO Zeiterfassung", title: "Heute erfasst",
-        blurb: "Summe der heute erfassten Stunden als Zahl.", needsAccount: true,
+        id: "moco-today", group: String(localized: "MOCO Zeiterfassung"), title: String(localized: "Heute erfasst"),
+        blurb: String(localized: "Summe der heute erfassten Stunden als Zahl."), needsAccount: true,
         definition: CustomWidgetDefinition(
             name: "MOCO heute", symbol: "clock.badge.checkmark", baseURL: mocoBase, auth: mocoAuth,
             endpoint: mocoActivities(from: "{today}", to: "{today}"), interval: 300,
@@ -85,8 +85,8 @@ struct CustomTemplate: Identifiable {
     )
 
     static let mocoWeek = CustomTemplate(
-        id: "moco-week", group: "MOCO Zeiterfassung", title: "Diese Woche",
-        blurb: "Stunden der laufenden Woche, ab 2×2 als Balken pro Tag.", needsAccount: true,
+        id: "moco-week", group: String(localized: "MOCO Zeiterfassung"), title: String(localized: "Diese Woche"),
+        blurb: String(localized: "Stunden der laufenden Woche, ab 2×2 als Balken pro Tag."), needsAccount: true,
         definition: CustomWidgetDefinition(
             name: "MOCO Woche", symbol: "chart.bar.xaxis", baseURL: mocoBase, auth: mocoAuth,
             endpoint: mocoActivities(from: "{weekStart}", to: "{weekEnd}"), interval: 600,
@@ -98,8 +98,8 @@ struct CustomTemplate: Identifiable {
     )
 
     static let mocoTimer = CustomTemplate(
-        id: "moco-timer", group: "MOCO Zeiterfassung", title: "Laufender Timer",
-        blurb: "Was gerade läuft: Projekt, Aufgabe, Beschreibung und wie lange schon – live mitgezählt.", needsAccount: true,
+        id: "moco-timer", group: String(localized: "MOCO Zeiterfassung"), title: String(localized: "Laufender Timer"),
+        blurb: String(localized: "Was gerade läuft: Projekt, Aufgabe, Beschreibung und wie lange schon – live mitgezählt."), needsAccount: true,
         definition: CustomWidgetDefinition(
             name: "MOCO Timer", symbol: "stopwatch", baseURL: mocoBase, auth: mocoAuth,
             endpoint: mocoActivities(from: "{today}", to: "{today}"), interval: 60,
@@ -113,18 +113,18 @@ struct CustomTemplate: Identifiable {
                 .init(name: "runningStart", selection: .init(arrayPath: "", valueField: "timer_started_at", aggregation: .first, filter: "timer_started_at")),
                 .init(name: "runningSeconds", selection: .init(arrayPath: "", valueField: "seconds", aggregation: .sum, filter: "timer_started_at"), format: .number),
             ],
-            display: .init(style: .status, caption: "Timer", format: .hoursMinutes, rules: [
-                .init(comparison: .atLeast, operand: "1", tone: .green, label: "Timer läuft"),
-                .init(comparison: .below, operand: "1", tone: .gray, label: "Kein Timer"),
-            ], lines: ["{project}", "{booked} h heute"], layout: CustomLayoutPresets.mocoTimer.layout,
+            display: .init(style: .status, caption: String(localized: "Timer"), format: .hoursMinutes, rules: [
+                .init(comparison: .atLeast, operand: "1", tone: .green, label: String(localized: "Timer läuft")),
+                .init(comparison: .below, operand: "1", tone: .gray, label: String(localized: "Kein Timer")),
+            ], lines: ["{project}", String(localized: "{booked} h heute")], layout: CustomLayoutPresets.mocoTimer.layout,
                 compact: CustomLayoutPresets.mocoTimer.compact, wide: CustomLayoutPresets.mocoTimer.wide)
         ),
         inputs: mocoInputs, sample: mocoDaySample
     )
 
     static let openMeteo = CustomTemplate(
-        id: "open-meteo", group: "Ohne Konto", title: "Open-Meteo Temperatur",
-        blurb: "Aktuelle Temperatur in Wien, ab 2×2 mit Verlauf.", needsAccount: false,
+        id: "open-meteo", group: String(localized: "Ohne Konto"), title: String(localized: "Open-Meteo Temperatur"),
+        blurb: String(localized: "Aktuelle Temperatur in Wien, ab 2×2 mit Verlauf."), needsAccount: false,
         definition: CustomWidgetDefinition(
             name: "Wien", symbol: "thermometer.medium", baseURL: "https://api.open-meteo.com/v1",
             endpoint: .init(path: "forecast", query: [
@@ -134,23 +134,23 @@ struct CustomTemplate: Identifiable {
             ]),
             interval: 900,
             selection: .init(valuePath: "current.temperature_2m"),
-            display: .init(style: .line, caption: "Temperatur", decimals: 1, unit: "°C", layout: CustomLayoutPresets.bigNumber.layout)
+            display: .init(style: .line, caption: String(localized: "Temperatur"), decimals: 1, unit: "°C", layout: CustomLayoutPresets.bigNumber.layout)
         ),
         sample: #"{"current":{"temperature_2m":17.4}}"#
     )
 
     static let githubStatus = CustomTemplate(
-        id: "github-status", group: "Ohne Konto", title: "GitHub-Status",
-        blurb: "Gesamtstatus von GitHub, ab 2×2 mit den einzelnen Diensten.", needsAccount: false,
+        id: "github-status", group: String(localized: "Ohne Konto"), title: "GitHub-Status",
+        blurb: String(localized: "Gesamtstatus von GitHub, ab 2×2 mit den einzelnen Diensten."), needsAccount: false,
         definition: CustomWidgetDefinition(
             name: "GitHub", symbol: "server.rack", baseURL: "https://www.githubstatus.com/api/v2",
             endpoint: .init(path: "summary.json"), interval: 300,
             selection: .init(valuePath: "status.indicator", seriesPath: "components", labelField: "name", seriesField: "status"),
             display: .init(style: .status, caption: "GitHub", rules: [
-                .init(comparison: .equals, operand: "none", tone: .green, label: "Alles in Ordnung"),
-                .init(comparison: .equals, operand: "minor", tone: .yellow, label: "Störung"),
-                .init(comparison: .equals, operand: "major", tone: .red, label: "Größere Störung"),
-                .init(comparison: .equals, operand: "critical", tone: .red, label: "Ausfall"),
+                .init(comparison: .equals, operand: "none", tone: .green, label: String(localized: "Alles in Ordnung")),
+                .init(comparison: .equals, operand: "minor", tone: .yellow, label: String(localized: "Störung")),
+                .init(comparison: .equals, operand: "major", tone: .red, label: String(localized: "Größere Störung")),
+                .init(comparison: .equals, operand: "critical", tone: .red, label: String(localized: "Ausfall")),
             ])
         ),
         sample: #"{"status":{"indicator":"none"},"components":[{"name":"Git","status":"operational"},{"name":"Actions","status":"operational"},{"name":"Pages","status":"operational"}]}"#

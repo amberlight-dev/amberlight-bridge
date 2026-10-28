@@ -11,20 +11,20 @@ nonisolated enum CustomRequestError: Error, Equatable {
 
     var message: String {
         switch self {
-        case .invalidURL: "Basis-URL ist ungültig"
-        case .insecureScheme: "Nur https – http nur für localhost bzw. private Adressen"
-        case .userInfo: "Zugangsdaten gehören nicht in die URL, nutze die Authentifizierung"
-        case .sensitiveName(let name): "„\(name)“ sieht nach Zugangsdaten aus – trag sie unter Authentifizierung ein"
+        case .invalidURL: String(localized: "Basis-URL ist ungültig")
+        case .insecureScheme: String(localized: "Nur https – http nur für localhost bzw. private Adressen")
+        case .userInfo: String(localized: "Zugangsdaten gehören nicht in die URL, nutze die Authentifizierung")
+        case .sensitiveName(let name): String(localized: "„\(name)“ sieht nach Zugangsdaten aus – trag sie unter Authentifizierung ein")
         case .missingSecret: "Zugangsdaten fehlen"
-        case .unconfirmed: "Freigabe fehlt – Host am Mac bestätigen"
-        case .layoutTooComplex: "Layout zu verschachtelt – höchstens \(CustomNode.maxNodes) Bausteine in \(CustomNode.maxDepth) Ebenen"
-        case .tooLarge: "Antwort größer als \(CustomRequest.maxResponseBytes >> 10) KB"
-        case .timeout: "Keine Antwort nach \(Int(CustomRequest.timeout)) s"
-        case .unreachable: "API nicht erreichbar"
-        case .unauthorized: "API lehnt die Zugangsdaten ab"
-        case .status(let code): "API antwortet mit \(code)"
-        case .notJSON: "Antwort ist kein JSON"
-        case .redirected: "Weiterleitung auf einen anderen Host blockiert"
+        case .unconfirmed: String(localized: "Freigabe fehlt – Host am Mac bestätigen")
+        case .layoutTooComplex: String(localized: "Layout zu verschachtelt – höchstens \(CustomNode.maxNodes) Bausteine in \(CustomNode.maxDepth) Ebenen")
+        case .tooLarge: String(localized: "Antwort größer als \(CustomRequest.maxResponseBytes >> 10) KB")
+        case .timeout: String(localized: "Keine Antwort nach \(Int(CustomRequest.timeout)) s")
+        case .unreachable: String(localized: "API nicht erreichbar")
+        case .unauthorized: String(localized: "API lehnt die Zugangsdaten ab")
+        case .status(let code): String(localized: "API antwortet mit \(code)")
+        case .notJSON: String(localized: "Antwort ist kein JSON")
+        case .redirected: String(localized: "Weiterleitung auf einen anderen Host blockiert")
         }
     }
 }

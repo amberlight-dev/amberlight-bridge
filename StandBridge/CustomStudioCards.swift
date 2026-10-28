@@ -34,7 +34,7 @@ struct CustomSetupCard: View {
     private var template: CustomTemplate? { draft.template.flatMap(CustomTemplate.named) }
 
     var body: some View {
-        StudioCard(title: "Verbinden", subtitle: subtitle) {
+        StudioCard(title: String(localized: "Verbinden"), subtitle: subtitle) {
             if let template, !template.inputs.isEmpty {
                 ForEach(Array(template.inputs.enumerated()), id: \.offset) { _, input in
                     field(for: input)
@@ -60,21 +60,21 @@ struct CustomSetupCard: View {
     }
 
     private var subtitle: String {
-        draft.needsSecret ? "Nur das Nötigste – Zugangsdaten bleiben im Schlüsselbund dieses Macs." : "Dieses Widget braucht kein Konto."
+        draft.needsSecret ? String(localized: "Nur das Nötigste – Zugangsdaten bleiben im Schlüsselbund dieses Macs.") : String(localized: "Dieses Widget braucht kein Konto.")
     }
 
     private var canTest: Bool { blockingHint == nil }
 
     private var blockingHint: String? {
         if let error = validationError { return error }
-        if draft.needsSecret, secret.value.isEmpty { return "Trag oben den Zugang ein, dann kannst du testen." }
+        if draft.needsSecret, secret.value.isEmpty { return String(localized: "Trag oben den Zugang ein, dann kannst du testen.") }
         return nil
     }
 
     private var validationError: String? {
         do {
             try CustomRequest.validate(draft)
-            return draft.origin == nil ? "Basis-URL fehlt" : nil
+            return draft.origin == nil ? String(localized: "Basis-URL fehlt") : nil
         } catch {
             return error.message
         }
@@ -99,7 +99,7 @@ struct CustomSetupCard: View {
                 .font(.system(.body, design: .monospaced))
         }
         if draft.needsSecret {
-            labeled("Zugang (Token bzw. Key)") { SecureField("Zugang", text: $secret.value) }
+            labeled(String(localized: "Zugang (Token bzw. Key)")) { SecureField("Zugang", text: $secret.value) }
         }
     }
 
@@ -165,7 +165,7 @@ struct CustomValuesCard: View {
     let texts: [String: String]
 
     var body: some View {
-        StudioCard(title: "Daten", subtitle: "Klick rechts in der Antwort auf ＋ – das Feld erscheint sofort im Widget.") {
+        StudioCard(title: String(localized: "Daten"), subtitle: String(localized: "Klick rechts in der Antwort auf ＋ – das Feld erscheint sofort im Widget.")) {
             if (draft.values ?? []).isEmpty {
                 Text("Noch kein eigenes Feld. Der Hauptwert kommt aus dem Abschnitt „Erweitert“.")
                     .font(.callout)
@@ -232,7 +232,7 @@ struct CustomLayoutCard: View {
     }
 
     var body: some View {
-        StudioCard(title: "Aussehen", subtitle: "Die Vorschauen zeigen deine Daten.") {
+        StudioCard(title: String(localized: "Aussehen"), subtitle: String(localized: "Die Vorschauen zeigen deine Daten.")) {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 130), spacing: 12, alignment: .top)], alignment: .leading, spacing: 14) {
                 ForEach(options) { option in
                     Button { apply(option) } label: { card(option) }
@@ -268,7 +268,7 @@ struct CustomLayoutCard: View {
     private func card(_ option: Option) -> some View {
         let selected = isSelected(option)
         return VStack(spacing: 6) {
-            CustomTile(display: display(for: option), span: GridSpan(w: 2, h: 2), notice: json == nil ? "Erst verbinden" : "Keine Daten")
+            CustomTile(display: display(for: option), span: GridSpan(w: 2, h: 2), notice: json == nil ? String(localized: "Erst verbinden") : String(localized: "Keine Daten"))
                 .overlay {
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
                         .strokeBorder(selected ? Color.accentColor : .clear, lineWidth: 2.5)

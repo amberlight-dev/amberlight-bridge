@@ -28,7 +28,7 @@ struct DiagnosticsView: View {
             Section {
                 LabeledContent("Hooks") {
                     HStack(spacing: 12) {
-                        StateLabel(isOK: model.hookState == .installed, ok: "Installiert", missing: hookProblem)
+                        StateLabel(isOK: model.hookState == .installed, ok: String(localized: "Installiert"), missing: hookProblem)
                         switch model.hookState {
                         case .installed: Button("Entfernen …") { model.removeHooks() }
                         case .legacy: Button("Umstellen …") { model.installHooks() }
@@ -40,15 +40,15 @@ struct DiagnosticsView: View {
                 LabeledContent("Usage aus der Statusline") {
                     switch model.statuslineState {
                     case .installed:
-                        StateLabel(isOK: true, ok: "Aktiv", missing: "")
+                        StateLabel(isOK: true, ok: String(localized: "Aktiv"), missing: "")
                     case .manual:
                         HStack(spacing: 12) {
-                            StateLabel(isOK: false, ok: "", missing: "Eigene Statusline")
+                            StateLabel(isOK: false, ok: "", missing: String(localized: "Eigene Statusline"))
                             Button("Zeile kopieren") { model.installStatusline() }
                         }
                     case .missing, .insertable:
                         HStack(spacing: 12) {
-                            StateLabel(isOK: false, ok: "", missing: "Fehlt")
+                            StateLabel(isOK: false, ok: "", missing: String(localized: "Fehlt"))
                             Button("Einrichten …") { model.installStatusline() }
                         }
                     }
@@ -71,8 +71,8 @@ struct DiagnosticsView: View {
             Section {
                 LabeledContent("Hooks") {
                     HStack(spacing: 12) {
-                        StateLabel(isOK: model.codexHookState == .installed, ok: "Installiert",
-                                   missing: model.codexHookState == .outdated ? "Veraltet" : "Fehlen")
+                        StateLabel(isOK: model.codexHookState == .installed, ok: String(localized: "Installiert"),
+                                   missing: model.codexHookState == .outdated ? String(localized: "Veraltet") : String(localized: "Fehlen"))
                         switch model.codexHookState {
                         case .installed: Button("Entfernen …") { model.removeCodexHooks() }
                         case .outdated: Button("Aktualisieren …") { model.installCodexHooks() }
@@ -81,7 +81,7 @@ struct DiagnosticsView: View {
                     }
                 }
                 LabeledContent("Usage aus den Codex-Sitzungen") {
-                    StateLabel(isOK: model.codexUsageFound, ok: "Aktiv", missing: "Noch keine Daten")
+                    StateLabel(isOK: model.codexUsageFound, ok: String(localized: "Aktiv"), missing: String(localized: "Noch keine Daten"))
                 }
             } header: {
                 Text("Codex")
@@ -119,7 +119,7 @@ struct DiagnosticsView: View {
                 if let server = model.server {
                     LabeledContent("Server") { ServerStatusLabel(status: server.status) }
                     LabeledContent("Port", value: "\(server.port)")
-                    LabeledContent("Kopplungscode", value: "\(server.token.count) Zeichen")
+                    LabeledContent("Kopplungscode", value: String(localized: "\(server.token.count) Zeichen"))
                 }
                 LabeledContent("Anordnung") {
                     Button("Im Finder zeigen") {
@@ -148,9 +148,9 @@ struct DiagnosticsView: View {
 
     private var hookProblem: String {
         switch model.hookState {
-        case .legacy: "Alte Python-Hooks"
-        case .outdated: "Veraltet"
-        case .missing, .installed: "Fehlen"
+        case .legacy: String(localized: "Alte Python-Hooks")
+        case .outdated: String(localized: "Veraltet")
+        case .missing, .installed: String(localized: "Fehlen")
         }
     }
 }

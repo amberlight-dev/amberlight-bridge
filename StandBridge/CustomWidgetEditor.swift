@@ -55,7 +55,7 @@ struct CustomWidgetEditor: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Picker("Ansicht", selection: modeBinding) {
-                    ForEach(Mode.allCases) { Text($0.rawValue).tag($0) }
+                    ForEach(Mode.allCases) { Text(LocalizedStringKey($0.rawValue)).tag($0) }
                 }
                 .pickerStyle(.segmented)
                 .frame(width: 330)
@@ -218,10 +218,10 @@ struct CustomWidgetEditor: View {
 
     private static func describe(_ error: Error) -> String {
         switch error {
-        case DecodingError.keyNotFound(let key, _): "Feld „\(key.stringValue)“ fehlt"
+        case DecodingError.keyNotFound(let key, _): String(localized: "Feld „\(key.stringValue)“ fehlt")
         case DecodingError.typeMismatch(_, let context), DecodingError.valueNotFound(_, let context), DecodingError.dataCorrupted(let context):
-            "Ungültig bei „\(context.codingPath.map(\.stringValue).joined(separator: "."))“: \(context.debugDescription)"
-        default: "Kein gültiges JSON"
+            String(localized: "Ungültig bei „\(context.codingPath.map(\.stringValue).joined(separator: "."))“: \(context.debugDescription)")
+        default: String(localized: "Kein gültiges JSON")
         }
     }
 
@@ -294,7 +294,7 @@ struct CustomWidgetEditor: View {
         } header: {
             Text("Authentifizierung")
         } footer: {
-            Text("Zugangsdaten liegen im macOS-Schlüsselbund, gebunden an dieses Widget und \(draft.origin ?? "den Host"). Sie gehen nur an diesen Host, nie ans iPhone und nie in einen Export.")
+            Text("Zugangsdaten liegen im macOS-Schlüsselbund, gebunden an dieses Widget und \(draft.origin ?? String(localized: "den Host")). Sie gehen nur an diesen Host, nie ans iPhone und nie in einen Export.")
         }
     }
 

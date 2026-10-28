@@ -75,7 +75,7 @@ nonisolated enum JSONPath {
         case let number as NSNumber where CFGetTypeID(number) == CFBooleanGetTypeID(): number.boolValue ? "true" : "false"
         case let number as NSNumber: number.stringValue
         case is [Any]: "Liste"
-        case is [String: Any]: "Objekt"
+        case is [String: Any]: String(localized: "Objekt")
         default: nil
         }
     }

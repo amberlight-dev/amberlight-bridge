@@ -46,7 +46,7 @@ struct BridgeSidebar: View {
         .safeAreaInset(edge: .bottom) {
             HStack(spacing: 4) {
                 Menu {
-                    Button("Leere Seite", systemImage: "square.dashed") { add(StandPage(name: "Neue Seite", items: [], icon: StandPage.newPageIcon)) }
+                    Button("Leere Seite", systemImage: "square.dashed") { add(StandPage(name: String(localized: "Neue Seite"), items: [], icon: StandPage.newPageIcon)) }
                     Divider()
                     Button("Schreibtisch", systemImage: "desktopcomputer") { add(.desk()) }
                     Button("Nachttisch", systemImage: "moon.zzz") { add(.nightstand()) }

@@ -37,7 +37,7 @@ struct CustomImportSheet: View {
                     LabeledContent("Anfrage", value: "\(definition.endpoint.method.rawValue) \(definition.endpoint.path.isEmpty ? "/" : definition.endpoint.path)")
                     LabeledContent("Intervall", value: Duration.seconds(definition.clampedInterval).formatted(.units(width: .abbreviated)))
                     LabeledContent("Darstellung", value: definition.display.style.title)
-                    LabeledContent("Zugangsdaten", value: definition.needsSecret ? "\(definition.auth.kind.title) – fehlen, trägst du danach ein" : "keine")
+                    LabeledContent("Zugangsdaten", value: definition.needsSecret ? String(localized: "\(definition.auth.kind.title) – fehlen, trägst du danach ein") : String(localized: "keine"))
                 }
                 .padding(4)
             }
@@ -45,7 +45,7 @@ struct CustomImportSheet: View {
                 Label("Unverschlüsselte Verbindung (http) ins lokale Netz.", systemImage: "exclamationmark.triangle.fill")
                     .foregroundStyle(.orange)
             }
-            Text("Die Konfiguration enthält keine Zugangsdaten und führt keinen Code aus. Die Bridge fragt \(definition.origin ?? "den Host") erst ab, wenn du ihn freigibst.")
+            Text("Die Konfiguration enthält keine Zugangsdaten und führt keinen Code aus. Die Bridge fragt \(definition.origin ?? String(localized: "den Host")) erst ab, wenn du ihn freigibst.")
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)

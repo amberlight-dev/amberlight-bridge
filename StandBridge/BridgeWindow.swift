@@ -115,7 +115,7 @@ struct BridgeWindow: View {
         }
         guard landed != page.id else { return }
         model.sidebar = .page(landed)
-        withAnimation(.smooth) { notice = "Auf „\(page.name)“ war kein Platz – \(settings?.customName ?? widget.title) liegt jetzt auf einer neuen Seite." }
+        withAnimation(.smooth) { notice = String(localized: "Auf „\(page.name)“ war kein Platz – \(settings?.customName ?? widget.title) liegt jetzt auf einer neuen Seite.") }
     }
 
     private func renamePlaced(_ definition: CustomWidgetDefinition) {
@@ -146,7 +146,7 @@ struct BridgeWindow: View {
             return
         }
         model.sidebar = .page(landed)
-        withAnimation(.smooth) { notice = "Auf „\(page.name)“ war kein Platz – die Kopie liegt jetzt auf einer neuen Seite." }
+        withAnimation(.smooth) { notice = String(localized: "Auf „\(page.name)“ war kein Platz – die Kopie liegt jetzt auf einer neuen Seite.") }
     }
 
     private func inspectFromLaunchArgument() {

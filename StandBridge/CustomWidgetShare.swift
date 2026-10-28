@@ -6,10 +6,10 @@ nonisolated enum CustomWidgetShare {
 
         var message: String {
             switch self {
-            case .notAWidget: "Kein Amberlight-Widget – der Text beginnt nicht mit „\(CustomWidgetShare.prefix)“"
-            case .tooLong: "Text ist zu lang für eine Widget-Konfiguration"
-            case .unreadable: "Konfiguration ist beschädigt"
-            case .unsupportedVersion: "Konfiguration stammt aus einer neueren Amberlight-Version"
+            case .notAWidget: String(localized: "Kein Amberlight-Widget – der Text beginnt nicht mit „\(CustomWidgetShare.prefix)“")
+            case .tooLong: String(localized: "Text ist zu lang für eine Widget-Konfiguration")
+            case .unreadable: String(localized: "Konfiguration ist beschädigt")
+            case .unsupportedVersion: String(localized: "Konfiguration stammt aus einer neueren Amberlight-Version")
             case .invalid(let error): error.message
             }
         }

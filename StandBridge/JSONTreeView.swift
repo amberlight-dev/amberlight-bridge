@@ -110,7 +110,7 @@ private struct JSONNodeRow: View {
         }
         .contentShape(.rect)
         .onTapGesture(perform: primary)
-        .help(node.id.isEmpty ? "Wurzel" : node.id)
+        .help(node.id.isEmpty ? String(localized: "Wurzel") : node.id)
     }
 
     private func primary() {
@@ -155,9 +155,9 @@ enum CustomFieldRole: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .aggregated: "Feld für die Aggregation"
-        case .label: "Label der Reihe"
-        case .series: "Wert der Reihe"
+        case .aggregated: String(localized: "Feld für die Aggregation")
+        case .label: String(localized: "Label der Reihe")
+        case .series: String(localized: "Wert der Reihe")
         }
     }
 }

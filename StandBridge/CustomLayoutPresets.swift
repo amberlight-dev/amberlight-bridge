@@ -22,7 +22,7 @@ enum CustomLayoutPresets {
 
     static let all = [bigNumber, ringValue, statusHero, mocoToday, mocoTimer]
 
-    static let bigNumber = Preset(id: "big-number", title: "Große Zahl mit Verlauf", layout: decode("""
+    static let bigNumber = Preset(id: "big-number", title: String(localized: "Große Zahl mit Verlauf"), layout: decode("""
     {"type":"vstack","spacing":2,"children":[
       {"type":"text","text":"{caption}","size":"xs"},
       {"type":"text","text":"{value}","size":"xl","priority":2},
@@ -30,13 +30,13 @@ enum CustomLayoutPresets {
     ]}
     """))
 
-    static let ringValue = Preset(id: "ring-value", title: "Ring um den Wert (0–100)", layout: decode("""
+    static let ringValue = Preset(id: "ring-value", title: String(localized: "Ring um den Wert (0–100)"), layout: decode("""
     {"type":"ring","value":"value","max":"100","tone":"blue","children":[
       {"type":"text","text":"{value}","size":"m"}
     ]}
     """))
 
-    static let statusHero = Preset(id: "status-hero", title: "Status mit Puls", layout: decode("""
+    static let statusHero = Preset(id: "status-hero", title: String(localized: "Status mit Puls"), layout: decode("""
     {"type":"hstack","spacing":10,"children":[
       {"type":"dot","pulse":true,"priority":1},
       {"type":"vstack","spacing":2,"children":[
@@ -46,7 +46,7 @@ enum CustomLayoutPresets {
     ]}
     """))
 
-    static let mocoToday = Preset(id: "moco-today", title: "MOCO: Heute als Ring", layout: decode("""
+    static let mocoToday = Preset(id: "moco-today", title: String(localized: "MOCO: Heute als Ring"), layout: decode("""
     {"type":"hstack","spacing":14,"children":[
       {"type":"ring","value":"booked","max":"8","tone":"blue","priority":2,"children":[
         {"type":"text","text":"{booked}","size":"m"}
@@ -59,7 +59,7 @@ enum CustomLayoutPresets {
     ]}
     """), requires: ["booked"])
 
-    static let mocoTimer = Preset(id: "moco-timer", title: "MOCO: Laufender Timer mit Projekt und Aufgabe", layout: decode("""
+    static let mocoTimer = Preset(id: "moco-timer", title: String(localized: "MOCO: Laufender Timer mit Projekt und Aufgabe"), layout: decode("""
     {"type":"vstack","spacing":4,"children":[
       {"type":"hstack","spacing":4,"children":[
         {"type":"dot","pulse":true,"tone":"green","when":"running >= 1"},

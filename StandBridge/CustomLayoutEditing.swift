@@ -7,21 +7,21 @@ nonisolated enum CustomBlock: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .title: "Titel"
+        case .title: String(localized: "Titel")
         case .label: "Label"
-        case .bigNumber: "Große Zahl"
+        case .bigNumber: String(localized: "Große Zahl")
         case .text: "Text"
         case .pill: "Status-Pille"
-        case .ring: "Ring"
+        case .ring: String(localized: "Ring")
         case .bar: "Fortschritt"
-        case .line: "Linie"
-        case .bars: "Balken"
+        case .line: String(localized: "Linie")
+        case .bars: String(localized: "Balken")
         case .list: "Liste"
         case .symbol: "Icon"
         case .spacer: "Abstand"
-        case .divider: "Trenner"
-        case .row: "Zeile"
-        case .column: "Spalte"
+        case .divider: String(localized: "Trenner")
+        case .row: String(localized: "Zeile")
+        case .column: String(localized: "Spalte")
         }
     }
 
@@ -51,7 +51,7 @@ nonisolated enum CustomBlock: String, CaseIterable, Identifiable {
         case .label: CustomNode(type: .text, text: "{caption}", size: .xs)
         case .bigNumber: CustomNode(type: .text, text: "{value}", size: .xl)
         case .text: CustomNode(type: .text, text: "{value}", size: .s)
-        case .pill: CustomNode(type: .pill, text: "{value}", size: .s, toneWhen: [.init(when: "value >= 1", tone: .green, label: "Aktiv")])
+        case .pill: CustomNode(type: .pill, text: "{value}", size: .s, toneWhen: [.init(when: "value >= 1", tone: .green, label: String(localized: "Aktiv"))])
         case .ring: CustomNode(type: .ring, children: [CustomNode(type: .text, text: "{value}", size: .s)], value: "value", max: "100")
         case .bar: CustomNode(type: .bar, value: "value", max: "100")
         case .line: CustomNode(type: .line)

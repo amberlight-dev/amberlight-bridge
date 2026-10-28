@@ -82,11 +82,11 @@ struct AccountsView: View {
 
     private func check(orbit account: OrbitAccount) async {
         let payload = await OrbitClient.cachedReport(account: account)
-        orbitResult = payload["error"] as? String ?? "Verbunden · \((payload["issues"] as? [JSON])?.count ?? 0) offene Tickets"
+        orbitResult = payload["error"] as? String ?? String(localized: "Verbunden · \((payload["issues"] as? [JSON])?.count ?? 0) offene Tickets")
     }
 
     private func check(gitlab account: GitLabAccount) async {
         let payload = await GitLabClient.cachedReport(account: account)
-        gitlabResult = payload["error"] as? String ?? "Verbunden · \((payload["pipelines"] as? [JSON])?.count ?? 0) Projekte"
+        gitlabResult = payload["error"] as? String ?? String(localized: "Verbunden · \((payload["pipelines"] as? [JSON])?.count ?? 0) Projekte")
     }
 }

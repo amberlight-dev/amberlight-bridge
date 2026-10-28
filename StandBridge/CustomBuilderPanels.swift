@@ -11,7 +11,7 @@ struct CustomBuilderSidebar: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
-                section("Werte") {
+                section(String(localized: "Werte")) {
                     VStack(alignment: .leading, spacing: 6) {
                         ForEach(names, id: \.self) { name in
                             Button { onValue(name) } label: { chip(name) }
@@ -21,7 +21,7 @@ struct CustomBuilderSidebar: View {
                         }
                     }
                 }
-                section("Bausteine") {
+                section(String(localized: "Bausteine")) {
                     LazyVGrid(columns: columns, spacing: 6) {
                         ForEach(CustomBlock.allCases) { block in
                             Button { onBlock(block) } label: { tile(block) }
@@ -141,20 +141,20 @@ struct CustomLayoutOutline: View {
 
     static func summary(_ node: CustomNode) -> String {
         switch node.type {
-        case .vstack: "Spalte"
-        case .hstack: "Zeile"
+        case .vstack: String(localized: "Spalte")
+        case .hstack: String(localized: "Zeile")
         case .zstack: "Ebenen"
         case .spacer: "Abstand"
-        case .divider: "Trenner"
+        case .divider: String(localized: "Trenner")
         case .text: node.text ?? "Text"
-        case .pill: "Pille " + (node.text ?? "")
-        case .symbol: node.text ?? "Icon"
-        case .dot: "Punkt"
-        case .timer: "Timer"
-        case .ring: "Ring " + (node.value.map { "{\($0)}" } ?? "")
-        case .bar: "Fortschritt " + (node.value.map { "{\($0)}" } ?? "")
-        case .line: "Linie"
-        case .bars: "Balken"
+        case .pill: String(localized: "Pille ") + (node.text ?? "")
+        case .symbol: node.text ?? String(localized: "Icon")
+        case .dot: String(localized: "Punkt")
+        case .timer: String(localized: "Timer")
+        case .ring: String(localized: "Ring ") + (node.value.map { "{\($0)}" } ?? "")
+        case .bar: String(localized: "Fortschritt ") + (node.value.map { "{\($0)}" } ?? "")
+        case .line: String(localized: "Linie")
+        case .bars: String(localized: "Balken")
         case .list: "Liste"
         }
     }

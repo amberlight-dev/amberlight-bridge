@@ -10,14 +10,14 @@ struct RepliesView: View {
         Form {
             Section {
                 explanation(
-                    "Fragen und Erlaubnisse",
+                    String(localized: "Fragen und Erlaubnisse"),
                     symbol: "checkmark.bubble",
-                    text: "Wartet Claude Code auf deine Antwort oder Erlaubnis, geht dein Tipp am iPhone direkt an die laufende Session. Das klappt immer, ganz ohne Freigabe."
+                    text: String(localized: "Wartet Claude Code auf deine Antwort oder Erlaubnis, geht dein Tipp am iPhone direkt an die laufende Session. Das klappt immer, ganz ohne Freigabe.")
                 )
                 explanation(
-                    "Vorschläge am Ende einer Antwort",
+                    String(localized: "Vorschläge am Ende einer Antwort"),
                     symbol: "text.bubble",
-                    text: "Ist Claude fertig und bietet Knöpfe wie „Ja, committen“ an, ist deine Wahl eine neue Nachricht. Die muss jemand ins Eingabefeld der Session tippen und abschicken – du am Mac oder die Bridge."
+                    text: String(localized: "Ist Claude fertig und bietet Knöpfe wie „Ja, committen“ an, ist deine Wahl eine neue Nachricht. Die muss jemand ins Eingabefeld der Session tippen und abschicken – du am Mac oder die Bridge.")
                 )
             } header: {
                 Text("Zwei Arten von Antworten")
@@ -29,7 +29,7 @@ struct RepliesView: View {
                     LabeledContent {
                         Button("Bedienungshilfen öffnen …") { NSWorkspace.shared.open(MacReply.accessibilitySettings) }
                     } label: {
-                        StatusLabel(text: "Bedienungshilfen sind noch nicht freigegeben", symbol: "exclamationmark.triangle.fill", tint: .yellow)
+                        StatusLabel(text: String(localized: "Bedienungshilfen sind noch nicht freigegeben"), symbol: "exclamationmark.triangle.fill", tint: .yellow)
                     }
                 }
             } header: {
@@ -47,10 +47,10 @@ struct RepliesView: View {
                     LabeledContent {
                         Button("Automation erlauben …") { NSWorkspace.shared.open(WindowFocus.automationSettings) }
                     } label: {
-                        StatusLabel(text: "Automation verweigert – nur die App wird aktiviert", symbol: "exclamationmark.triangle.fill", tint: .yellow)
+                        StatusLabel(text: String(localized: "Automation verweigert – nur die App wird aktiviert"), symbol: "exclamationmark.triangle.fill", tint: .yellow)
                     }
                 } else {
-                    StatusLabel(text: model.server?.lastFocus == nil ? "Noch nicht genutzt" : "Zuletzt erfolgreich nach vorn geholt", symbol: "macwindow.on.rectangle", tint: .secondary)
+                    StatusLabel(text: model.server?.lastFocus == nil ? String(localized: "Noch nicht genutzt") : String(localized: "Zuletzt erfolgreich nach vorn geholt"), symbol: "macwindow.on.rectangle", tint: .secondary)
                 }
             } header: {
                 Text("Session-Fenster")

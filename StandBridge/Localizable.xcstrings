@@ -1,0 +1,6640 @@
+{
+  "sourceLanguage" : "de",
+  "strings" : {
+    "%@ antwortet mit %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ antwortet mit %2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ responds with %lld"
+          }
+        }
+      }
+    },
+    "%@ arbeitet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ is working"
+          }
+        }
+      }
+    },
+    "%@ ausführen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run %@?"
+          }
+        }
+      }
+    },
+    "%@ hat eine Frage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ has a question"
+          }
+        }
+      }
+    },
+    "%@ hinzufügen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add %@"
+          }
+        }
+      }
+    },
+    "%@ lehnt den Token ab" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ rejects the token"
+          }
+        }
+      }
+    },
+    "%@ nicht erreichbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ is unreachable"
+          }
+        }
+      }
+    },
+    "%@ schläft" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ is asleep"
+          }
+        }
+      }
+    },
+    "%@ · %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · %@"
+          }
+        }
+      }
+    },
+    "%@ · Klick wählt den Wert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · Click to pick the value"
+          }
+        }
+      }
+    },
+    "%@ – fehlen, trägst du danach ein" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ – missing, you add them afterwards"
+          }
+        }
+      }
+    },
+    "%@, %lld mal %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$lld mal %3$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@, %lld by %lld"
+          }
+        }
+      }
+    },
+    "%@: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        }
+      }
+    },
+    "%@: leer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: empty"
+          }
+        }
+      }
+    },
+    "%lld Min" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min"
+          }
+        }
+      }
+    },
+    "%lld Zeichen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld characters"
+          }
+        }
+      }
+    },
+    "%lld pt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld pt"
+          }
+        }
+      }
+    },
+    "%lld s" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld s"
+          }
+        }
+      }
+    },
+    "%lld×%lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld×%2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld×%lld"
+          }
+        }
+      }
+    },
+    "**An:** Die Bridge drückt ⌘V und Return für dich. Weil sie dafür Tastendrücke simuliert, verlangt macOS die Freigabe unter Bedienungshilfen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**On:** The Bridge presses ⌘V and Return for you. Because it simulates key presses to do that, macOS asks for permission under Accessibility."
+          }
+        }
+      }
+    },
+    "**Aus:** Die Bridge legt den Text in die Zwischenablage und holt das Fenster der Session nach vorn. Einfügen und abschicken machst du selbst mit ⌘V und Return." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Off:** The Bridge puts the text on the clipboard and brings the session’s window to the front. You paste and send it yourself with ⌘V and Return."
+          }
+        }
+      }
+    },
+    "100 oder {wert}" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100 or {value}"
+          }
+        }
+      }
+    },
+    "1×1 zeigt den Kernwert, 2×1 dazu die Beschriftung, ab 2×2 die volle Darstellung." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1×1 shows the main value, 2×1 adds the caption, 2×2 and up shows everything."
+          }
+        }
+      }
+    },
+    "2×2 und größer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2×2 and larger"
+          }
+        }
+      }
+    },
+    "5h-Fenster" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5h window"
+          }
+        }
+      }
+    },
+    "5h-Fenster vorab starten (experimentell)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start the 5-hour window early (experimental)"
+          }
+        }
+      }
+    },
+    "API" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API"
+          }
+        }
+      }
+    },
+    "API antwortet mit %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API responds with %lld"
+          }
+        }
+      }
+    },
+    "API lehnt die Zugangsdaten ab" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API rejects the credentials"
+          }
+        }
+      }
+    },
+    "API nicht erreichbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API is unreachable"
+          }
+        }
+      }
+    },
+    "API, Wert und Darstellung richtest du in der Widget-Bibliothek ein." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set up the API, value and display in the Widget Library."
+          }
+        }
+      }
+    },
+    "API-Key" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API key"
+          }
+        }
+      }
+    },
+    "API-Key als Header" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API key as header"
+          }
+        }
+      }
+    },
+    "API-Key als Query" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API key as query"
+          }
+        }
+      }
+    },
+    "API-URL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API URL"
+          }
+        }
+      }
+    },
+    "ASCII" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ASCII"
+          }
+        }
+      }
+    },
+    "Abbrechen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "Abfrage-Intervall" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polling interval"
+          }
+        }
+      }
+    },
+    "Abgeschlossene" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finished"
+          }
+        }
+      }
+    },
+    "Abgeschlossene zeigen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show finished"
+          }
+        }
+      }
+    },
+    "Ablehnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deny"
+          }
+        }
+      }
+    },
+    "Abstand" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spacing"
+          }
+        }
+      }
+    },
+    "Access Token" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Access Token"
+          }
+        }
+      }
+    },
+    "Adresse" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Address"
+          }
+        }
+      }
+    },
+    "Aggregation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggregation"
+          }
+        }
+      }
+    },
+    "Akku-Bogen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Battery Arc"
+          }
+        }
+      }
+    },
+    "Aktiv" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active"
+          }
+        }
+      }
+    },
+    "Aktivität" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity"
+          }
+        }
+      }
+    },
+    "Aktualisieren …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update …"
+          }
+        }
+      }
+    },
+    "Aktuelle Temperatur in Wien, ab 2×2 mit Verlauf." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current temperature in Vienna, with history from 2×2."
+          }
+        }
+      }
+    },
+    "Akzent" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accent"
+          }
+        }
+      }
+    },
+    "Akzentfarbe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accent Color"
+          }
+        }
+      }
+    },
+    "Alle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        }
+      }
+    },
+    "Alles in Ordnung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All good"
+          }
+        }
+      }
+    },
+    "Als Feld im Widget zeigen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show as a field in the widget"
+          }
+        }
+      }
+    },
+    "Als Liste bzw. Reihe verwenden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use as list or series"
+          }
+        }
+      }
+    },
+    "Als Wert verwenden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use as value"
+          }
+        }
+      }
+    },
+    "Alte Python-Bridge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Old Python Bridge"
+          }
+        }
+      }
+    },
+    "Alte Python-Bridge entfernen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove the old Python Bridge?"
+          }
+        }
+      }
+    },
+    "Alte Python-Hooks" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Old Python hooks"
+          }
+        }
+      }
+    },
+    "Am wichtigsten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Most important"
+          }
+        }
+      }
+    },
+    "Amber" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amber"
+          }
+        }
+      }
+    },
+    "Amberlight" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amberlight"
+          }
+        }
+      }
+    },
+    "Amberlight Bridge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amberlight Bridge"
+          }
+        }
+      }
+    },
+    "Amberlight Bridge beenden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quit Amberlight Bridge"
+          }
+        }
+      }
+    },
+    "Amberlight Bridge öffnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Amberlight Bridge"
+          }
+        }
+      }
+    },
+    "Amberlight Bridge, Update verfügbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amberlight Bridge, update available"
+          }
+        }
+      }
+    },
+    "Anfrage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Request"
+          }
+        }
+      }
+    },
+    "Angezeigt wird „Bereits erfasst“ plus die Zeit seit der Startzeit." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows “already tracked” plus the time since the start time."
+          }
+        }
+      }
+    },
+    "Anordnung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Layout"
+          }
+        }
+      }
+    },
+    "Anordnung abgeholt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Layout fetched"
+          }
+        }
+      }
+    },
+    "Anordnung bearbeiten …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Layout …"
+          }
+        }
+      }
+    },
+    "Anordnung empfangen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Layout received"
+          }
+        }
+      }
+    },
+    "Ansicht" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View"
+          }
+        }
+      }
+    },
+    "Antwort" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Response"
+          }
+        }
+      }
+    },
+    "Antwort ans Mac-Fenster" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answer to Mac window"
+          }
+        }
+      }
+    },
+    "Antwort größer als %lld KB" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Response larger than %lld KB"
+          }
+        }
+      }
+    },
+    "Antwort ist kein JSON" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Response is not JSON"
+          }
+        }
+      }
+    },
+    "Antwort vom iPhone" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answer from iPhone"
+          }
+        }
+      }
+    },
+    "Antworten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answers"
+          }
+        }
+      }
+    },
+    "Antworten direkt senden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send answers directly"
+          }
+        }
+      }
+    },
+    "Anzahl" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Count"
+          }
+        }
+      }
+    },
+    "Anzahl mit Wert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Count with value"
+          }
+        }
+      }
+    },
+    "App-Icon abgefragt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App icon requested"
+          }
+        }
+      }
+    },
+    "App-Liste abgefragt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App list requested"
+          }
+        }
+      }
+    },
+    "Apps durchsuchen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search apps"
+          }
+        }
+      }
+    },
+    "Apps, Links und Ordner auf dem Mac mit einem Tipp öffnen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open apps, links and folders on your Mac with a tap."
+          }
+        }
+      }
+    },
+    "Arbeitende und wartende Sessions stehen immer da. Der Projektfilter vergleicht mit dem Ordnernamen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Working and waiting sessions are always shown. The project filter matches the folder name."
+          }
+        }
+      }
+    },
+    "Art" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kind"
+          }
+        }
+      }
+    },
+    "Atmet langsam. Reagiert er auf Sessions, wird er schneller, solange gearbeitet wird, und leuchtet kurz auf, wenn etwas fertig ist." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Breathes slowly. When it reacts to sessions, it speeds up while work is in progress and flashes briefly when something is done."
+          }
+        }
+      }
+    },
+    "Auf einen Baustein ziehen bindet ihn an {%@}" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drag onto a block to bind it to {%@}"
+          }
+        }
+      }
+    },
+    "Auf „%@“ ausblenden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide on “%@”"
+          }
+        }
+      }
+    },
+    "Auf „%@“ war kein Platz – %@ liegt jetzt auf einer neuen Seite." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Auf „%1$@“ war kein Platz – %2$@ liegt jetzt auf einer neuen Seite."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There was no room on “%@” – %@ is now on a new page."
+          }
+        }
+      }
+    },
+    "Auf „%@“ war kein Platz – die Kopie liegt jetzt auf einer neuen Seite." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There was no room on “%@” – the copy is now on a new page."
+          }
+        }
+      }
+    },
+    "Aurora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora"
+          }
+        }
+      }
+    },
+    "Aus Zwischenablage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From Clipboard"
+          }
+        }
+      }
+    },
+    "Aus einer Liste berechnet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculated from a list"
+          }
+        }
+      }
+    },
+    "Aus: Fragen erscheinen am iPhone nur zur Info und werden am Mac beantwortet. Wie Antworten am Mac ankommen, stellst du unter „Antworten“ ein." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off: Questions appear on the iPhone for information only and are answered on the Mac. How answers reach the Mac is set under “Answers”."
+          }
+        }
+      }
+    },
+    "Ausfall" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Outage"
+          }
+        }
+      }
+    },
+    "Ausgewählte Seite löschen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete selected page"
+          }
+        }
+      }
+    },
+    "Ausrichtung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alignment"
+          }
+        }
+      }
+    },
+    "Aussehen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        }
+      }
+    },
+    "Auswahl aufheben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deselect"
+          }
+        }
+      }
+    },
+    "Authentifizierung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authentication"
+          }
+        }
+      }
+    },
+    "Authorization" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authorization"
+          }
+        }
+      }
+    },
+    "Automation erlauben …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow Automation …"
+          }
+        }
+      }
+    },
+    "Automation verweigert – nur die App wird aktiviert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automation denied – only the app is activated"
+          }
+        }
+      }
+    },
+    "Automatisch aus der Hauptgröße abgeleitet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Derived automatically from the main size"
+          }
+        }
+      }
+    },
+    "Automatisch nach Updates suchen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check for updates automatically"
+          }
+        }
+      }
+    },
+    "Außenabstand" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Margin"
+          }
+        }
+      }
+    },
+    "Balken" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bars"
+          }
+        }
+      }
+    },
+    "Balkendiagramm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bar Chart"
+          }
+        }
+      }
+    },
+    "Basic (Benutzer + Passwort)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basic (user + password)"
+          }
+        }
+      }
+    },
+    "Basis-URL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base URL"
+          }
+        }
+      }
+    },
+    "Basis-URL fehlt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base URL missing"
+          }
+        }
+      }
+    },
+    "Basis-URL ist ungültig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base URL is invalid"
+          }
+        }
+      }
+    },
+    "Bausteine" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blocks"
+          }
+        }
+      }
+    },
+    "Bausteine hierher ziehen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drag blocks here"
+          }
+        }
+      }
+    },
+    "Bausteine und Werte links per Drag & Drop in die Vorschau ziehen oder anklicken. Entf löscht, Pfeiltasten verschieben." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drag blocks and values from the left into the preview, or click them. Delete removes, arrow keys move."
+          }
+        }
+      }
+    },
+    "Bearbeiten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        }
+      }
+    },
+    "Bedienungshilfen fehlen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accessibility permission missing"
+          }
+        }
+      }
+    },
+    "Bedienungshilfen freigeben …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow Accessibility …"
+          }
+        }
+      }
+    },
+    "Bedienungshilfen sind noch nicht freigegeben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accessibility is not allowed yet"
+          }
+        }
+      }
+    },
+    "Bedienungshilfen öffnen …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Accessibility …"
+          }
+        }
+      }
+    },
+    "Bedingung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Condition"
+          }
+        }
+      }
+    },
+    "Beenden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quit"
+          }
+        }
+      }
+    },
+    "Beim Login starten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start at login"
+          }
+        }
+      }
+    },
+    "Benachrichtigungen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        }
+      }
+    },
+    "Benutzer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User"
+          }
+        }
+      }
+    },
+    "Berechnung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calculation"
+          }
+        }
+      }
+    },
+    "Berechtigungen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permissions"
+          }
+        }
+      }
+    },
+    "Beschriftung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caption"
+          }
+        }
+      }
+    },
+    "Blau" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blue"
+          }
+        }
+      }
+    },
+    "Bonjour" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bonjour"
+          }
+        }
+      }
+    },
+    "Braucht ein Konto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Needs an account"
+          }
+        }
+      }
+    },
+    "Braucht eine Reihe aus Schritt 6. Klein zeigt das Widget den Kernwert." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Needs a series from step 6. At small sizes the widget shows the main value."
+          }
+        }
+      }
+    },
+    "Bridge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bridge"
+          }
+        }
+      }
+    },
+    "Bridge-Adresse, Code und Berechtigungen gehören zum Gerät und werden in der Amberlight-App eingestellt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bridge address, code and permissions belong to the device and are set in the Amberlight app."
+          }
+        }
+      }
+    },
+    "Bäumchen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sapling"
+          }
+        }
+      }
+    },
+    "CPU, RAM und Netz deines Macs." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Mac’s CPU, RAM and network."
+          }
+        }
+      }
+    },
+    "Claude Code" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code"
+          }
+        }
+      }
+    },
+    "Claude-Code-Hooks entfernen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove Claude Code hooks?"
+          }
+        }
+      }
+    },
+    "Claude-Code-Hooks installieren?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Claude Code hooks?"
+          }
+        }
+      }
+    },
+    "Claude-Sessions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Sessions"
+          }
+        }
+      }
+    },
+    "Code" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code"
+          }
+        }
+      }
+    },
+    "Codex" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Codex"
+          }
+        }
+      }
+    },
+    "Codex-Hooks entfernen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove Codex hooks?"
+          }
+        }
+      }
+    },
+    "Codex-Hooks installieren?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Codex hooks?"
+          }
+        }
+      }
+    },
+    "Darstellung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display"
+          }
+        }
+      }
+    },
+    "Das Layout regelt diese Größe selbst" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The layout handles this size itself"
+          }
+        }
+      }
+    },
+    "Das zuletzt verbundene iPhone hat keine LED." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The last connected iPhone has no LED."
+          }
+        }
+      }
+    },
+    "Daten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data"
+          }
+        }
+      }
+    },
+    "Daten aus einer eigenen API, eingerichtet in der Widget-Bibliothek am Mac." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data from your own API, set up in the widget library on your Mac."
+          }
+        }
+      }
+    },
+    "Datum" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
+          }
+        }
+      }
+    },
+    "Deine Claude- und Codex-Sessions mit Status, Fragen und Freigaben." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Claude and Codex sessions with status, questions and approvals."
+          }
+        }
+      }
+    },
+    "Deine Statusline ist kein bekanntes Skript. Die Zeile liegt in der Zwischenablage – füge sie dort ein, wo $input das Statusline-JSON enthält." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your status line isn’t a known script. The line is on the clipboard – paste it where $input holds the status line JSON."
+          }
+        }
+      }
+    },
+    "Deine nächsten Termine heute und morgen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your next events today and tomorrow."
+          }
+        }
+      }
+    },
+    "Deine offenen Orbit-Tickets, ein Tipp öffnet sie am Mac." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your open Orbit tickets – tap to open them on your Mac."
+          }
+        }
+      }
+    },
+    "Den Token legst du in Orbit unter Konto → Einstellungen → Personal Access Tokens an. Das Widget zeigt deine offenen Tickets." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create the token in Orbit under Account → Settings → Personal Access Tokens. The widget shows your open tickets."
+          }
+        }
+      }
+    },
+    "Den Verlauf speichert die Bridge selbst – mit jedem Abruf ein Punkt, bis zu %lld." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Bridge stores the history itself – one point per fetch, up to %lld."
+          }
+        }
+      }
+    },
+    "Der Body wird mit exportiert – trag dort keine Zugangsdaten ein." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The body is included in exports – don’t put credentials in it."
+          }
+        }
+      }
+    },
+    "Der Verlauf füllt sich mit jedem Abruf." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The history fills up with every refresh."
+          }
+        }
+      }
+    },
+    "Dezenter Verlauf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subtle Gradient"
+          }
+        }
+      }
+    },
+    "Diagnose" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagnostics"
+          }
+        }
+      }
+    },
+    "Die Konfiguration enthält keine Zugangsdaten und führt keinen Code aus. Die Bridge fragt %@ erst ab, wenn du ihn freigibst." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The configuration contains no credentials and runs no code. The Bridge only queries %@ once you allow it."
+          }
+        }
+      }
+    },
+    "Die Vorschauen zeigen deine Daten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The previews show your data."
+          }
+        }
+      }
+    },
+    "Die erste passende Regel bestimmt Farbe und Text. Passt keine, wird der Wert grau gezeigt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The first matching rule sets color and text. If none matches, the value is shown in gray."
+          }
+        }
+      }
+    },
+    "Diese Woche" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This week"
+          }
+        }
+      }
+    },
+    "Dieses Widget braucht kein Konto." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This widget doesn’t need an account."
+          }
+        }
+      }
+    },
+    "Duplizieren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duplicate"
+          }
+        }
+      }
+    },
+    "Ebenen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Layers"
+          }
+        }
+      }
+    },
+    "Ecke oben links" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top Left Corner"
+          }
+        }
+      }
+    },
+    "Ecke oben rechts" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top Right Corner"
+          }
+        }
+      }
+    },
+    "Ecke unten links" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bottom Left Corner"
+          }
+        }
+      }
+    },
+    "Ecke unten rechts" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bottom Right Corner"
+          }
+        }
+      }
+    },
+    "Eigene" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom"
+          }
+        }
+      }
+    },
+    "Eigene Akzentfarbe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom accent color"
+          }
+        }
+      }
+    },
+    "Eigene Anordnung für %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom layout for %@"
+          }
+        }
+      }
+    },
+    "Eigene Dauer: %lld Min" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom duration: %lld min"
+          }
+        }
+      }
+    },
+    "Eigene Farbe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Color"
+          }
+        }
+      }
+    },
+    "Eigene Statusline" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom status line"
+          }
+        }
+      }
+    },
+    "Eigene Widgets" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Widgets"
+          }
+        }
+      }
+    },
+    "Eigene Widgets legst du in der Widget-Bibliothek an." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create custom widgets in the Widget Library."
+          }
+        }
+      }
+    },
+    "Eigener Header" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom header"
+          }
+        }
+      }
+    },
+    "Eigenes Widget" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Widget"
+          }
+        }
+      }
+    },
+    "Ein Personal Access Token mit dem Bereich read_api reicht. Das Widget zeigt die letzte Pipeline deiner aktiven Projekte und deine offenen Merge Requests." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A personal access token with the read_api scope is enough. The widget shows the latest pipeline of your active projects and your open merge requests."
+          }
+        }
+      }
+    },
+    "Ein Pomodoro-Timer: Tippen startet, lange drücken setzt zurück." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Pomodoro timer: tap to start, long-press to reset."
+          }
+        }
+      }
+    },
+    "Einfach" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simple"
+          }
+        }
+      }
+    },
+    "Einfügen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paste"
+          }
+        }
+      }
+    },
+    "Einfügen in eine andere Amberlight Bridge unter Widget-Bibliothek → Einfügen. Zugangsdaten sind nicht enthalten, die trägt jeder selbst ein." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paste into another Amberlight Bridge under Widget Library → Paste. Credentials aren’t included; everyone adds their own."
+          }
+        }
+      }
+    },
+    "Einheit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unit"
+          }
+        }
+      }
+    },
+    "Einrichten …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set Up …"
+          }
+        }
+      }
+    },
+    "Einstellungen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "Einträge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entries"
+          }
+        }
+      }
+    },
+    "Einzelner Wert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Single value"
+          }
+        }
+      }
+    },
+    "Endpunkt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endpoint"
+          }
+        }
+      }
+    },
+    "Entfernen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove"
+          }
+        }
+      }
+    },
+    "Entfernen …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove …"
+          }
+        }
+      }
+    },
+    "Entfernt alle Amberlight-Bridge-Hooks aus %@. Vorher wird eine Sicherungskopie angelegt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Removes all Amberlight Bridge hooks from %@. A backup is made first."
+          }
+        }
+      }
+    },
+    "Entfernt auch die Zugangsdaten im Schlüsselbund und das Widget von allen Seiten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Also removes the credentials from the keychain and the widget from all pages."
+          }
+        }
+      }
+    },
+    "Erlauben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow"
+          }
+        }
+      }
+    },
+    "Erneut testen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test Again"
+          }
+        }
+      }
+    },
+    "Erscheint im Open-Window-Widget auf dem iPhone, in dieser Reihenfolge." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appears in the Open Window widget on the iPhone, in this order."
+          }
+        }
+      }
+    },
+    "Erst eine gültige Basis-URL eintragen und den Host freigeben." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a valid base URL and allow the host first."
+          }
+        }
+      }
+    },
+    "Erst verbinden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect first"
+          }
+        }
+      }
+    },
+    "Erstes Element" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First element"
+          }
+        }
+      }
+    },
+    "Erweitert" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced"
+          }
+        }
+      }
+    },
+    "Exportieren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export"
+          }
+        }
+      }
+    },
+    "Farbe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color"
+          }
+        }
+      }
+    },
+    "Farbe dieses Hintergrunds nur für diese Seite einstellen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set this background’s color for this page only"
+          }
+        }
+      }
+    },
+    "Farbe …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color …"
+          }
+        }
+      }
+    },
+    "Fehlen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Missing"
+          }
+        }
+      }
+    },
+    "Fehlt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Missing"
+          }
+        }
+      }
+    },
+    "Feld für Label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field for label"
+          }
+        }
+      }
+    },
+    "Feld für Wert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field for value"
+          }
+        }
+      }
+    },
+    "Feld für die Aggregation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field to aggregate"
+          }
+        }
+      }
+    },
+    "Feld im Element" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field in element"
+          }
+        }
+      }
+    },
+    "Feld „%@“ fehlt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Field “%@” is missing"
+          }
+        }
+      }
+    },
+    "Fenster nach vorn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Window brought to front"
+          }
+        }
+      }
+    },
+    "Fertig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "Fertig: zweimal kurz. Frage oder Freigabe: dreimal. Nicht im Nachttisch-Modus und nur, solange Amberlight offen ist." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done: two short flashes. Question or approval: three. Not in nightstand mode, and only while Amberlight is open."
+          }
+        }
+      }
+    },
+    "Fett" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bold"
+          }
+        }
+      }
+    },
+    "Filter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        }
+      }
+    },
+    "Fokus" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Focus"
+          }
+        }
+      }
+    },
+    "Fokus-Timer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Focus Timer"
+          }
+        }
+      }
+    },
+    "Format" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Format"
+          }
+        }
+      }
+    },
+    "Fortfahren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        }
+      }
+    },
+    "Fortschritt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progress"
+          }
+        }
+      }
+    },
+    "Fortschritt " : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progress "
+          }
+        }
+      }
+    },
+    "Fragen in Amberlight beantworten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answer questions in Amberlight"
+          }
+        }
+      }
+    },
+    "Fragen und Antworten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questions and answers"
+          }
+        }
+      }
+    },
+    "Fragen und Erlaubnisse" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questions and permissions"
+          }
+        }
+      }
+    },
+    "Freigabe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permission"
+          }
+        }
+      }
+    },
+    "Freigabe fehlt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not allowed yet"
+          }
+        }
+      }
+    },
+    "Freigabe fehlt – Host am Mac bestätigen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not allowed yet – confirm the host on the Mac"
+          }
+        }
+      }
+    },
+    "Freigeben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow"
+          }
+        }
+      }
+    },
+    "Fügt in %@ nach input=$(cat) eine Zeile ein, die die Usage-Werte nach ~/.claude/stand-usage.json schreibt. Vorher wird eine Sicherungskopie angelegt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adds a line to %@ after input=$(cat) that writes the usage values to ~/.claude/stand-usage.json. A backup is made first."
+          }
+        }
+      }
+    },
+    "Für diese Größe anpassen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Customize for this size"
+          }
+        }
+      }
+    },
+    "Für dieses Widget gibt es keine eigenen Einstellungen. Es passt sich seiner Größe an." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This widget has no settings of its own. It adapts to its size."
+          }
+        }
+      }
+    },
+    "Für kleine Größen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For small sizes"
+          }
+        }
+      }
+    },
+    "Gedimmt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dimmed"
+          }
+        }
+      }
+    },
+    "Gekoppelt wird nur über diesen QR-Code: In der Amberlight-App beim Einrichten oder unter Einstellungen „Neu koppeln“ wählen und scannen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pairing works only through this QR code: in the Amberlight app, choose “Pair Again” during setup or in Settings and scan it."
+          }
+        }
+      }
+    },
+    "Gelb" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yellow"
+          }
+        }
+      }
+    },
+    "Geräte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Devices"
+          }
+        }
+      }
+    },
+    "Geräte öffnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Devices"
+          }
+        }
+      }
+    },
+    "Gesamtstatus von GitHub, ab 2×2 mit den einzelnen Diensten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overall GitHub status, with the individual services from 2×2."
+          }
+        }
+      }
+    },
+    "Gesendet wird nur, was Claude angeboten hat – je Vorschlag einmal, höchstens 10 Minuten alt und nur, wenn das Fenster der Session vorne ist und ein Eingabefeld den Fokus hat. Sonst bleibt es bei der Zwischenablage." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only what Claude offered is sent – once per suggestion, at most 10 minutes old, and only if the session’s window is in front and an input field has focus. Otherwise it stays on the clipboard."
+          }
+        }
+      }
+    },
+    "Gesichert: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backed up: %@"
+          }
+        }
+      }
+    },
+    "Gestalten" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Design"
+          }
+        }
+      }
+    },
+    "Gilt für alle Session-Widgets ohne eigene Einstellung. Einzelne Widgets stellst du im Inspector ein." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Applies to all session widgets without their own setting. Set individual widgets in the Inspector."
+          }
+        }
+      }
+    },
+    "GitLab" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitLab"
+          }
+        }
+      }
+    },
+    "Gleiche Labels zusammenzählen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sum up equal labels"
+          }
+        }
+      }
+    },
+    "Glut" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Embers"
+          }
+        }
+      }
+    },
+    "Glühwürmchen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fireflies"
+          }
+        }
+      }
+    },
+    "Grau" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gray"
+          }
+        }
+      }
+    },
+    "Groß" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Large"
+          }
+        }
+      }
+    },
+    "Große Zahl" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Big number"
+          }
+        }
+      }
+    },
+    "Große Zahl mit Verlauf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Big number with history"
+          }
+        }
+      }
+    },
+    "Größe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Size"
+          }
+        }
+      }
+    },
+    "Größe %lld mal %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Größe %1$lld mal %2$lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Size %lld by %lld"
+          }
+        }
+      }
+    },
+    "Größe ändern" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resize"
+          }
+        }
+      }
+    },
+    "Größere Störung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Major disruption"
+          }
+        }
+      }
+    },
+    "Grün" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Green"
+          }
+        }
+      }
+    },
+    "Gültig – Änderungen gelten sofort im Entwurf. Zugangsdaten stehen nie im JSON; ändert sich der Host, muss er neu freigegeben werden." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valid – changes apply to the draft right away. Credentials are never in the JSON; if the host changes, it has to be allowed again."
+          }
+        }
+      }
+    },
+    "Hauptwert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Main value"
+          }
+        }
+      }
+    },
+    "Header" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Header"
+          }
+        }
+      }
+    },
+    "Helligkeit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brightness"
+          }
+        }
+      }
+    },
+    "Heute" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        }
+      }
+    },
+    "Heute erfasst" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tracked today"
+          }
+        }
+      }
+    },
+    "Hintergrund" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Background"
+          }
+        }
+      }
+    },
+    "Hinzufügen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
+          }
+        }
+      }
+    },
+    "Hook von Claude Code" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hook from Claude Code"
+          }
+        }
+      }
+    },
+    "Hooks" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hooks"
+          }
+        }
+      }
+    },
+    "Host geändert – die gespeicherten Zugangsdaten werden beim Sichern verworfen. Bitte neu eintragen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Host changed – the saved credentials are discarded when you save. Please enter them again."
+          }
+        }
+      }
+    },
+    "Host noch nicht freigegeben – die Bridge ruft ihn erst nach deiner Bestätigung ab." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Host not allowed yet – the Bridge only fetches it after you confirm."
+          }
+        }
+      }
+    },
+    "Höhenlinien" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contours"
+          }
+        }
+      }
+    },
+    "Icon" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Icon"
+          }
+        }
+      }
+    },
+    "Icon der Seite ändern" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change page icon"
+          }
+        }
+      }
+    },
+    "Icon der Seite: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Page icon: %@"
+          }
+        }
+      }
+    },
+    "Im Baukasten anordnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrange in the builder"
+          }
+        }
+      }
+    },
+    "Im Finder zeigen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show in Finder"
+          }
+        }
+      }
+    },
+    "Im Schlüsselbund" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In the keychain"
+          }
+        }
+      }
+    },
+    "Im Widget zeigen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show in widget"
+          }
+        }
+      }
+    },
+    "Importieren und freigeben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import and allow"
+          }
+        }
+      }
+    },
+    "In Amberlight abgelehnt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denied in Amberlight."
+          }
+        }
+      }
+    },
+    "In der Amberlight-App beim Einrichten oder unter Einstellungen „Neu koppeln“ scannen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan it in the Amberlight app during setup or under Settings → “Pair Again”."
+          }
+        }
+      }
+    },
+    "In der Widget-Bibliothek öffnen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open in Widget Library"
+          }
+        }
+      }
+    },
+    "Inhalt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Content"
+          }
+        }
+      }
+    },
+    "Inspector" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inspector"
+          }
+        }
+      }
+    },
+    "Inspector ausblenden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide Inspector"
+          }
+        }
+      }
+    },
+    "Inspector einblenden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Inspector"
+          }
+        }
+      }
+    },
+    "Installieren …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install …"
+          }
+        }
+      }
+    },
+    "Installiert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed"
+          }
+        }
+      }
+    },
+    "Instanz-URL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instance URL"
+          }
+        }
+      }
+    },
+    "Intervall" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interval"
+          }
+        }
+      }
+    },
+    "Ist Claude fertig und bietet Knöpfe wie „Ja, committen“ an, ist deine Wahl eine neue Nachricht. Die muss jemand ins Eingabefeld der Session tippen und abschicken – du am Mac oder die Bridge." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When Claude is done and offers buttons like “Yes, commit”, your choice is a new message. Someone has to type it into the session’s input field and send it – you at the Mac, or the Bridge."
+          }
+        }
+      }
+    },
+    "Kaktus" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cactus"
+          }
+        }
+      }
+    },
+    "Kalender" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calendar"
+          }
+        }
+      }
+    },
+    "Kamera" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Camera"
+          }
+        }
+      }
+    },
+    "Kamera, Standort, Kalender" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Camera, location, calendar"
+          }
+        }
+      }
+    },
+    "Kamera-Ohr" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Camera Ear"
+          }
+        }
+      }
+    },
+    "Kein Amberlight-Widget – der Text beginnt nicht mit „%@“" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not an Amberlight widget – the text doesn’t start with “%@”"
+          }
+        }
+      }
+    },
+    "Kein Eingabefeld im Fokus" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No input field has focus"
+          }
+        }
+      }
+    },
+    "Kein Timer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No timer"
+          }
+        }
+      }
+    },
+    "Kein gültiges JSON" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not valid JSON"
+          }
+        }
+      }
+    },
+    "Kein passendes Symbol." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No matching symbol."
+          }
+        }
+      }
+    },
+    "Keine" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None"
+          }
+        }
+      }
+    },
+    "Keine Antwort nach %lld s" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No response after %lld s"
+          }
+        }
+      }
+    },
+    "Keine Daten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No data"
+          }
+        }
+      }
+    },
+    "Klein" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Small"
+          }
+        }
+      }
+    },
+    "Klick einen Baustein in der Vorschau oder in den Ebenen an." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click a block in the preview or in Layers."
+          }
+        }
+      }
+    },
+    "Klick im Antwort-Baum rechts setzt den Pfad, das Menü ⋯ belegt Felder einer Liste. Pfade sind nur Schlüssel und Indizes wie data.items[0].hours – Der Filter kennt nur „Feld“, „Feld == Wert“ und „Feld != Wert“. Mehrere Werte und Zusatzzeilen definierst du im Code-Modus. Skripte gibt es bewusst nicht." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clicking in the response tree on the right sets the path; the ⋯ menu assigns fields of a list. Paths are only keys and indexes like data.items[0].hours. The filter only knows “field”, “field == value” and “field != value”. Define multiple values and extra lines in Code mode. There are deliberately no scripts."
+          }
+        }
+      }
+    },
+    "Klick rechts in der Antwort auf ＋ – das Feld erscheint sofort im Widget." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click ＋ in the response on the right – the field appears in the widget right away."
+          }
+        }
+      }
+    },
+    "Klicken setzt es auf den ersten freien Platz." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click to place it in the first free spot."
+          }
+        }
+      }
+    },
+    "Klicken wählt ein Widget und zeigt rechts seine Einstellungen. Ziehen verschiebt, der Griff unten rechts ändert die Größe." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click a widget to select it and see its settings on the right. Drag to move it, use the handle at the bottom right to resize."
+          }
+        }
+      }
+    },
+    "Kobalt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cobalt"
+          }
+        }
+      }
+    },
+    "Kompakt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compact"
+          }
+        }
+      }
+    },
+    "Kompakt rückt alles an Rand und Nachbarn heran und blendet die Rand-Widgets aus. Standard-Abstand: 28 pt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compact moves everything close to the edge and its neighbors and hides the edge widgets. Default spacing: 28 pt."
+          }
+        }
+      }
+    },
+    "Konfiguration ist beschädigt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuration is damaged"
+          }
+        }
+      }
+    },
+    "Konfiguration ohne Zugangsdaten in die Zwischenablage kopieren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy the configuration to the clipboard, without credentials"
+          }
+        }
+      }
+    },
+    "Konfiguration stammt aus einer neueren Amberlight-Version" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configuration comes from a newer Amberlight version"
+          }
+        }
+      }
+    },
+    "Kontaktiert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contacted"
+          }
+        }
+      }
+    },
+    "Konten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accounts"
+          }
+        }
+      }
+    },
+    "Koppeln" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pairing"
+          }
+        }
+      }
+    },
+    "Kopplung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pairing"
+          }
+        }
+      }
+    },
+    "Kopplungscode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pairing code"
+          }
+        }
+      }
+    },
+    "LED blinkt bei Ereignissen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flash LED on Events"
+          }
+        }
+      }
+    },
+    "Label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label"
+          }
+        }
+      }
+    },
+    "Label der Reihe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Series label"
+          }
+        }
+      }
+    },
+    "Labels sind Datumswerte (als Wochentag zeigen)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Labels are dates (show as weekday)"
+          }
+        }
+      }
+    },
+    "Laufender Timer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Running timer"
+          }
+        }
+      }
+    },
+    "Lavendel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lavender"
+          }
+        }
+      }
+    },
+    "Layout entfernen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove Layout"
+          }
+        }
+      }
+    },
+    "Layout zu verschachtelt – höchstens %lld Bausteine in %lld Ebenen" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Layout zu verschachtelt – höchstens %1$lld Bausteine in %2$lld Ebenen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Layout too nested – at most %lld blocks in %lld levels"
+          }
+        }
+      }
+    },
+    "Layout-Vorlage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Layout template"
+          }
+        }
+      }
+    },
+    "Lebhaft" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lively"
+          }
+        }
+      }
+    },
+    "Leer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empty"
+          }
+        }
+      }
+    },
+    "Leer lassen, um den Standort des iPhones zu nutzen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leave empty to use the iPhone’s location."
+          }
+        }
+      }
+    },
+    "Leere Seite" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empty Page"
+          }
+        }
+      }
+    },
+    "Leeres Widget" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empty Widget"
+          }
+        }
+      }
+    },
+    "Legt running, runningStart und runningSeconds an und verbindet diesen Timer damit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creates running, runningStart and runningSeconds and connects this timer to them"
+          }
+        }
+      }
+    },
+    "Letzte 2 Stunden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last 2 Hours"
+          }
+        }
+      }
+    },
+    "Letzte 30 Minuten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last 30 Minutes"
+          }
+        }
+      }
+    },
+    "Letztes Element" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last element"
+          }
+        }
+      }
+    },
+    "Linie" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Line"
+          }
+        }
+      }
+    },
+    "Liniendiagramm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Line Chart"
+          }
+        }
+      }
+    },
+    "Link" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Link"
+          }
+        }
+      }
+    },
+    "Link, z. B. github.com" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Link, e.g. github.com"
+          }
+        }
+      }
+    },
+    "Linker Rand" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Left Edge"
+          }
+        }
+      }
+    },
+    "Links" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Left"
+          }
+        }
+      }
+    },
+    "Liste" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List"
+          }
+        }
+      }
+    },
+    "Listenelemente: timer_started_at oder status == active" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List elements: timer_started_at or status == active"
+          }
+        }
+      }
+    },
+    "Live-Vorschau" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live preview"
+          }
+        }
+      }
+    },
+    "Läuft" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Running"
+          }
+        }
+      }
+    },
+    "Läuft gerade" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Now Playing"
+          }
+        }
+      }
+    },
+    "Läuft mit, solange deine Sessions arbeiten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keeps running while your sessions work."
+          }
+        }
+      }
+    },
+    "Löschen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
+    "MOCO Zeiterfassung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MOCO time tracking"
+          }
+        }
+      }
+    },
+    "MOCO → Profil → Integrationen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MOCO → Profile → Integrations"
+          }
+        }
+      }
+    },
+    "MOCO-Timer einrichten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set Up MOCO Timer"
+          }
+        }
+      }
+    },
+    "MOCO: Heute als Ring" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MOCO: today as a ring"
+          }
+        }
+      }
+    },
+    "MOCO: Laufender Timer mit Projekt und Aufgabe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MOCO: running timer with project and task"
+          }
+        }
+      }
+    },
+    "Mac" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac"
+          }
+        }
+      }
+    },
+    "Mac-Status" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Status"
+          }
+        }
+      }
+    },
+    "Mac-Werte abgefragt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac values requested"
+          }
+        }
+      }
+    },
+    "Magenta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magenta"
+          }
+        }
+      }
+    },
+    "Maskottchen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mascot"
+          }
+        }
+      }
+    },
+    "Maximum" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum"
+          }
+        }
+      }
+    },
+    "Methode" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Method"
+          }
+        }
+      }
+    },
+    "Mini-Maskottchen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mini Mascot"
+          }
+        }
+      }
+    },
+    "Minimum" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimum"
+          }
+        }
+      }
+    },
+    "Mitte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Center"
+          }
+        }
+      }
+    },
+    "Mittel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medium"
+          }
+        }
+      }
+    },
+    "Mittelwert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Average"
+          }
+        }
+      }
+    },
+    "Nach Updates suchen …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check for Updates …"
+          }
+        }
+      }
+    },
+    "Nach dem Installieren oder Aktualisieren einmal in Codex /hooks aufrufen und die Amberlight-Hooks als vertrauenswürdig bestätigen – vorher führt Codex sie nicht aus. Die Usage liest Amberlight Bridge aus den neuesten Dateien in ~/.codex/sessions; sie erscheint, sobald Codex dort ein Limit gemeldet hat." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After installing or updating, run /hooks once in Codex and confirm the Amberlight hooks as trusted – Codex won’t run them before that. Amberlight Bridge reads usage from the newest files in ~/.codex/sessions; it appears once Codex has reported a limit there."
+          }
+        }
+      }
+    },
+    "Nach oben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move Up"
+          }
+        }
+      }
+    },
+    "Nach unten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move Down"
+          }
+        }
+      }
+    },
+    "Nachkommastellen: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decimal places: %lld"
+          }
+        }
+      }
+    },
+    "Nachttisch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nightstand"
+          }
+        }
+      }
+    },
+    "Name" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        }
+      }
+    },
+    "Netzwerk" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Network"
+          }
+        }
+      }
+    },
+    "Neue Seite" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Page"
+          }
+        }
+      }
+    },
+    "Neuer Kopplungscode – iPhone bitte neu koppeln" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New pairing code – please pair the iPhone again"
+          }
+        }
+      }
+    },
+    "Neuer, längerer Kopplungscode – iPhone bitte neu koppeln" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New, longer pairing code – please pair the iPhone again"
+          }
+        }
+      }
+    },
+    "Neues Widget" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Widget"
+          }
+        }
+      }
+    },
+    "Nichts ausgewählt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing selected"
+          }
+        }
+      }
+    },
+    "Noch kein eigenes Feld. Der Hauptwert kommt aus dem Abschnitt „Erweitert“." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No field of its own yet. The main value comes from the “Advanced” section."
+          }
+        }
+      }
+    },
+    "Noch kein iPhone seit dem Start" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No iPhone since launch"
+          }
+        }
+      }
+    },
+    "Noch kein iPhone verbunden – Änderungen gelten, sobald es sich meldet." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No iPhone connected yet – changes apply as soon as it checks in."
+          }
+        }
+      }
+    },
+    "Noch keine Aktivität seit dem Start." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No activity since launch."
+          }
+        }
+      }
+    },
+    "Noch keine Antwort" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No response yet"
+          }
+        }
+      }
+    },
+    "Noch keine Daten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No data yet"
+          }
+        }
+      }
+    },
+    "Noch leer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Empty so far"
+          }
+        }
+      }
+    },
+    "Noch nicht genutzt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not used yet"
+          }
+        }
+      }
+    },
+    "Noch nicht getestet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not tested yet"
+          }
+        }
+      }
+    },
+    "Noch nichts gesendet." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing sent yet."
+          }
+        }
+      }
+    },
+    "Noch nichts hinzugefügt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing added yet."
+          }
+        }
+      }
+    },
+    "Normal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normal"
+          }
+        }
+      }
+    },
+    "Nur Kalender" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calendar only"
+          }
+        }
+      }
+    },
+    "Nur Projekt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Project only"
+          }
+        }
+      }
+    },
+    "Nur aktive" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active only"
+          }
+        }
+      }
+    },
+    "Nur am iPhone" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On the iPhone only"
+          }
+        }
+      }
+    },
+    "Nur das Nötigste – Zugangsdaten bleiben im Schlüsselbund dieses Macs." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only what’s needed – credentials stay in this Mac’s keychain."
+          }
+        }
+      }
+    },
+    "Nur https – http nur für localhost bzw. private Adressen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https only – http only for localhost or private addresses"
+          }
+        }
+      }
+    },
+    "Nur importieren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import Only"
+          }
+        }
+      }
+    },
+    "Nur zeigen, wenn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show only if"
+          }
+        }
+      }
+    },
+    "Nächster Termin" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next Event"
+          }
+        }
+      }
+    },
+    "Oberkante" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top Edge"
+          }
+        }
+      }
+    },
+    "Objekt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Object"
+          }
+        }
+      }
+    },
+    "Ohne Auswahl zeigt das Widget alle Kalender." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With nothing selected, the widget shows all calendars."
+          }
+        }
+      }
+    },
+    "Ohne Konto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No account"
+          }
+        }
+      }
+    },
+    "Ohne Symbol läuft die Bridge unsichtbar weiter. Öffnest du sie erneut, etwa über Spotlight, kommt dieses Fenster nach vorn. Updates meldet sie dann gleich mit einem eigenen Fenster." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Without the icon, the Bridge keeps running invisibly. Open it again, for example via Spotlight, and this window comes to the front. Updates then show up right away in a window of their own."
+          }
+        }
+      }
+    },
+    "Ohr oben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top Ear"
+          }
+        }
+      }
+    },
+    "Ohr unten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bottom Ear"
+          }
+        }
+      }
+    },
+    "Open-Meteo Temperatur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open-Meteo temperature"
+          }
+        }
+      }
+    },
+    "Orbit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orbit"
+          }
+        }
+      }
+    },
+    "Orbit-Tickets" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orbit Tickets"
+          }
+        }
+      }
+    },
+    "Ordner wählen …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Folder …"
+          }
+        }
+      }
+    },
+    "Passwort" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        }
+      }
+    },
+    "Pause" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause"
+          }
+        }
+      }
+    },
+    "Personal Access Token" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personal Access Token"
+          }
+        }
+      }
+    },
+    "Pfad" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Path"
+          }
+        }
+      }
+    },
+    "Pfad zum Wert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Path to value"
+          }
+        }
+      }
+    },
+    "Pfad zur Liste" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Path to list"
+          }
+        }
+      }
+    },
+    "Pfad zur Reihe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Path to series"
+          }
+        }
+      }
+    },
+    "Pille " : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pill "
+          }
+        }
+      }
+    },
+    "Pilz" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mushroom"
+          }
+        }
+      }
+    },
+    "Pipelines und offene Merge Requests deiner Projekte." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pipelines and open merge requests of your projects."
+          }
+        }
+      }
+    },
+    "Pixel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pixel"
+          }
+        }
+      }
+    },
+    "Plattenspieler" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turntable"
+          }
+        }
+      }
+    },
+    "Platz anklicken und ein Micro-Widget wählen. Die Plätze gelten für alle Seiten, die Kamera sitzt hier links." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click a spot and choose a micro widget. The spots apply to all pages; the camera is on the left here."
+          }
+        }
+      }
+    },
+    "Platzhalter in Pfad, Query und Body: {today}, {yesterday}, {weekStart}, {weekEnd}, {monthStart}, {monthEnd} (jeweils JJJJ-MM-TT). Leere Query-Werte werden weggelassen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Placeholders in path, query and body: {today}, {yesterday}, {weekStart}, {weekEnd}, {monthStart}, {monthEnd} (each YYYY-MM-DD). Empty query values are left out."
+          }
+        }
+      }
+    },
+    "Port" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Port"
+          }
+        }
+      }
+    },
+    "Port %u" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Port %u"
+          }
+        }
+      }
+    },
+    "Port %u ist belegt – neuer Versuch läuft" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Port %u is in use – trying again"
+          }
+        }
+      }
+    },
+    "Prozent" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Percent"
+          }
+        }
+      }
+    },
+    "Präfix" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prefix"
+          }
+        }
+      }
+    },
+    "Puls" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulse"
+          }
+        }
+      }
+    },
+    "Puls …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulse …"
+          }
+        }
+      }
+    },
+    "Pulsieren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulse"
+          }
+        }
+      }
+    },
+    "Punkt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dot"
+          }
+        }
+      }
+    },
+    "QR-Code zum Koppeln" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QR code for pairing"
+          }
+        }
+      }
+    },
+    "Quelle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source"
+          }
+        }
+      }
+    },
+    "Query-Parameter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Query parameters"
+          }
+        }
+      }
+    },
+    "Rand" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edge"
+          }
+        }
+      }
+    },
+    "Raster" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grid"
+          }
+        }
+      }
+    },
+    "Reagiert auf Sessions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reacts to Sessions"
+          }
+        }
+      }
+    },
+    "Rechter Rand" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Right Edge"
+          }
+        }
+      }
+    },
+    "Rechts" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Right"
+          }
+        }
+      }
+    },
+    "Regel hinzufügen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Rule"
+          }
+        }
+      }
+    },
+    "Regeln" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rules"
+          }
+        }
+      }
+    },
+    "Regen am Fenster" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rain on the Window"
+          }
+        }
+      }
+    },
+    "Reihe für Balken bzw. Liste" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Series for bars or list"
+          }
+        }
+      }
+    },
+    "Retro-Horizont" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retro Horizon"
+          }
+        }
+      }
+    },
+    "Revision %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Revision %lld"
+          }
+        }
+      }
+    },
+    "Riesig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Huge"
+          }
+        }
+      }
+    },
+    "Ring" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ring"
+          }
+        }
+      }
+    },
+    "Ring " : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ring "
+          }
+        }
+      }
+    },
+    "Ring um den Wert (0–100)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ring around the value (0–100)"
+          }
+        }
+      }
+    },
+    "Roboter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Robot"
+          }
+        }
+      }
+    },
+    "Rot" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Red"
+          }
+        }
+      }
+    },
+    "Ruhig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calm"
+          }
+        }
+      }
+    },
+    "Rückgängig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Undo"
+          }
+        }
+      }
+    },
+    "SF Symbol" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SF Symbol"
+          }
+        }
+      }
+    },
+    "Sand" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sand"
+          }
+        }
+      }
+    },
+    "Schnellstart" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launcher"
+          }
+        }
+      }
+    },
+    "Schreibt sechs Hooks in %@, die Fragen und Freigaben per curl an Amberlight Bridge melden. Alte stand_hook.py-Einträge werden ersetzt, alles andere bleibt. Vorher wird eine Sicherungskopie angelegt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Writes six hooks to %@ that report questions and permission requests to Amberlight Bridge via curl. Old stand_hook.py entries are replaced, everything else stays. A backup is made first."
+          }
+        }
+      }
+    },
+    "Schreibt sieben Hooks in %@, die Status und Freigaben per curl an Amberlight Bridge melden. Deine anderen Hooks bleiben erhalten. Vorher wird eine Sicherungskopie angelegt.\n\nDanach in Codex einmal /hooks aufrufen und die Amberlight-Hooks als vertrauenswürdig bestätigen – vorher führt Codex sie nicht aus." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Writes seven hooks to %@ that report status and permission requests to Amberlight Bridge via curl. Your other hooks stay. A backup is made first.\n\nThen run /hooks once in Codex and confirm the Amberlight hooks as trusted – Codex won’t run them before that."
+          }
+        }
+      }
+    },
+    "Schreibtisch" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desk"
+          }
+        }
+      }
+    },
+    "Schrift" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Typeface"
+          }
+        }
+      }
+    },
+    "Schwarz" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Black"
+          }
+        }
+      }
+    },
+    "Schwellwert hinzufügen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Threshold"
+          }
+        }
+      }
+    },
+    "Schwellwerte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thresholds"
+          }
+        }
+      }
+    },
+    "Sehr helle Farben werden gedämpft, damit Schrift lesbar bleibt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Very bright colors are toned down so text stays readable."
+          }
+        }
+      }
+    },
+    "Seite hinzufügen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Page"
+          }
+        }
+      }
+    },
+    "Seite löschen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Page"
+          }
+        }
+      }
+    },
+    "Seite nicht mehr da" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Page no longer exists"
+          }
+        }
+      }
+    },
+    "Sekunden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seconds"
+          }
+        }
+      }
+    },
+    "Sekunden-Umlauf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seconds Orbit"
+          }
+        }
+      }
+    },
+    "Server" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server"
+          }
+        }
+      }
+    },
+    "Session-App nicht vorne" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session app is not in front"
+          }
+        }
+      }
+    },
+    "Session-Fenster" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session windows"
+          }
+        }
+      }
+    },
+    "Session-Fenster nicht gefunden (%@)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session window not found (%@)"
+          }
+        }
+      }
+    },
+    "Session-Pips" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session Pips"
+          }
+        }
+      }
+    },
+    "Sessions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sessions"
+          }
+        }
+      }
+    },
+    "Setzt in %@ eine Statusline, die nur die Usage-Werte für Amberlight mitschreibt. Vorher wird eine Sicherungskopie angelegt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sets a status line in %@ that only records the usage values for Amberlight. A backup is made first."
+          }
+        }
+      }
+    },
+    "Shortcut geöffnet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shortcut opened"
+          }
+        }
+      }
+    },
+    "Shortcuts einstellen …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set Up Shortcuts …"
+          }
+        }
+      }
+    },
+    "Sichern" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
+    },
+    "Sichern und prüfen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save and Check"
+          }
+        }
+      }
+    },
+    "Sichtbarkeit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visibility"
+          }
+        }
+      }
+    },
+    "Sieht nach Zugangsdaten aus – die gehören unter „Authentifizierung“." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Looks like credentials – those belong under “Authentication”."
+          }
+        }
+      }
+    },
+    "Sobald sich die Amberlight-App verbindet, übernimmt die Bridge ihre Seiten. Unter „Geräte“ koppelst du ein iPhone." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As soon as the Amberlight app connects, the Bridge takes over its pages. Pair an iPhone under “Devices”."
+          }
+        }
+      }
+    },
+    "Spalte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Column"
+          }
+        }
+      }
+    },
+    "Stadt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "City"
+          }
+        }
+      }
+    },
+    "Standard" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default"
+          }
+        }
+      }
+    },
+    "Startet …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starting …"
+          }
+        }
+      }
+    },
+    "Startzeit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start time"
+          }
+        }
+      }
+    },
+    "Status" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status"
+          }
+        }
+      }
+    },
+    "Status mit Puls" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status with pulse"
+          }
+        }
+      }
+    },
+    "Status-Ton" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status tone"
+          }
+        }
+      }
+    },
+    "Statusline für Usage einrichten?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set up a status line for usage?"
+          }
+        }
+      }
+    },
+    "Sternenhimmel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starry Sky"
+          }
+        }
+      }
+    },
+    "Steuerknöpfe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controls"
+          }
+        }
+      }
+    },
+    "Stoppt den launchd-Agent %@ und löscht %@ sowie %@." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Stoppt den launchd-Agent %1$@ und löscht %2$@ sowie %3$@."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stops the launchd agent %@ and deletes %@ and %@."
+          }
+        }
+      }
+    },
+    "Stunden der laufenden Woche, ab 2×2 als Balken pro Tag." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hours of the current week, as bars per day from 2×2."
+          }
+        }
+      }
+    },
+    "Störung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disruption"
+          }
+        }
+      }
+    },
+    "Such dir ein Vorbild aus – du trägst danach nur noch deinen Zugang ein." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick a template – afterwards you only add your access."
+          }
+        }
+      }
+    },
+    "Such dir eine Vorlage aus, trag deinen Zugang ein und wähl das Aussehen. Geteilte Konfigurationen fügst du mit „Einfügen“ ein." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick a template, add your access and choose the look. Paste shared configurations with “Paste”."
+          }
+        }
+      }
+    },
+    "Suffix" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suffix"
+          }
+        }
+      }
+    },
+    "Summe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sum"
+          }
+        }
+      }
+    },
+    "Summe der heute erfassten Stunden als Zahl." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total hours tracked today, as a number."
+          }
+        }
+      }
+    },
+    "Symbol" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Symbol"
+          }
+        }
+      }
+    },
+    "Symbol in der Menüleiste" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menu bar icon"
+          }
+        }
+      }
+    },
+    "Symbol suchen oder Namen eingeben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search for a symbol or enter its name"
+          }
+        }
+      }
+    },
+    "Temperatur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temperature"
+          }
+        }
+      }
+    },
+    "Temperatur jetzt und für die nächsten Stunden." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temperature now and for the next few hours."
+          }
+        }
+      }
+    },
+    "Tempo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speed"
+          }
+        }
+      }
+    },
+    "Testen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test"
+          }
+        }
+      }
+    },
+    "Text" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text"
+          }
+        }
+      }
+    },
+    "Text (optional)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text (optional)"
+          }
+        }
+      }
+    },
+    "Text bzw. Zahl" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text or Number"
+          }
+        }
+      }
+    },
+    "Text ist zu lang für eine Widget-Konfiguration" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text is too long for a widget configuration"
+          }
+        }
+      }
+    },
+    "Tiefsee" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deep Sea"
+          }
+        }
+      }
+    },
+    "Timer" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer"
+          }
+        }
+      }
+    },
+    "Timer läuft" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Timer running"
+          }
+        }
+      }
+    },
+    "Tippst du am iPhone auf eine Session, kommt ihr Fenster nach vorn. Für Terminal und iTerm fragt macOS einmal nach der Automation-Erlaubnis." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When you tap a session on the iPhone, its window comes to the front. For Terminal and iTerm, macOS asks once for Automation permission."
+          }
+        }
+      }
+    },
+    "Titel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title"
+          }
+        }
+      }
+    },
+    "Token" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token"
+          }
+        }
+      }
+    },
+    "Token konnte nicht angelegt werden: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn’t create the token: %@"
+          }
+        }
+      }
+    },
+    "Token token=" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token token="
+          }
+        }
+      }
+    },
+    "Tokens liegen im macOS-Schlüsselbund und verlassen den Mac nie. Das iPhone bekommt nur die Ticket- und Pipeline-Liste." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tokens are stored in the macOS keychain and never leave the Mac. The iPhone only gets the list of tickets and pipelines."
+          }
+        }
+      }
+    },
+    "Trag oben den Zugang ein, dann kannst du testen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add your access above, then you can test."
+          }
+        }
+      }
+    },
+    "Trenner" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Divider"
+          }
+        }
+      }
+    },
+    "Uhr" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clock"
+          }
+        }
+      }
+    },
+    "Uhr in Akzentfarbe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clock in Accent Color"
+          }
+        }
+      }
+    },
+    "Uhrzeit und Datum, groß und von Weitem lesbar." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time and date, big and readable from across the room."
+          }
+        }
+      }
+    },
+    "Umlauf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orbit"
+          }
+        }
+      }
+    },
+    "Umstellen …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Switch Over …"
+          }
+        }
+      }
+    },
+    "Ungültig bei „%@“: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Ungültig bei „%1$@“: %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid at “%@”: %@"
+          }
+        }
+      }
+    },
+    "Unterkante" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bottom Edge"
+          }
+        }
+      }
+    },
+    "Unverschlüsselt (http) – nur im lokalen Netz verwenden." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unencrypted (http) – use only on your local network."
+          }
+        }
+      }
+    },
+    "Unverschlüsselte Verbindung (http) ins lokale Netz." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unencrypted connection (http) to the local network."
+          }
+        }
+      }
+    },
+    "Update auf %@ installieren …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Update to %@ …"
+          }
+        }
+      }
+    },
+    "Usage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usage"
+          }
+        }
+      }
+    },
+    "Usage aus den Codex-Sitzungen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usage from the Codex sessions"
+          }
+        }
+      }
+    },
+    "Usage aus der Statusline" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usage from the status line"
+          }
+        }
+      }
+    },
+    "Usage-Haarlinie" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usage Hairline"
+          }
+        }
+      }
+    },
+    "Usage-Zeile in deine Statusline einfügen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add the usage line to your status line?"
+          }
+        }
+      }
+    },
+    "Veraltet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Outdated"
+          }
+        }
+      }
+    },
+    "Verbinden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect"
+          }
+        }
+      }
+    },
+    "Verbinden & testen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect & Test"
+          }
+        }
+      }
+    },
+    "Verbunden · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connected · %@"
+          }
+        }
+      }
+    },
+    "Verbunden · %lld Projekte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connected · %lld projects"
+          }
+        }
+      }
+    },
+    "Verbunden · %lld offene Tickets" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connected · %lld open tickets"
+          }
+        }
+      }
+    },
+    "Vergleich" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comparison"
+          }
+        }
+      }
+    },
+    "Version" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        }
+      }
+    },
+    "Vorab starten: Läuft zur Startzeit kein 5h-Fenster, schickt die Bridge einen Mini-Prompt mit Haiku. Das Fenster beginnt so früher und setzt im Arbeitstag einmal öfter zurück. Der Mac muss dafür wach sein; bis drei Stunden danach wird nachgeholt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start early: if no 5-hour window is running at the start time, the Bridge sends a tiny prompt with Haiku. The window starts earlier and resets once more during the workday. The Mac has to be awake for this; it catches up for up to three hours afterwards."
+          }
+        }
+      }
+    },
+    "Vorschläge am Ende einer Antwort" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggestions at the end of a reply"
+          }
+        }
+      }
+    },
+    "Vorschläge vom iPhone" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggestions from the iPhone"
+          }
+        }
+      }
+    },
+    "Warte auf das iPhone" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for the iPhone"
+          }
+        }
+      }
+    },
+    "Wartet Claude Code auf deine Antwort oder Erlaubnis, geht dein Tipp am iPhone direkt an die laufende Session. Das klappt immer, ganz ohne Freigabe." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When Claude Code is waiting for your answer or permission, your tap on the iPhone goes straight to the running session. That always works, without any permission."
+          }
+        }
+      }
+    },
+    "Wartet auf das iPhone" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for the iPhone"
+          }
+        }
+      }
+    },
+    "Was gerade läuft, mit Play, Pause und Skip." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What’s playing, with play, pause and skip."
+          }
+        }
+      }
+    },
+    "Was gerade läuft: Projekt, Aufgabe, Beschreibung und wie lange schon – live mitgezählt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What’s running now: project, task, description and for how long – counted live."
+          }
+        }
+      }
+    },
+    "Web-URL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Web URL"
+          }
+        }
+      }
+    },
+    "Weiteres iPhone koppeln …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pair Another iPhone …"
+          }
+        }
+      }
+    },
+    "Weiterleitung auf einen anderen Host blockiert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redirect to another host blocked"
+          }
+        }
+      }
+    },
+    "Werkzeug" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tool"
+          }
+        }
+      }
+    },
+    "Wert" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Value"
+          }
+        }
+      }
+    },
+    "Wert der Reihe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Series value"
+          }
+        }
+      }
+    },
+    "Wert nicht gefunden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Value not found"
+          }
+        }
+      }
+    },
+    "Wert „%@“ fehlt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Value “%@” is missing"
+          }
+        }
+      }
+    },
+    "Werte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Values"
+          }
+        }
+      }
+    },
+    "Wetter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather"
+          }
+        }
+      }
+    },
+    "Wichtig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Important"
+          }
+        }
+      }
+    },
+    "Widget anlegen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Widget"
+          }
+        }
+      }
+    },
+    "Widget aus der Bibliothek löschen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Widget from Library"
+          }
+        }
+      }
+    },
+    "Widget aus einer Vorlage anlegen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Widget from Template"
+          }
+        }
+      }
+    },
+    "Widget entfernen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove Widget"
+          }
+        }
+      }
+    },
+    "Widget hinzufügen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Widget"
+          }
+        }
+      }
+    },
+    "Widget importieren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import Widget"
+          }
+        }
+      }
+    },
+    "Widget-Bibliothek" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Widget Library"
+          }
+        }
+      }
+    },
+    "Widget-Konfiguration aus der Zwischenablage importieren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import a widget configuration from the clipboard"
+          }
+        }
+      }
+    },
+    "Widgets" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Widgets"
+          }
+        }
+      }
+    },
+    "Wie das Widget" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Same as the widget"
+          }
+        }
+      }
+    },
+    "Wie in den Einstellungen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Same as in Settings"
+          }
+        }
+      }
+    },
+    "Wie viel deine KI-Abos verbraucht haben – Claude und Codex." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How much of your AI plans you’ve used – Claude and Codex."
+          }
+        }
+      }
+    },
+    "Wiederholen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redo"
+          }
+        }
+      }
+    },
+    "Wird beim Sichern im Schlüsselbund abgelegt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stored in the keychain when you save"
+          }
+        }
+      }
+    },
+    "Woche" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Week"
+          }
+        }
+      }
+    },
+    "Wurzel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Root"
+          }
+        }
+      }
+    },
+    "Wölkchen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cloudlet"
+          }
+        }
+      }
+    },
+    "X-API-Key" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "X-API-Key"
+          }
+        }
+      }
+    },
+    "Zahl" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Number"
+          }
+        }
+      }
+    },
+    "Zahlen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Numbers"
+          }
+        }
+      }
+    },
+    "Zahlenformat" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Number format"
+          }
+        }
+      }
+    },
+    "Zeigt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows"
+          }
+        }
+      }
+    },
+    "Zeigt jetzt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Showing now"
+          }
+        }
+      }
+    },
+    "Zeile" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Row"
+          }
+        }
+      }
+    },
+    "Zeile kopieren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy Line"
+          }
+        }
+      }
+    },
+    "Zeilen: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lines: %lld"
+          }
+        }
+      }
+    },
+    "Zeit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
+    },
+    "Zugang" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Access"
+          }
+        }
+      }
+    },
+    "Zugang (Token bzw. Key)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Access (token or key)"
+          }
+        }
+      }
+    },
+    "Zugangsdaten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credentials"
+          }
+        }
+      }
+    },
+    "Zugangsdaten fehlen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credentials missing"
+          }
+        }
+      }
+    },
+    "Zugangsdaten gehören nicht in die URL, nutze die Authentifizierung" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credentials don’t belong in the URL, use Authentication"
+          }
+        }
+      }
+    },
+    "Zugangsdaten liegen im macOS-Schlüsselbund, gebunden an dieses Widget und %@. Sie gehen nur an diesen Host, nie ans iPhone und nie in einen Export." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credentials are stored in the macOS keychain, tied to this widget and %@. They only go to this host, never to the iPhone and never into an export."
+          }
+        }
+      }
+    },
+    "Zuletzt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last"
+          }
+        }
+      }
+    },
+    "Zuletzt %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last %@"
+          }
+        }
+      }
+    },
+    "Zuletzt direkt gesendet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last sent directly"
+          }
+        }
+      }
+    },
+    "Zuletzt erfolgreich nach vorn geholt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last brought to front successfully"
+          }
+        }
+      }
+    },
+    "Zurück zu „Widget hinzufügen“" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back to “Add Widget”"
+          }
+        }
+      }
+    },
+    "Zurücksetzen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset"
+          }
+        }
+      }
+    },
+    "Zwei Arten von Antworten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Two kinds of answers"
+          }
+        }
+      }
+    },
+    "Zwischen Widgets und Rand-Plätzen wechseln" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Switch between widgets and edge spots"
+          }
+        }
+      }
+    },
+    "activities" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "activities"
+          }
+        }
+      }
+    },
+    "aktueller Standort" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "current location"
+          }
+        }
+      }
+    },
+    "alle Projekte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "all projects"
+          }
+        }
+      }
+    },
+    "alle, sonst Namen mit Komma" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "all, or names separated by commas"
+          }
+        }
+      }
+    },
+    "api_key" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "api_key"
+          }
+        }
+      }
+    },
+    "data.items (leer = Wurzel)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "data.items (empty = root)"
+          }
+        }
+      }
+    },
+    "deine-firma" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "your-company"
+          }
+        }
+      }
+    },
+    "den Host" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "the host"
+          }
+        }
+      }
+    },
+    "h" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "h"
+          }
+        }
+      }
+    },
+    "hours (leer = Element)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "hours (empty = element)"
+          }
+        }
+      }
+    },
+    "https://api.example.com/v1" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://api.example.com/v1"
+          }
+        }
+      }
+    },
+    "https://gitlab.com" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://gitlab.com"
+          }
+        }
+      }
+    },
+    "https://orbit.example.com" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://orbit.example.com"
+          }
+        }
+      }
+    },
+    "iPhone" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iPhone"
+          }
+        }
+      }
+    },
+    "iPhone verbunden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iPhone connected"
+          }
+        }
+      }
+    },
+    "ist gleich" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "equals"
+          }
+        }
+      }
+    },
+    "keine" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "none"
+          }
+        }
+      }
+    },
+    "kleiner als" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "less than"
+          }
+        }
+      }
+    },
+    "leer = alle Mitarbeitenden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "empty = all staff"
+          }
+        }
+      }
+    },
+    "min" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "min"
+          }
+        }
+      }
+    },
+    "noch nicht übernommen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "not applied yet"
+          }
+        }
+      }
+    },
+    "s" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "s"
+          }
+        }
+      }
+    },
+    "star.fill" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "star.fill"
+          }
+        }
+      }
+    },
+    "value >= 1" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "value >= 1"
+          }
+        }
+      }
+    },
+    "wie API-URL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "same as API URL"
+          }
+        }
+      }
+    },
+    "wie der Name" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "same as the name"
+          }
+        }
+      }
+    },
+    "z. B. running >= 1" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "e.g. running >= 1"
+          }
+        }
+      }
+    },
+    "{%@}" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "{%@}"
+          }
+        }
+      }
+    },
+    "{booked} h heute" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "{booked} h today"
+          }
+        }
+      }
+    },
+    "{wert} oder freier Text" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "{value} or free text"
+          }
+        }
+      }
+    },
+    "·" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "·"
+          }
+        }
+      }
+    },
+    "Über Amberlight Bridge" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About Amberlight Bridge"
+          }
+        }
+      }
+    },
+    "Über …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About …"
+          }
+        }
+      }
+    },
+    "–" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "–"
+          }
+        }
+      }
+    },
+    "„%@“ liegt in der Zwischenablage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@” is on the clipboard"
+          }
+        }
+      }
+    },
+    "„%@“ löschen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete “%@”?"
+          }
+        }
+      }
+    },
+    "„%@“ sieht nach Zugangsdaten aus – trag sie unter Authentifizierung ein" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“%@” looks like credentials – enter them under Authentication"
+          }
+        }
+      }
+    },
+    "„Standard“ folgt der Figur aus den Darstellungs-Einstellungen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“Default” follows the character from the appearance settings."
+          }
+        }
+      }
+    },
+    "„Testen“ schickt eine echte Anfrage und zeigt die Antwort hier als Baum." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“Test” sends a real request and shows the response here as a tree."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

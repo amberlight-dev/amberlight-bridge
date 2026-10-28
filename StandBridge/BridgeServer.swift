@@ -89,7 +89,7 @@ final class BridgeServer {
                 status = .failed(error.localizedDescription)
                 return
             }
-            status = .failed("Port \(port) ist belegt – neuer Versuch läuft")
+            status = .failed(String(localized: "Port \(port) ist belegt – neuer Versuch läuft"))
             Task {
                 try? await Task.sleep(for: .seconds(3))
                 if case .failed = status { start() }

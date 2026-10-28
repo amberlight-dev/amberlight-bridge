@@ -13,7 +13,7 @@ struct CustomPreview: View {
 
     private func tile(_ span: GridSpan) -> some View {
         VStack(spacing: 4) {
-            CustomTile(display: display, span: span, notice: "Noch nicht getestet")
+            CustomTile(display: display, span: span, notice: String(localized: "Noch nicht getestet"))
             Text("\(span.w)×\(span.h)")
                 .font(.caption2.monospacedDigit())
                 .foregroundStyle(.secondary)
@@ -24,7 +24,7 @@ struct CustomPreview: View {
 struct CustomTile: View {
     let display: CustomWidgetDisplay?
     let span: GridSpan
-    var notice = "Keine Daten"
+    var notice = String(localized: "Keine Daten")
 
     private let cell: CGFloat = 54
     private let gap: CGFloat = 6

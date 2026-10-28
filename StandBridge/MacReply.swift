@@ -39,10 +39,10 @@ enum MacReply {
     }
 
     private static func pasteBlocker(_ entry: JSON, focused: WindowFocus.Outcome, desk: ReplyDesk) async -> String? {
-        if !desk.canPaste { return "Bedienungshilfen fehlen" }
-        if focused != .window { return "Session-Fenster nicht gefunden (\(focused.rawValue))" }
-        if !(await desk.isFrontmost(entry)) { return "Session-App nicht vorne" }
-        if !(await desk.isReadyForInput(entry)) { return "Kein Eingabefeld im Fokus" }
+        if !desk.canPaste { return String(localized: "Bedienungshilfen fehlen") }
+        if focused != .window { return String(localized: "Session-Fenster nicht gefunden (\(focused.rawValue))") }
+        if !(await desk.isFrontmost(entry)) { return String(localized: "Session-App nicht vorne") }
+        if !(await desk.isReadyForInput(entry)) { return String(localized: "Kein Eingabefeld im Fokus") }
         return nil
     }
 

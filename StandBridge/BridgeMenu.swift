@@ -18,13 +18,13 @@ struct BridgeMenu: View {
                     Divider()
                 }
                 VStack(alignment: .leading, spacing: 2) {
-                    action("Amberlight Bridge öffnen", symbol: "macwindow", key: "o") { show(model.sidebar) }
-                    action("Anordnung bearbeiten …", symbol: "rectangle.3.group", key: "e") { show(model.layout.pages.first.map { .page($0.id) }) }
+                    action(String(localized: "Amberlight Bridge öffnen"), symbol: "macwindow", key: "o") { show(model.sidebar) }
+                    action(String(localized: "Anordnung bearbeiten …"), symbol: "rectangle.3.group", key: "e") { show(model.layout.pages.first.map { .page($0.id) }) }
                     if isConnected {
-                        action("Weiteres iPhone koppeln …", symbol: "qrcode", key: "k") { show(.devices) }
+                        action(String(localized: "Weiteres iPhone koppeln …"), symbol: "qrcode", key: "k") { show(.devices) }
                     }
                     if directReply && !MacReply.isTrusted {
-                        action("Bedienungshilfen freigeben …", symbol: "exclamationmark.triangle.fill", tint: .yellow) {
+                        action(String(localized: "Bedienungshilfen freigeben …"), symbol: "exclamationmark.triangle.fill", tint: .yellow) {
                             NSWorkspace.shared.open(MacReply.accessibilitySettings)
                         }
                     }
@@ -38,16 +38,16 @@ struct BridgeMenu: View {
                 }
                 Divider()
                 VStack(alignment: .leading, spacing: 2) {
-                    action("Über Amberlight Bridge", symbol: "info.circle", trailing: Bundle.main.versionLabel) {
+                    action(String(localized: "Über Amberlight Bridge"), symbol: "info.circle", trailing: Bundle.main.versionLabel) {
                         NSApp.activate()
                         NSApp.orderFrontStandardAboutPanel(nil)
                     }
                     if let version = model.availableUpdate {
-                        action("Update auf \(version) installieren …", symbol: "arrow.down.circle.fill", tint: StandAccent.bridgeTint, key: "u", perform: checkForUpdates)
+                        action(String(localized: "Update auf \(version) installieren …"), symbol: "arrow.down.circle.fill", tint: StandAccent.bridgeTint, key: "u", perform: checkForUpdates)
                     } else {
-                        action("Nach Updates suchen …", symbol: "arrow.down.circle", key: "u", perform: checkForUpdates)
+                        action(String(localized: "Nach Updates suchen …"), symbol: "arrow.down.circle", key: "u", perform: checkForUpdates)
                     }
-                    action("Amberlight Bridge beenden", symbol: "power", key: "q") {
+                    action(String(localized: "Amberlight Bridge beenden"), symbol: "power", key: "q") {
                         BridgeAppDelegate.quitRequested = true
                         NSApplication.shared.terminate(nil)
                     }
@@ -92,7 +92,7 @@ struct BridgeMenu: View {
                 .background(.white, in: .rect(cornerRadius: 12))
                 .accessibilityLabel("QR-Code zum Koppeln")
             if model.tokenRenewed {
-                StatusLabel(text: "Neuer Kopplungscode – iPhone bitte neu koppeln", symbol: "exclamationmark.triangle.fill", tint: .yellow)
+                StatusLabel(text: String(localized: "Neuer Kopplungscode – iPhone bitte neu koppeln"), symbol: "exclamationmark.triangle.fill", tint: .yellow)
                     .font(.caption)
             }
             Text("In der Amberlight-App beim Einrichten oder unter Einstellungen „Neu koppeln“ scannen.")

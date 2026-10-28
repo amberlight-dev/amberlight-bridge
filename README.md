@@ -15,8 +15,8 @@ macOS 15 or later. Then install [Amberlight](https://amberlight.dev) on your iPh
 
 | What | Where | Why |
 |---|---|---|
-| Hooks for Claude Code | `~/.claude/settings.json` | Claude Code reports session events (prompt submitted, permission request, question, stop) to the Bridge. Installed and removed by you under **Diagnose**. |
-| Status line for Claude Code | `~/.claude/settings.json`, writes `~/.claude/stand-usage.json` | Usage and limits for the usage widget. Optional, set up under **Diagnose**. |
+| Hooks for Claude Code | `~/.claude/settings.json` | Claude Code reports session events (prompt submitted, permission request, question, stop) to the Bridge. Installed and removed by you under **Diagnostics**. |
+| Status line for Claude Code | `~/.claude/settings.json`, writes `~/.claude/stand-usage.json` | Usage and limits for the usage widget. Optional, set up under **Diagnostics**. |
 | Hooks for Codex | `~/.codex/hooks.json`, reads `~/.codex/sessions` | Same as above, for Codex. Installed and removed by you. |
 | Pairing token | `~/.config/duo-stand/token` | Every hook call and every request from the iPhone must carry it. |
 | Layout and custom widgets | `~/Library/Application Support/Stand Bridge/` | What your iPhone shows. |
@@ -29,7 +29,7 @@ The hooks are `curl` calls to `http://127.0.0.1:7420/hook` with the token in a h
 | From | To | What |
 |---|---|---|
 | iPhone | Your Mac, local network only | Sessions, questions, answers, usage, layout. Found via Bonjour (`_duostand._tcp`), port 7420, token from the QR pairing. |
-| Bridge | amberlight.dev | The Sparkle appcast, to check for updates. Can be turned off under **Diagnose → Mac**. |
+| Bridge | amberlight.dev | The Sparkle appcast, to check for updates. Can be turned off under **Diagnostics → Mac**. |
 | Bridge | Services you configure | GitLab pipelines and custom widgets fetch the URLs you enter. |
 | Bridge | lab73 | Nothing. No account, no analytics, no telemetry. |
 
@@ -55,7 +55,7 @@ To run it signed on your own Mac, open the project in Xcode and set your own tea
 xcodebuild -project AmberlightBridge.xcodeproj -scheme StandBridge test
 ```
 
-The code in `Shared/` (layout, widget and mascot models and views) is also compiled into the iPhone app, which is closed source. The UI of the Bridge is in German for now.
+The code in `Shared/` (layout, widget and mascot models and views) is also compiled into the iPhone app, which is closed source. The Bridge follows your system language: English, or German on a German Mac.
 
 ## Verify a download
 

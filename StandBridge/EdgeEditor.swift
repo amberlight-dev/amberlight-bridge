@@ -94,8 +94,8 @@ struct EdgeEditor: View {
 
     private func title(of slot: MicroSlot) -> String {
         switch slot {
-        case .earBefore: "Ohr oben"
-        case .earAfter: "Ohr unten"
+        case .earBefore: String(localized: "Ohr oben")
+        case .earAfter: String(localized: "Ohr unten")
         default: slot.title
         }
     }

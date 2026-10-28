@@ -51,7 +51,7 @@ final class BridgeModel {
             }
         } catch {
             server = nil
-            message = "Token konnte nicht angelegt werden: \(error.localizedDescription)"
+            message = String(localized: "Token konnte nicht angelegt werden: \(error.localizedDescription)")
         }
         refresh()
     }
@@ -89,8 +89,8 @@ final class BridgeModel {
     }
 
     func removeLegacyBridge() {
-        guard confirm("Alte Python-Bridge entfernen?",
-                      "Stoppt den launchd-Agent \(LegacyBridge.label) und löscht \(LegacyBridge.agentPlist.path) sowie \(LegacyBridge.scriptFolder.path).") else { return }
+        guard confirm(String(localized: "Alte Python-Bridge entfernen?"),
+                      String(localized: "Stoppt den launchd-Agent \(LegacyBridge.label) und löscht \(LegacyBridge.agentPlist.path) sowie \(LegacyBridge.scriptFolder.path).")) else { return }
         perform {
             try LegacyBridge.remove()
             Task {
@@ -101,43 +101,43 @@ final class BridgeModel {
     }
 
     func installHooks() {
-        guard confirm("Claude-Code-Hooks installieren?",
-                      "Schreibt sechs Hooks in \(Self.settingsFile.path), die Fragen und Freigaben per curl an Amberlight Bridge melden. Alte stand_hook.py-Einträge werden ersetzt, alles andere bleibt. Vorher wird eine Sicherungskopie angelegt.") else { return }
+        guard confirm(String(localized: "Claude-Code-Hooks installieren?"),
+                      String(localized: "Schreibt sechs Hooks in \(Self.settingsFile.path), die Fragen und Freigaben per curl an Amberlight Bridge melden. Alte stand_hook.py-Einträge werden ersetzt, alles andere bleibt. Vorher wird eine Sicherungskopie angelegt.")) else { return }
         updateSettings(Self.settingsFile, ClaudeSettings.installingHooks)
     }
 
     func removeHooks() {
-        guard confirm("Claude-Code-Hooks entfernen?",
-                      "Entfernt alle Amberlight-Bridge-Hooks aus \(Self.settingsFile.path). Vorher wird eine Sicherungskopie angelegt.") else { return }
+        guard confirm(String(localized: "Claude-Code-Hooks entfernen?"),
+                      String(localized: "Entfernt alle Amberlight-Bridge-Hooks aus \(Self.settingsFile.path). Vorher wird eine Sicherungskopie angelegt.")) else { return }
         updateSettings(Self.settingsFile, ClaudeSettings.removingHooks)
     }
 
     func installCodexHooks() {
-        guard confirm("Codex-Hooks installieren?",
-                      "Schreibt sieben Hooks in \(CodexSettings.hooksFile.path), die Status und Freigaben per curl an Amberlight Bridge melden. Deine anderen Hooks bleiben erhalten. Vorher wird eine Sicherungskopie angelegt.\n\nDanach in Codex einmal /hooks aufrufen und die Amberlight-Hooks als vertrauenswürdig bestätigen – vorher führt Codex sie nicht aus.") else { return }
+        guard confirm(String(localized: "Codex-Hooks installieren?"),
+                      String(localized: "Schreibt sieben Hooks in \(CodexSettings.hooksFile.path), die Status und Freigaben per curl an Amberlight Bridge melden. Deine anderen Hooks bleiben erhalten. Vorher wird eine Sicherungskopie angelegt.\n\nDanach in Codex einmal /hooks aufrufen und die Amberlight-Hooks als vertrauenswürdig bestätigen – vorher führt Codex sie nicht aus.")) else { return }
         updateSettings(CodexSettings.hooksFile, CodexSettings.installingHooks)
     }
 
     func removeCodexHooks() {
-        guard confirm("Codex-Hooks entfernen?",
-                      "Entfernt alle Amberlight-Bridge-Hooks aus \(CodexSettings.hooksFile.path). Vorher wird eine Sicherungskopie angelegt.") else { return }
+        guard confirm(String(localized: "Codex-Hooks entfernen?"),
+                      String(localized: "Entfernt alle Amberlight-Bridge-Hooks aus \(CodexSettings.hooksFile.path). Vorher wird eine Sicherungskopie angelegt.")) else { return }
         updateSettings(CodexSettings.hooksFile, ClaudeSettings.removingHooks)
     }
 
     func installStatusline() {
         switch statuslineState {
         case .missing:
-            guard confirm("Statusline für Usage einrichten?",
-                          "Setzt in \(Self.settingsFile.path) eine Statusline, die nur die Usage-Werte für Amberlight mitschreibt. Vorher wird eine Sicherungskopie angelegt.") else { return }
+            guard confirm(String(localized: "Statusline für Usage einrichten?"),
+                          String(localized: "Setzt in \(Self.settingsFile.path) eine Statusline, die nur die Usage-Werte für Amberlight mitschreibt. Vorher wird eine Sicherungskopie angelegt.")) else { return }
             updateSettings(Self.settingsFile, ClaudeSettings.installingStatusline)
         case .insertable(let script):
-            guard confirm("Usage-Zeile in deine Statusline einfügen?",
-                          "Fügt in \(script.path) nach input=$(cat) eine Zeile ein, die die Usage-Werte nach ~/.claude/stand-usage.json schreibt. Vorher wird eine Sicherungskopie angelegt.") else { return }
+            guard confirm(String(localized: "Usage-Zeile in deine Statusline einfügen?"),
+                          String(localized: "Fügt in \(script.path) nach input=$(cat) eine Zeile ein, die die Usage-Werte nach ~/.claude/stand-usage.json schreibt. Vorher wird eine Sicherungskopie angelegt.")) else { return }
             perform { try ClaudeSettings.insertUsageLine(into: script) }
         case .manual:
             NSPasteboard.general.clearContents()
             NSPasteboard.general.setString(ClaudeSettings.usageLine, forType: .string)
-            message = "Deine Statusline ist kein bekanntes Skript. Die Zeile liegt in der Zwischenablage – füge sie dort ein, wo $input das Statusline-JSON enthält."
+            message = String(localized: "Deine Statusline ist kein bekanntes Skript. Die Zeile liegt in der Zwischenablage – füge sie dort ein, wo $input das Statusline-JSON enthält.")
         case .installed:
             break
         }
@@ -146,7 +146,7 @@ final class BridgeModel {
     private func updateSettings(_ file: URL, _ transform: (JSON) -> JSON) {
         perform {
             let backup = try ClaudeSettings.update(file, transform)
-            message = backup.map { "Gesichert: \($0.lastPathComponent)" }
+            message = backup.map { String(localized: "Gesichert: \($0.lastPathComponent)") }
         }
     }
 
@@ -161,7 +161,7 @@ final class BridgeModel {
         let alert = NSAlert()
         alert.messageText = title
         alert.informativeText = text
-        alert.addButton(withTitle: "Fortfahren")
+        alert.addButton(withTitle: String(localized: "Fortfahren"))
         alert.addButton(withTitle: "Abbrechen")
         return alert.runModal() == .alertFirstButtonReturn
     }

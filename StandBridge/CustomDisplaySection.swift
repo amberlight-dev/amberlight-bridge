@@ -38,10 +38,10 @@ struct CustomDisplaySection: View {
 
     private var footer: String {
         switch display.style {
-        case .line: "Den Verlauf speichert die Bridge selbst – mit jedem Abruf ein Punkt, bis zu \(CustomWidgetStore.historyLimit)."
-        case .status: "Die erste passende Regel bestimmt Farbe und Text. Passt keine, wird der Wert grau gezeigt."
-        case .bar, .list: "Braucht eine Reihe aus Schritt 6. Klein zeigt das Widget den Kernwert."
-        case .text, .gauge: "1×1 zeigt den Kernwert, 2×1 dazu die Beschriftung, ab 2×2 die volle Darstellung."
+        case .line: String(localized: "Den Verlauf speichert die Bridge selbst – mit jedem Abruf ein Punkt, bis zu \(CustomWidgetStore.historyLimit).")
+        case .status: String(localized: "Die erste passende Regel bestimmt Farbe und Text. Passt keine, wird der Wert grau gezeigt.")
+        case .bar, .list: String(localized: "Braucht eine Reihe aus Schritt 6. Klein zeigt das Widget den Kernwert.")
+        case .text, .gauge: String(localized: "1×1 zeigt den Kernwert, 2×1 dazu die Beschriftung, ab 2×2 die volle Darstellung.")
         }
     }
 

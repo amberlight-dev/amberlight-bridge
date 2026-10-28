@@ -10,7 +10,7 @@ nonisolated enum CustomSizing {
             switch self {
             case .compact: "1×1"
             case .wide: "2×1"
-            case .main: "2×2 und größer"
+            case .main: String(localized: "2×2 und größer")
             }
         }
     }

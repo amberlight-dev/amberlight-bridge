@@ -46,7 +46,7 @@ struct CustomNodeInspector: View {
     private var content: some View {
         switch node.type {
         case .text, .pill:
-            group("Inhalt") {
+            group(String(localized: "Inhalt")) {
                 HStack(spacing: 6) {
                     TextField("Text", text: text(\.text), prompt: Text("{wert} oder freier Text"))
                     Menu {
@@ -99,7 +99,7 @@ struct CustomNodeInspector: View {
                     .help("Legt running, runningStart und runningSeconds an und verbindet diesen Timer damit")
             }
         case .symbol:
-            group("Icon") {
+            group(String(localized: "Icon")) {
                 HStack {
                     TextField("SF Symbol", text: text(\.text), prompt: Text("star.fill"))
                     Image(systemName: node.text ?? "questionmark").frame(width: 24)
@@ -107,9 +107,9 @@ struct CustomNodeInspector: View {
                 Toggle("Pulsieren", isOn: flag(\.pulse))
             }
         case .dot:
-            group("Punkt") { Toggle("Pulsieren", isOn: flag(\.pulse)) }
+            group(String(localized: "Punkt")) { Toggle("Pulsieren", isOn: flag(\.pulse)) }
         case .vstack, .hstack:
-            group(node.type == .vstack ? "Spalte" : "Zeile") {
+            group(node.type == .vstack ? String(localized: "Spalte") : String(localized: "Zeile")) {
                 if node.type == .vstack {
                     Picker("Ausrichtung", selection: Binding(get: { node.align ?? .leading }, set: { new in change("align") { $0.align = new } })) {
                         Text("Links").tag(CustomNode.Align.leading)
@@ -161,7 +161,7 @@ struct CustomNodeInspector: View {
     }
 
     private var visibility: some View {
-        group("Sichtbarkeit") {
+        group(String(localized: "Sichtbarkeit")) {
             TextField("Nur zeigen, wenn", text: text(\.when), prompt: Text("z. B. running >= 1"))
             missing(CustomLayout.referencedNames(in: node.when) + (node.toneWhen ?? []).flatMap { CustomLayout.referencedNames(in: $0.when) } + [node.since, node.plus, node.value])
             Picker("Für kleine Größen", selection: Binding(get: { node.priority ?? 0 }, set: { new in change("priority") { $0.priority = new == 0 ? nil : new } })) {
@@ -173,7 +173,7 @@ struct CustomNodeInspector: View {
     }
 
     private var pillRules: some View {
-        group("Schwellwerte") {
+        group(String(localized: "Schwellwerte")) {
             ForEach(Array((node.toneWhen ?? []).enumerated()), id: \.offset) { index, rule in
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(spacing: 6) {

@@ -10,7 +10,7 @@ struct PreferencesView: View {
         Form {
             if store.revision == 0 {
                 Section {
-                    StatusLabel(text: "Noch kein iPhone verbunden – Änderungen gelten, sobald es sich meldet.", symbol: "hourglass", tint: .secondary)
+                    StatusLabel(text: String(localized: "Noch kein iPhone verbunden – Änderungen gelten, sobald es sich meldet."), symbol: "hourglass", tint: .secondary)
                 }
             }
 
@@ -93,7 +93,7 @@ struct PreferencesView: View {
             Section {
                 Toggle("LED blinkt bei Ereignissen", isOn: binding(\.ledAlerts, default: false))
                 if store.device?.ledAvailable == false {
-                    StatusLabel(text: "Das zuletzt verbundene iPhone hat keine LED.", symbol: "info.circle", tint: .secondary)
+                    StatusLabel(text: String(localized: "Das zuletzt verbundene iPhone hat keine LED."), symbol: "info.circle", tint: .secondary)
                 }
             } header: {
                 Text("Benachrichtigungen")
@@ -117,7 +117,7 @@ struct PreferencesView: View {
                 LabeledContent("Kopplung") {
                     Button("Geräte öffnen", action: onShowDevices)
                 }
-                LabeledContent("Berechtigungen", value: "Kamera, Standort, Kalender")
+                LabeledContent("Berechtigungen", value: String(localized: "Kamera, Standort, Kalender"))
             } header: {
                 Text("Nur am iPhone")
             } footer: {

@@ -11,10 +11,10 @@ struct CustomSelectionSection: View {
             }
             .pickerStyle(.segmented)
             if selection.arrayPath == nil {
-                pathField("Pfad zum Wert", text: $selection.valuePath, prompt: "data.items[0].hours")
+                pathField(String(localized: "Pfad zum Wert"), text: $selection.valuePath, prompt: "data.items[0].hours")
             } else {
-                pathField("Pfad zur Liste", text: optional(\.arrayPath), prompt: "data.items (leer = Wurzel)")
-                pathField("Feld im Element", text: $selection.valueField, prompt: "hours (leer = Element)")
+                pathField(String(localized: "Pfad zur Liste"), text: optional(\.arrayPath), prompt: String(localized: "data.items (leer = Wurzel)"))
+                pathField(String(localized: "Feld im Element"), text: $selection.valueField, prompt: String(localized: "hours (leer = Element)"))
                 Picker("Aggregation", selection: $selection.aggregation) {
                     ForEach(CustomWidgetDefinition.Aggregation.allCases) { Text($0.title).tag($0) }
                 }
@@ -23,9 +23,9 @@ struct CustomSelectionSection: View {
                 .font(.system(.body, design: .monospaced))
             Toggle("Reihe für Balken bzw. Liste", isOn: hasSeries)
             if selection.seriesPath != nil {
-                pathField("Pfad zur Reihe", text: optional(\.seriesPath), prompt: "data.items (leer = Wurzel)")
-                pathField("Feld für Label", text: $selection.labelField, prompt: "date")
-                pathField("Feld für Wert", text: $selection.seriesField, prompt: "hours")
+                pathField(String(localized: "Pfad zur Reihe"), text: optional(\.seriesPath), prompt: String(localized: "data.items (leer = Wurzel)"))
+                pathField(String(localized: "Feld für Label"), text: $selection.labelField, prompt: "date")
+                pathField(String(localized: "Feld für Wert"), text: $selection.seriesField, prompt: "hours")
                 Toggle("Gleiche Labels zusammenzählen", isOn: $selection.groupsLabels)
                 Toggle("Labels sind Datumswerte (als Wochentag zeigen)", isOn: $selection.labelsAreDates)
             }

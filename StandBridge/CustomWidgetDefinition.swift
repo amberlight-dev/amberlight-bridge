@@ -8,12 +8,12 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
 
         var title: String {
             switch self {
-            case .none: "Keine"
+            case .none: String(localized: "Keine")
             case .bearer: "Bearer-Token"
-            case .headerKey: "API-Key als Header"
-            case .queryKey: "API-Key als Query"
-            case .basic: "Basic (Benutzer + Passwort)"
-            case .customHeader: "Eigener Header"
+            case .headerKey: String(localized: "API-Key als Header")
+            case .queryKey: String(localized: "API-Key als Query")
+            case .basic: String(localized: "Basic (Benutzer + Passwort)")
+            case .customHeader: String(localized: "Eigener Header")
             }
         }
     }
@@ -64,14 +64,14 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
 
         var title: String {
             switch self {
-            case .sum: "Summe"
-            case .count: "Anzahl"
-            case .countPresent: "Anzahl mit Wert"
-            case .average: "Mittelwert"
+            case .sum: String(localized: "Summe")
+            case .count: String(localized: "Anzahl")
+            case .countPresent: String(localized: "Anzahl mit Wert")
+            case .average: String(localized: "Mittelwert")
             case .minimum: "Minimum"
             case .maximum: "Maximum"
-            case .first: "Erstes Element"
-            case .last: "Letztes Element"
+            case .first: String(localized: "Erstes Element")
+            case .last: String(localized: "Letztes Element")
             }
         }
     }
@@ -96,8 +96,8 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
 
         var title: String {
             switch self {
-            case .number: "Zahl"
-            case .percent: "Prozent"
+            case .number: String(localized: "Zahl")
+            case .percent: String(localized: "Prozent")
             case .hoursMinutes: "Stunden:Minuten"
             }
         }
@@ -110,9 +110,9 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
 
         var title: String {
             switch self {
-            case .equals: "ist gleich"
+            case .equals: String(localized: "ist gleich")
             case .atLeast: "mindestens"
-            case .below: "kleiner als"
+            case .below: String(localized: "kleiner als")
             }
         }
     }

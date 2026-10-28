@@ -57,9 +57,9 @@ enum RemoteError: Error {
 
     func message(for service: String) -> String {
         switch self {
-        case .unauthorized: "\(service) lehnt den Token ab"
-        case .unreachable: "\(service) nicht erreichbar"
-        case .status(let code): "\(service) antwortet mit \(code)"
+        case .unauthorized: String(localized: "\(service) lehnt den Token ab")
+        case .unreachable: String(localized: "\(service) nicht erreichbar")
+        case .status(let code): String(localized: "\(service) antwortet mit \(code)")
         }
     }
 }

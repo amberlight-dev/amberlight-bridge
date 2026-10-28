@@ -24,16 +24,16 @@ struct RequestLogEntry: Identifiable, Equatable {
 
     var title: String {
         switch (method, path) {
-        case ("POST", "/hook"): "Hook von Claude Code"
-        case ("POST", "/answer"): "Antwort vom iPhone"
-        case ("POST", "/reply"): "Antwort ans Mac-Fenster"
-        case ("POST", "/focus"): "Fenster nach vorn"
-        case ("POST", "/open"): "Shortcut geöffnet"
-        case ("PUT", "/layout"): "Anordnung empfangen"
-        case ("GET", "/layout"): "Anordnung abgeholt"
-        case ("GET", "/apps"): "App-Liste abgefragt"
-        case ("GET", "/icon"): "App-Icon abgefragt"
-        case ("GET", "/system"): "Mac-Werte abgefragt"
+        case ("POST", "/hook"): String(localized: "Hook von Claude Code")
+        case ("POST", "/answer"): String(localized: "Antwort vom iPhone")
+        case ("POST", "/reply"): String(localized: "Antwort ans Mac-Fenster")
+        case ("POST", "/focus"): String(localized: "Fenster nach vorn")
+        case ("POST", "/open"): String(localized: "Shortcut geöffnet")
+        case ("PUT", "/layout"): String(localized: "Anordnung empfangen")
+        case ("GET", "/layout"): String(localized: "Anordnung abgeholt")
+        case ("GET", "/apps"): String(localized: "App-Liste abgefragt")
+        case ("GET", "/icon"): String(localized: "App-Icon abgefragt")
+        case ("GET", "/system"): String(localized: "Mac-Werte abgefragt")
         default: "\(method) \(path)"
         }
     }
