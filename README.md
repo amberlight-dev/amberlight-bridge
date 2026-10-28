@@ -73,4 +73,4 @@ Issues and pull requests are welcome. For ideas and votes on what comes next, us
 
 [MIT](LICENSE), © 2026 lab73 GmbH.
 
-Amberlight is an independent app by lab73 GmbH. It is not affiliated with, endorsed by or sponsored by Anthropic, PBC or OpenAI. Claude and Claude Code are trademarks of Anthropic, PBC, Codex is a trademark of OpenAI; they are named here only to describe compatibility.
+Claude and Claude Code are trademarks of Anthropic, PBC. Codex is a trademark of OpenAI.
