@@ -33,6 +33,22 @@ struct PlacedWidget: Codable, Hashable, Identifiable {
     var settings: WidgetSettings?
 }
 
+extension PlacedWidget {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(UUID.self, forKey: .id)
+        widget = try container.decode(StandWidget.self, forKey: .widget)
+        frame = try container.decode(GridRect.self, forKey: .frame)
+        settings = try container.decodeIfPresent(WidgetSettings.self, forKey: .settings)
+        let wasOrchestra = (try? container.decode(String.self, forKey: .widget)) == StandWidget.legacyOrchestraRawValue
+        if wasOrchestra {
+            var migrated = settings ?? WidgetSettings()
+            migrated.agentsDisplay = .cards
+            settings = migrated
+        }
+    }
+}
+
 extension BackgroundStyle: Codable {}
 
 struct PageStyle: Codable, Hashable {
@@ -52,7 +68,7 @@ struct StandPage: Codable, Hashable, Identifiable {
         StandPage(name: "Schreibtisch", items: [
             PlacedWidget(widget: .clock, frame: GridRect(x: 0, y: 0, w: 2, h: 2)),
             PlacedWidget(widget: .usage, frame: GridRect(x: 0, y: 2, w: 2, h: 2)),
-            PlacedWidget(widget: .claude, frame: GridRect(x: 2, y: 0, w: 4, h: 4)),
+            PlacedWidget(widget: .agents, frame: GridRect(x: 2, y: 0, w: 4, h: 4)),
         ], icon: "desktopcomputer")
     }
 
@@ -172,26 +188,27 @@ extension StandPage {
 extension StandWidget {
     var reflowMaxRows: Int {
         switch self {
-        case .claude, .calendar, .orbit, .gitlab, .custom: StandGrid.rows
+        case .agents, .calendar, .gitlab, .googleChat, .custom: StandGrid.rows
         case .mascot: 1
-        case .clock, .usage, .nowPlaying, .shortcuts, .mac, .weather, .focus: 2
+        case .clock, .usage, .nowPlaying, .radio, .shortcuts, .mac, .weather, .focus: 2
         }
     }
 
     var galleryPresets: [GridSpan] {
         switch self {
         case .clock: [GridSpan(w: 1, h: 1), GridSpan(w: 2, h: 1), GridSpan(w: 2, h: 2), GridSpan(w: 4, h: 2), GridSpan(w: 6, h: 4)]
-        case .claude: [GridSpan(w: 2, h: 2), GridSpan(w: 3, h: 4), GridSpan(w: 4, h: 4)]
+        case .agents: [GridSpan(w: 2, h: 2), GridSpan(w: 3, h: 4), GridSpan(w: 4, h: 4), GridSpan(w: 6, h: 4)]
         case .usage: [GridSpan(w: 1, h: 1), GridSpan(w: 2, h: 2), GridSpan(w: 2, h: 4)]
         case .mascot: [GridSpan(w: 1, h: 1), GridSpan(w: 2, h: 1)]
         case .nowPlaying: [GridSpan(w: 1, h: 1), GridSpan(w: 2, h: 1), GridSpan(w: 3, h: 2), GridSpan(w: 6, h: 4)]
+        case .radio: [GridSpan(w: 2, h: 1), GridSpan(w: 3, h: 1), GridSpan(w: 3, h: 2), GridSpan(w: 6, h: 1), GridSpan(w: 6, h: 2)]
         case .shortcuts: [GridSpan(w: 6, h: 1), GridSpan(w: 2, h: 2), GridSpan(w: 3, h: 2)]
         case .mac: [GridSpan(w: 1, h: 1), GridSpan(w: 2, h: 1), GridSpan(w: 2, h: 2), GridSpan(w: 4, h: 2)]
         case .calendar: [GridSpan(w: 1, h: 1), GridSpan(w: 2, h: 1), GridSpan(w: 2, h: 2), GridSpan(w: 3, h: 4)]
         case .weather: [GridSpan(w: 1, h: 1), GridSpan(w: 2, h: 1), GridSpan(w: 3, h: 2), GridSpan(w: 6, h: 2)]
         case .focus: [GridSpan(w: 1, h: 1), GridSpan(w: 2, h: 1), GridSpan(w: 3, h: 2)]
-        case .orbit: [GridSpan(w: 1, h: 1), GridSpan(w: 2, h: 1), GridSpan(w: 3, h: 2), GridSpan(w: 3, h: 4)]
         case .gitlab: [GridSpan(w: 1, h: 1), GridSpan(w: 2, h: 1), GridSpan(w: 3, h: 2), GridSpan(w: 3, h: 4)]
+        case .googleChat: [GridSpan(w: 1, h: 1), GridSpan(w: 2, h: 1), GridSpan(w: 2, h: 2), GridSpan(w: 3, h: 2), GridSpan(w: 3, h: 4)]
         case .custom: [GridSpan(w: 1, h: 1), GridSpan(w: 2, h: 1), GridSpan(w: 2, h: 2), GridSpan(w: 3, h: 2), GridSpan(w: 4, h: 3)]
         }
     }

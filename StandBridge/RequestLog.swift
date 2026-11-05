@@ -13,7 +13,7 @@ struct ClientContact: Equatable {
 
 struct RequestLogEntry: Identifiable, Equatable {
     static let limit = 40
-    static let quietPaths: Set<String> = ["/system", "/icon", "/custom"]
+    static let quietPaths: Set<String> = ["/system", "/icon", "/custom", "/gchat"]
 
     let id = UUID()
     let at: Date

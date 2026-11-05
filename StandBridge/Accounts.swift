@@ -1,14 +1,5 @@
 import Foundation
 
-struct OrbitAccount: Codable, Equatable {
-    var apiURL: String
-    var webURL: String
-    var token: String
-
-    var api: String { Accounts.trimmed(apiURL) }
-    var web: String { Accounts.trimmed(webURL.isEmpty ? apiURL : webURL) }
-}
-
 struct GitLabAccount: Codable, Equatable {
     var url: String
     var token: String
@@ -17,20 +8,20 @@ struct GitLabAccount: Codable, Equatable {
 }
 
 enum Accounts {
-    private static let orbitKey = "account.orbit"
     private static let gitlabKey = "account.gitlab"
+    private static let googleChatKey = "account.googlechat"
 
-    static var orbit: OrbitAccount? { load(orbitKey) }
     static var gitlab: GitLabAccount? { load(gitlabKey) }
-
-    static func save(_ account: OrbitAccount?) {
-        store(account, at: orbitKey)
-        OrbitClient.forgetCache()
-    }
+    static var googleChat: GoogleChatAccount? { load(googleChatKey) }
 
     static func save(_ account: GitLabAccount?) {
         store(account, at: gitlabKey)
         GitLabClient.forgetCache()
+    }
+
+    static func save(_ account: GoogleChatAccount?) {
+        store(account, at: googleChatKey)
+        GoogleChatClient.forgetCache()
     }
 
     static func trimmed(_ url: String) -> String {

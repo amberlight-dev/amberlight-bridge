@@ -79,7 +79,8 @@ nonisolated enum PulseTempo: String, CaseIterable, Sendable {
 }
 
 nonisolated struct BackgroundTint: Codable, Hashable, Sendable {
-    static let palette = ["#1E3A5F", "#16424A", "#1F4D3A", "#4A3B1C", "#5A2A1E", "#4B1F3F", "#33265C", "#2B2F36"]
+    static let defaultHex = "#1E3A5F"
+    static let palette = ["#000000", "#1E3A5F", "#16424A", "#1F4D3A", "#4A3B1C", "#5A2A1E", "#4B1F3F", "#33265C", "#2B2F36"]
     static let brightnessRange: ClosedRange<Double> = 0.15...1
 
     var hex: String?
@@ -108,7 +109,7 @@ nonisolated struct BackgroundTint: Codable, Hashable, Sendable {
     }
 
     var resolvedHex: String {
-        guard let hex, Self.rgb(hex) != nil else { return Self.palette[0] }
+        guard let hex, Self.rgb(hex) != nil else { return Self.defaultHex }
         return hex
     }
     var resolvedBrightness: Double { min(max(brightness ?? 0.7, Self.brightnessRange.lowerBound), Self.brightnessRange.upperBound) }

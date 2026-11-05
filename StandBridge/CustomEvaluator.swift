@@ -18,8 +18,13 @@ nonisolated enum CustomEvaluator {
         case .gauge:
             result.text = text
             result.progress = number.map { progress(of: $0, display: definition.display) }
+            result.overflow = number.flatMap { overflow(of: $0, display: definition.display) }
         case .text, .line, .bar, .list:
             result.text = text
+        }
+        if definition.display.style != .gauge, let number, let target = definition.display.target, target > 0 {
+            result.progress = min(max(number / target, 0), 1)
+            result.overflow = number > target ? min((number - target) / target, 1) : nil
         }
         result.points = series(definition.selection, in: json, display: definition.display)
         result.lines = lines(for: definition, json: json, at: date)
@@ -40,7 +45,12 @@ nonisolated enum CustomEvaluator {
     }
 
     static func selectedValue(_ selection: CustomWidgetDefinition.Selection, in json: Any) -> Any? {
-        guard let arrayPath = selection.arrayPath else { return JSONPath.resolve(selection.valuePath, in: json) }
+        guard let arrayPath = selection.arrayPath else {
+            guard selection.valuePath.contains("??") else { return JSONPath.resolve(selection.valuePath, in: json) }
+            return selection.valuePath.components(separatedBy: "??").lazy
+                .compactMap { JSONPath.resolve($0.trimmingCharacters(in: .whitespaces), in: json) }
+                .first(where: JSONPath.isPresent)
+        }
         guard let array = JSONPath.resolve(arrayPath, in: json) as? [Any] else { return nil }
         return aggregate(filtered(array, by: selection.filter).map { field(selection.valueField, of: $0) }, by: selection.aggregation)
     }
@@ -88,14 +98,16 @@ nonisolated enum CustomEvaluator {
         for (index, element) in filtered(array, by: selection.filter).enumerated() {
             let raw = field(selection.seriesField, of: element)
             let rawLabel = JSONPath.text(field(selection.labelField, of: element)) ?? "\(index + 1)"
-            let label = selection.labelsAreDates ? dayLabel(rawLabel) : rawLabel
+            let label = selection.labelTemplate.flatMap { CustomRowTemplate.fill($0, element) }
+                ?? (selection.labelsAreDates ? dayLabel(rawLabel) : rawLabel)
             let value = JSONPath.number(raw)
+            let rowText = selection.textTemplate.flatMap { CustomRowTemplate.fill($0, element) }
             if selection.groupsLabels, let existing = points.firstIndex(where: { $0.label == label }) {
                 let sum = (points[existing].value ?? 0) + (value ?? 0)
                 points[existing].value = sum
                 points[existing].text = formatted(sum, display: display)
             } else {
-                points.append(CustomWidgetDisplay.Point(label: label, value: value, text: formatted(value ?? raw, display: display)))
+                points.append(CustomWidgetDisplay.Point(label: label, value: value, text: rowText ?? formatted(value ?? raw, display: display)))
             }
         }
         return Array(points.prefix(maxPoints))
@@ -103,7 +115,10 @@ nonisolated enum CustomEvaluator {
 
     static func formatted(_ value: Any?, display: CustomWidgetDefinition.Display) -> String? {
         let core: String
-        if let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID() {
+        if display.format == .clock {
+            guard let clock = CustomRowTemplate.clock(value) else { return nil }
+            core = clock
+        } else if let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID() {
             core = format(number.doubleValue, display: display)
         } else if let number = value as? Double {
             core = format(number, display: display)
@@ -126,6 +141,8 @@ nonisolated enum CustomEvaluator {
         case .hoursMinutes:
             let minutes = Int((abs(number) * 60).rounded())
             return (number < 0 ? "-" : "") + String(format: "%d:%02d", minutes / 60, minutes % 60)
+        case .clock:
+            return CustomRowTemplate.clock(number) ?? number.formatted()
         }
     }
 
@@ -152,6 +169,12 @@ nonisolated enum CustomEvaluator {
         let range = display.gaugeMax - display.gaugeMin
         guard range > 0 else { return 0 }
         return min(max((value - display.gaugeMin) / range, 0), 1)
+    }
+
+    static func overflow(of value: Double, display: CustomWidgetDefinition.Display) -> Double? {
+        let range = display.gaugeMax - display.gaugeMin
+        guard range > 0, value > display.gaugeMax else { return nil }
+        return min((value - display.gaugeMax) / range, 1)
     }
 
     private static func field(_ path: String, of element: Any) -> Any? {

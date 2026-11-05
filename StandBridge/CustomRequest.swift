@@ -94,12 +94,13 @@ nonisolated enum CustomRequest {
         guard var components = URLComponents(string: definition.baseURL.trimmingCharacters(in: .whitespaces)),
               let pinned = origin(of: components) else { throw .invalidURL }
         let basePath = components.path.hasSuffix("/") ? String(components.path.dropLast()) : components.path
-        let endpointPath = substitute(definition.endpoint.path.trimmingCharacters(in: .whitespaces), now: now)
+        let variables = definition.variables ?? []
+        let endpointPath = substitute(definition.endpoint.path.trimmingCharacters(in: .whitespaces), now: now, variables: variables)
         components.path = basePath + (endpointPath.isEmpty || endpointPath.hasPrefix("/") ? "" : "/") + endpointPath
         components.fragment = nil
         var items = queryItems(of: components)
         for pair in definition.endpoint.query where !pair.name.isEmpty {
-            let value = substitute(pair.value, now: now)
+            let value = substitute(pair.value, now: now, variables: variables)
             if !value.isEmpty { items.append(URLQueryItem(name: pair.name, value: value)) }
         }
         let credentials = definition.needsSecret ? secret(pinned) : nil
@@ -114,10 +115,10 @@ nonisolated enum CustomRequest {
         request.httpMethod = definition.endpoint.method.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         for pair in definition.endpoint.headers where !pair.name.isEmpty {
-            request.setValue(substitute(pair.value, now: now), forHTTPHeaderField: pair.name)
+            request.setValue(substitute(pair.value, now: now, variables: variables), forHTTPHeaderField: pair.name)
         }
         if definition.endpoint.method == .post, !definition.endpoint.body.isEmpty {
-            let body = Data(substitute(definition.endpoint.body, now: now).utf8)
+            let body = Data(substitute(definition.endpoint.body, now: now, variables: variables, escapingJSON: true).utf8)
             guard body.count <= maxBodyBytes else { throw .tooLarge }
             request.httpBody = body
             if request.value(forHTTPHeaderField: "Content-Type") == nil {
@@ -128,8 +129,20 @@ nonisolated enum CustomRequest {
         return request
     }
 
-    static func substitute(_ text: String, now: Date) -> String {
+    static func substitute(_ text: String, now: Date, variables: [CustomWidgetDefinition.Pair] = [], escapingJSON: Bool = false) -> String {
         guard text.contains("{") else { return text }
+        let named = variables.filter { !$0.name.isEmpty }.reduce(text) { text, pair in
+            text.replacingOccurrences(of: "{\(pair.name)}", with: escapingJSON ? jsonEscaped(pair.value) : pair.value)
+        }
+        return substituteDates(named, now: now)
+    }
+
+    static func jsonEscaped(_ value: String) -> String {
+        guard let data = try? JSONSerialization.data(withJSONObject: [value]), let array = String(data: data, encoding: .utf8) else { return "" }
+        return String(array.dropFirst(2).dropLast(2))
+    }
+
+    private static func substituteDates(_ text: String, now: Date) -> String {
         var calendar = Calendar(identifier: .iso8601)
         calendar.timeZone = .current
         let day = calendar.startOfDay(for: now)

@@ -3,6 +3,7 @@ import SwiftUI
 struct PageTintButton: View {
     let style: BackgroundStyle
     let tint: BackgroundTint?
+    let globalTint: BackgroundTint
     let onChange: (BackgroundTint?) -> Void
 
     @State private var showsTint = false
@@ -13,7 +14,7 @@ struct PageTintButton: View {
             .popover(isPresented: $showsTint, arrowEdge: .bottom) {
                 Form {
                     BackgroundTintSection(style: style, tint: Binding(
-                        get: { tint ?? BackgroundTint() },
+                        get: { tint ?? globalTint },
                         set: { onChange($0) }
                     ))
                     if tint != nil {

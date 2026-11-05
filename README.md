@@ -17,6 +17,7 @@ macOS 15 or later. Then install [Amberlight](https://amberlight.dev) on your iPh
 |---|---|---|
 | Hooks for Claude Code | `~/.claude/settings.json` | Claude Code reports session events (prompt submitted, permission request, question, stop) to the Bridge. Installed and removed by you under **Diagnostics**. |
 | Status line for Claude Code | `~/.claude/settings.json`, writes `~/.claude/stand-usage.json` | Usage and limits for the usage widget. Optional, set up under **Diagnostics**. |
+| Widget MCP for Claude Code | `~/.claude.json` (entry `mcpServers.amberlight-widgets`) | Lets Claude Code build custom widgets through the Bridge. Set up and removed by you under **Diagnostics**; needs Node.js. The entry holds only the path to the bundled script, never the token. |
 | Hooks for Codex | `~/.codex/hooks.json`, reads `~/.codex/sessions` | Same as above, for Codex. Installed and removed by you. |
 | Pairing token | `~/.config/duo-stand/token` | Every hook call and every request from the iPhone must carry it. |
 | Layout and custom widgets | `~/Library/Application Support/Stand Bridge/` | What your iPhone shows. |
@@ -38,6 +39,20 @@ The hooks are `curl` calls to `http://127.0.0.1:7420/hook` with the token in a h
 - **Local network:** so your iPhone can reach the Bridge.
 - **Automation (Apple Events):** to bring the terminal window of a session to the front when you tap it.
 - **Accessibility:** only for "send answers directly", which pastes your answer into the terminal and presses Return.
+
+## Custom widgets from Claude Code (MCP)
+
+`mcp/widgets-mcp.mjs` is a dependency-free MCP server for Node. It lets an agent list, create, change and delete custom widgets and render them to a PNG at Stand grid sizes, with live data or a sample response. It talks only to the local Bridge (`127.0.0.1:7420`, token from `~/.config/duo-stand/token`); the `/studio/*` routes refuse anything that is not a loopback request.
+
+In the app, **Diagnostics → Claude Code → Widget MCP → Set up** writes the entry into `~/.claude.json` (with a backup first) and points it at the copy of the script inside the app bundle; **Remove** deletes only that entry. Restart Claude Code afterwards. If the app is moved or updated, the Bridge corrects the path on the next start. Node.js is required; the row says so if it is missing. Codex is not set up automatically.
+
+To run it from a checkout instead, add this to a project `.mcp.json`:
+
+```json
+{ "mcpServers": { "amberlight-widgets": { "command": "node", "args": ["mcp/widgets-mcp.mjs"] } } }
+```
+
+Set `STAND_BRIDGE_PORT` if your Bridge runs on another port.
 
 ## Build from source
 

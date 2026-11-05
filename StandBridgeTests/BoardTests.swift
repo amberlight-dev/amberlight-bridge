@@ -17,7 +17,7 @@ final class BoardTests: XCTestCase {
     override func setUp() async throws {
         dir = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
         try FileManager.default.createDirectory(at: dir.appending(path: "sessions"), withIntermediateDirectories: true)
-        try write(["pid": Int(getpid()), "sessionId": "s1", "cwd": "/x/orbit", "name": "Fix", "status": "busy", "statusUpdatedAt": 1000], to: "sessions/1.json")
+        try write(["pid": Int(getpid()), "sessionId": "s1", "cwd": "/x/app", "name": "Fix", "status": "busy", "statusUpdatedAt": 1000], to: "sessions/1.json")
         try write(["five_hour": ["used_percentage": 42, "resets_at": 99], "seven_day": ["used_percentage": 18]], to: "stand-usage.json")
         board = Board(claudeDir: dir, standWaitSeconds: 2)
     }
@@ -29,7 +29,7 @@ final class BoardTests: XCTestCase {
     func testSnapshotMapsRegistry() {
         let session = sessions(board.snapshot(standAnswers: false))[0]
         XCTAssertEqual(session["state"] as? String, "working")
-        XCTAssertEqual(session["repo"] as? String, "orbit")
+        XCTAssertEqual(session["repo"] as? String, "app")
     }
 
     func testStatuslineUsageBecomesClaudeProvider() {
@@ -133,7 +133,7 @@ final class BoardTests: XCTestCase {
     }
 
     private func idleBoard() throws -> Board {
-        try write(["pid": Int(getpid()), "sessionId": "s1", "cwd": "/x/orbit", "name": "Fix", "status": "idle"], to: "sessions/1.json")
+        try write(["pid": Int(getpid()), "sessionId": "s1", "cwd": "/x/app", "name": "Fix", "status": "idle"], to: "sessions/1.json")
         return Board(claudeDir: dir, doneDelay: 0.2)
     }
 
@@ -144,6 +144,27 @@ final class BoardTests: XCTestCase {
         try await Task.sleep(for: .milliseconds(500))
         XCTAssertEqual(lastEvent(board)?["kind"] as? String, "done")
         XCTAssertEqual(lastEvent(board)?["text"] as? String, "Alles grün.\nDetails")
+    }
+
+    func testHeldStopReturnsReplyFromStand() async throws {
+        _ = board.snapshot(standAnswers: true)
+        let stop: JSON = ["hook_event_name": "Stop", "session_id": "s1", "last_assistant_message": "Soll ich committen?"]
+        let board = board!
+        let held = Task { @MainActor in
+            let result = await board.handleHook(stop)
+            return [result["decision"] as? String ?? "", result["reason"] as? String ?? ""]
+        }
+        try await Task.sleep(for: .milliseconds(200))
+        XCTAssertTrue(board.deliverHeldReply("Ja", to: "s1"))
+        let result = await held.value
+        XCTAssertEqual(result[0], "block")
+        XCTAssertTrue(result[1].contains("Ja"))
+        XCTAssertFalse(board.deliverHeldReply("Nochmal", to: "s1"))
+    }
+
+    func testStopWithoutStandReturnsImmediately() async {
+        let result = await board.handleHook(["hook_event_name": "Stop", "session_id": "s1", "last_assistant_message": "Soll ich committen?"])
+        XCTAssertTrue(result.isEmpty)
     }
 
     func testActivityAfterStopCancelsDone() async throws {

@@ -1,6 +1,26 @@
 {
   "sourceLanguage" : "de",
   "strings" : {
+    "%1$lld h %2$lld Min." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld h %2$lld min"
+          }
+        }
+      }
+    },
+    "%@ abspielen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play %@"
+          }
+        }
+      }
+    },
     "%@ antwortet mit %lld" : {
       "localizations" : {
         "de" : {
@@ -57,6 +77,16 @@
         }
       }
     },
+    "%@ in Google Chat, zuletzt von %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ in Google Chat, latest from %@"
+          }
+        }
+      }
+    },
     "%@ lehnt den Token ab" : {
       "localizations" : {
         "en" : {
@@ -83,6 +113,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ is asleep"
+          }
+        }
+      }
+    },
+    "%@ stoppen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop %@"
           }
         }
       }
@@ -165,6 +205,16 @@
         }
       }
     },
+    "%lld Fehler" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld errors"
+          }
+        }
+      }
+    },
     "%lld Min" : {
       "localizations" : {
         "en" : {
@@ -175,12 +225,82 @@
         }
       }
     },
+    "%lld Min." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min"
+          }
+        }
+      }
+    },
+    "%lld Subagents" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld subagents"
+          }
+        }
+      }
+    },
     "%lld Zeichen" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld characters"
+          }
+        }
+      }
+    },
+    "%lld fertig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld done"
+          }
+        }
+      }
+    },
+    "%lld früher" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld earlier"
+          }
+        }
+      }
+    },
+    "%lld h" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld h"
+          }
+        }
+      }
+    },
+    "%lld laufen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld running"
+          }
+        }
+      }
+    },
+    "%lld neue Nachrichten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld new messages"
           }
         }
       }
@@ -237,6 +357,56 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Off:** The Bridge puts the text on the clipboard and brings the session’s window to the front. You paste and send it yourself with ⌘V and Return."
+          }
+        }
+      }
+    },
+    "+ %lld weitere" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ %lld more"
+          }
+        }
+      }
+    },
+    "+ %lld weitere Sessions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ %lld more sessions"
+          }
+        }
+      }
+    },
+    "+ 1 weitere Session" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+ 1 more session"
+          }
+        }
+      }
+    },
+    "1 läuft" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 running"
+          }
+        }
+      }
+    },
+    "1 neue Nachricht" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 new message"
           }
         }
       }
@@ -401,6 +571,26 @@
         }
       }
     },
+    "Abfahrten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Departures"
+          }
+        }
+      }
+    },
+    "Abfahrtstafel einer Station: Zeit, Ziel und Bahnsteig in Echtzeit." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Departure board of a station: time, destination and platform, live."
+          }
+        }
+      }
+    },
     "Abfrage-Intervall" : {
       "localizations" : {
         "en" : {
@@ -467,6 +657,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Address"
+          }
+        }
+      }
+    },
+    "Agents" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agents"
           }
         }
       }
@@ -557,6 +757,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "All"
+          }
+        }
+      }
+    },
+    "Alles gelesen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All read"
           }
         }
       }
@@ -721,6 +931,26 @@
         }
       }
     },
+    "Anhang" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attachment"
+          }
+        }
+      }
+    },
+    "Anmeldung abgebrochen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign-in cancelled"
+          }
+        }
+      }
+    },
     "Anordnung" : {
       "localizations" : {
         "en" : {
@@ -821,6 +1051,26 @@
         }
       }
     },
+    "Antwort von Google nicht lesbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google’s reply is unreadable"
+          }
+        }
+      }
+    },
+    "Antwort von Google passt nicht zur Anfrage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google’s reply does not match the request"
+          }
+        }
+      }
+    },
     "Antworten" : {
       "localizations" : {
         "en" : {
@@ -901,12 +1151,32 @@
         }
       }
     },
-    "Arbeitende und wartende Sessions stehen immer da. Der Projektfilter vergleicht mit dem Ordnernamen." : {
+    "Arbeitende und wartende Sessions stehen immer da. Der Projektfilter vergleicht mit dem Ordnernamen. Im Vollbild legen sich „Fertig“ und „Wartet auf dich“ wie eine Freigabe über den ganzen Stand." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Working and waiting sessions are always shown. The project filter matches the folder name."
+            "value" : "Working and waiting sessions are always shown. The project filter matches the folder name. In full screen, “Done” and “Waiting for you” cover the whole Stand like an approval."
+          }
+        }
+      }
+    },
+    "Arbeitende und wartende Sessions stehen immer da. „Nur aktive“ zeigt nur sie. Der Projektfilter vergleicht mit dem Ordnernamen. Der Aufgabenfortschritt kommt aus der Aufgabenliste der Session. Im Vollbild legen sich „Fertig“ und „Wartet auf dich“ wie eine Freigabe über den ganzen Stand." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Working and waiting sessions always show. “Active only” shows just those. The project filter matches the folder name. Task progress comes from the session’s task list. In full screen, “Done” and “Waiting for you” cover the whole stand like an approval."
+          }
+        }
+      }
+    },
+    "Arbeitet ohne Subagents" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Working without subagents"
           }
         }
       }
@@ -927,6 +1197,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Breathes slowly. When it reacts to sessions, it speeds up while work is in progress and flashes briefly when something is done."
+          }
+        }
+      }
+    },
+    "Audio nicht verfügbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio unavailable"
           }
         }
       }
@@ -973,6 +1253,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "There was no room on “%@” – the copy is now on a new page."
+          }
+        }
+      }
+    },
+    "Aufgabenfortschritt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Task progress"
           }
         }
       }
@@ -1347,12 +1637,42 @@
         }
       }
     },
+    "Bereich" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Space"
+          }
+        }
+      }
+    },
+    "Bericht abgegeben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Report handed in"
+          }
+        }
+      }
+    },
     "Beschriftung" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Caption"
+          }
+        }
+      }
+    },
+    "Bitte alle angefragten Google-Berechtigungen erlauben und neu verbinden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please allow all requested Google permissions and reconnect"
           }
         }
       }
@@ -1407,6 +1727,26 @@
         }
       }
     },
+    "Bridge nicht erreichbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bridge unreachable"
+          }
+        }
+      }
+    },
+    "Bridge nicht verbunden · Tippen für Einstellungen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bridge not connected · Tap for settings"
+          }
+        }
+      }
+    },
     "Bridge-Adresse, Code und Berechtigungen gehören zum Gerät und werden in der Amberlight-App eingestellt." : {
       "localizations" : {
         "en" : {
@@ -1433,6 +1773,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your Mac’s CPU, RAM and network."
+          }
+        }
+      }
+    },
+    "Chat-App" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat app"
+          }
+        }
+      }
+    },
+    "Chat-App im Cloud-Projekt konfigurieren (Chat API → Konfiguration)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configure the Chat app in the Cloud project (Chat API → Configuration)"
           }
         }
       }
@@ -1467,12 +1827,32 @@
         }
       }
     },
-    "Claude-Sessions" : {
+    "Client-ID" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Claude Sessions"
+            "value" : "Client ID"
+          }
+        }
+      }
+    },
+    "Client-ID oder Client-Secret stimmt nicht" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Client ID or client secret is wrong"
+          }
+        }
+      }
+    },
+    "Client-Secret" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Client secret"
           }
         }
       }
@@ -1578,12 +1958,12 @@
         }
       }
     },
-    "Deine Claude- und Codex-Sessions mit Status, Fragen und Freigaben." : {
+    "Datum (TT.MM.)" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your Claude and Codex sessions with status, questions and approvals."
+            "value" : "Date (DD.MM.)"
           }
         }
       }
@@ -1598,32 +1978,22 @@
         }
       }
     },
+    "Deine laufenden Agent-Sessions mit Status, Fragen, Freigaben, Subagents und Aufgabenfortschritt – als Liste oder als Karten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your running agent sessions with status, questions, approvals, subagents and task progress – as a list or as cards."
+          }
+        }
+      }
+    },
     "Deine nächsten Termine heute und morgen." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your next events today and tomorrow."
-          }
-        }
-      }
-    },
-    "Deine offenen Orbit-Tickets, ein Tipp öffnet sie am Mac." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your open Orbit tickets – tap to open them on your Mac."
-          }
-        }
-      }
-    },
-    "Den Token legst du in Orbit unter Konto → Einstellungen → Personal Access Tokens an. Das Widget zeigt deine offenen Tickets." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create the token in Orbit under Account → Settings → Personal Access Tokens. The widget shows your open tickets."
           }
         }
       }
@@ -1708,6 +2078,16 @@
         }
       }
     },
+    "Die nächsten Züge von A nach B mit Echtzeit, Bahnsteig und Verspätung." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The next trains from A to B with live times, platform and delay."
+          }
+        }
+      }
+    },
     "Diese Woche" : {
       "localizations" : {
         "en" : {
@@ -1724,6 +2104,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "This widget doesn’t need an account."
+          }
+        }
+      }
+    },
+    "Direktnachricht" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Direct message"
+          }
+        }
+      }
+    },
+    "Du kannst dieses Fenster schließen." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can close this window."
           }
         }
       }
@@ -1878,12 +2278,42 @@
         }
       }
     },
+    "Eigener Stream" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom stream"
+          }
+        }
+      }
+    },
     "Eigenes Widget" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Custom Widget"
+          }
+        }
+      }
+    },
+    "Eigenes Widget lädt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom widget is loading"
+          }
+        }
+      }
+    },
+    "Ein MP3- oder AAC-Stream über https, etwa von Icecast oder Shoutcast. Er steht vor den NTS-Sendern." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An MP3 or AAC stream over https, for example from Icecast or Shoutcast. It comes before the NTS stations."
           }
         }
       }
@@ -1935,6 +2365,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Paste into another Amberlight Bridge under Widget Library → Paste. Credentials aren’t included; everyone adds their own."
+          }
+        }
+      }
+    },
+    "Eingerichtet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set up"
           }
         }
       }
@@ -2035,6 +2475,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Also removes the credentials from the keychain and the widget from all pages."
+          }
+        }
+      }
+    },
+    "Entfernt den Eintrag %@ aus %@. Vorher wird eine Sicherungskopie angelegt." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Removes the %@ entry from %@. A backup is made first."
           }
         }
       }
@@ -2160,6 +2610,16 @@
         }
       }
     },
+    "Fehler" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
+    },
     "Fehlt" : {
       "localizations" : {
         "en" : {
@@ -2236,6 +2696,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Done"
+          }
+        }
+      }
+    },
+    "Fertig und Wartet im Vollbild" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done and Waiting in full screen"
           }
         }
       }
@@ -2326,6 +2796,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Progress "
+          }
+        }
+      }
+    },
+    "Frage anzeigen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show question"
           }
         }
       }
@@ -2581,6 +3061,126 @@
         }
       }
     },
+    "Google Chat" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google Chat"
+          }
+        }
+      }
+    },
+    "Google Chat API im Cloud-Projekt aktivieren" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable the Google Chat API in the Cloud project"
+          }
+        }
+      }
+    },
+    "Google Chat in Stand Bridge unter Konten verbinden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect Google Chat in Stand Bridge under Accounts"
+          }
+        }
+      }
+    },
+    "Google Chat lädt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google Chat is loading"
+          }
+        }
+      }
+    },
+    "Google Chat nicht erreichbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google Chat unreachable"
+          }
+        }
+      }
+    },
+    "Google Chat · %@ ungelesen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google Chat · %@ unread"
+          }
+        }
+      }
+    },
+    "Google Chat: alles gelesen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google Chat: all read"
+          }
+        }
+      }
+    },
+    "Google antwortet mit %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google responds with %lld"
+          }
+        }
+      }
+    },
+    "Google nicht erreichbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google unreachable"
+          }
+        }
+      }
+    },
+    "Google-Kontingent erreicht – gleich wieder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google quota reached – back shortly"
+          }
+        }
+      }
+    },
+    "Google-Konto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google account"
+          }
+        }
+      }
+    },
+    "Google-Zugang abgelaufen – in Stand Bridge unter Konten neu verbinden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google access expired – reconnect in Stand Bridge under Accounts"
+          }
+        }
+      }
+    },
     "Grau" : {
       "localizations" : {
         "en" : {
@@ -2601,6 +3201,16 @@
         }
       }
     },
+    "Großbuchstaben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uppercase"
+          }
+        }
+      }
+    },
     "Große Zahl" : {
       "localizations" : {
         "en" : {
@@ -2617,6 +3227,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Big number with history"
+          }
+        }
+      }
+    },
+    "Gruppenchat" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group chat"
+          }
+        }
+      }
+    },
+    "Gruppieren nach" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group by"
           }
         }
       }
@@ -2757,6 +3387,16 @@
         }
       }
     },
+    "Holt das Fenster am Mac nach vorn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Brings the window to the front on the Mac"
+          }
+        }
+      }
+    },
     "Hook von Claude Code" : {
       "localizations" : {
         "en" : {
@@ -2847,6 +3487,16 @@
         }
       }
     },
+    "Im Browser bei Google anmelden …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in to Google in the browser …"
+          }
+        }
+      }
+    },
     "Im Finder zeigen" : {
       "localizations" : {
         "en" : {
@@ -2903,6 +3553,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Scan it in the Amberlight app during setup or under Settings → “Pair Again”."
+          }
+        }
+      }
+    },
+    "In der Google Cloud Console die Google Chat API aktivieren und einen OAuth-Client vom Typ „Desktop-App“ anlegen. „Mit Google verbinden“ öffnet den Browser, die Antwort fängt die Bridge lokal auf 127.0.0.1 ab. Das Widget zeigt ungelesene Nachrichten; ihre Texte bleiben nur im Speicher." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In the Google Cloud Console, enable the Google Chat API and create an OAuth client of type “Desktop app”. “Connect with Google” opens the browser; the Bridge catches the reply locally on 127.0.0.1. The widget shows unread messages; their texts stay in memory only."
           }
         }
       }
@@ -2987,6 +3647,26 @@
         }
       }
     },
+    "Internetradio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Internet radio"
+          }
+        }
+      }
+    },
+    "Internetradio direkt auf dem iPhone: NTS live und Infinite Mixtapes oder dein eigener Stream." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Internet radio right on the iPhone: NTS live and Infinite Mixtapes or your own stream."
+          }
+        }
+      }
+    },
     "Intervall" : {
       "localizations" : {
         "en" : {
@@ -3057,6 +3737,16 @@
         }
       }
     },
+    "Karten" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cards"
+          }
+        }
+      }
+    },
     "Kein Amberlight-Widget – der Text beginnt nicht mit „%@“" : {
       "localizations" : {
         "en" : {
@@ -3117,6 +3807,16 @@
         }
       }
     },
+    "Keine Antwort aus dem Browser – bitte erneut verbinden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No reply from the browser – please connect again"
+          }
+        }
+      }
+    },
     "Keine Antwort nach %lld s" : {
       "localizations" : {
         "en" : {
@@ -3137,12 +3837,52 @@
         }
       }
     },
+    "Keine Subagents" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No subagents"
+          }
+        }
+      }
+    },
+    "Keine aktiven Sessions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No active sessions"
+          }
+        }
+      }
+    },
+    "Keine aktiven Sessions · %lld ältere" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No active sessions · %lld older"
+          }
+        }
+      }
+    },
     "Klein" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Small"
+          }
+        }
+      }
+    },
+    "Kleinbuchstaben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lowercase"
           }
         }
       }
@@ -3733,6 +4473,16 @@
         }
       }
     },
+    "Mein Sender" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My station"
+          }
+        }
+      }
+    },
     "Methode" : {
       "localizations" : {
         "en" : {
@@ -3763,6 +4513,26 @@
         }
       }
     },
+    "Minuten bis dahin" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minutes until then"
+          }
+        }
+      }
+    },
+    "Mit Google verbinden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect with Google"
+          }
+        }
+      }
+    },
     "Mitte" : {
       "localizations" : {
         "en" : {
@@ -3789,6 +4559,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Average"
+          }
+        }
+      }
+    },
+    "Nach" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To"
           }
         }
       }
@@ -3843,6 +4623,16 @@
         }
       }
     },
+    "Nachricht ohne Text" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Message without text"
+          }
+        }
+      }
+    },
     "Nachttisch" : {
       "localizations" : {
         "en" : {
@@ -3869,6 +4659,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Network"
+          }
+        }
+      }
+    },
+    "Neu verbinden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reconnect"
           }
         }
       }
@@ -3909,6 +4709,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "New Widget"
+          }
+        }
+      }
+    },
+    "Nicht eingerichtet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not set up"
+          }
+        }
+      }
+    },
+    "Nicht verbunden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not connected"
           }
         }
       }
@@ -4033,6 +4853,16 @@
         }
       }
     },
+    "Node.js fehlt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Node.js missing"
+          }
+        }
+      }
+    },
     "Normal" : {
       "localizations" : {
         "en" : {
@@ -4059,6 +4889,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Project only"
+          }
+        }
+      }
+    },
+    "Nur Symbol und Temperatur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Symbol and temperature only"
           }
         }
       }
@@ -4129,6 +4969,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Next Event"
+          }
+        }
+      }
+    },
+    "Nächster Zug" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next train"
           }
         }
       }
@@ -4209,26 +5059,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Open-Meteo temperature"
-          }
-        }
-      }
-    },
-    "Orbit" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orbit"
-          }
-        }
-      }
-    },
-    "Orbit-Tickets" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orbit Tickets"
           }
         }
       }
@@ -4373,6 +5203,26 @@
         }
       }
     },
+    "Platz anklicken und ein Micro-Widget wählen. Eigene Widgets zeigen in Ecken Wert und Ziel als Bogen, an Kanten als Laufschrift. Die Plätze gelten für alle Seiten, die Kamera sitzt hier links." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click a spot and pick a micro widget. Custom widgets show value and target as an arc in corners and as a ticker along edges. The spots apply to all pages; the camera sits on the left here."
+          }
+        }
+      }
+    },
+    "Platz antippen und ein Micro-Widget wählen. Eigene Widgets zeigen in Ecken Wert und Ziel als Bogen, an Kanten als Laufschrift. Gilt für alle Seiten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap a spot and pick a micro widget. Custom widgets show value and target as an arc in corners and as a ticker along edges. Applies to all pages."
+          }
+        }
+      }
+    },
     "Platzhalter in Pfad, Query und Body: {today}, {yesterday}, {weekStart}, {weekEnd}, {monthStart}, {monthEnd} (jeweils JJJJ-MM-TT). Leere Query-Werte werden weggelassen." : {
       "localizations" : {
         "en" : {
@@ -4409,6 +5259,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Port %u is in use – trying again"
+          }
+        }
+      }
+    },
+    "Projekt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Project"
           }
         }
       }
@@ -5013,6 +5873,16 @@
         }
       }
     },
+    "Stand Bridge ist mit Google Chat verbunden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stand Bridge is connected to Google Chat"
+          }
+        }
+      }
+    },
     "Standard" : {
       "localizations" : {
         "en" : {
@@ -5039,6 +5909,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Start time"
+          }
+        }
+      }
+    },
+    "Station" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Station"
           }
         }
       }
@@ -5119,6 +5999,26 @@
         }
       }
     },
+    "Stream nicht erreichbar" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stream unreachable"
+          }
+        }
+      }
+    },
+    "Stunden der laufenden Woche, ab 2×2 als Balken pro Tag, in einer Rand-Ecke als Bogen bis zum Wochenziel." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hours of the current week, from 2×2 as bars per day, in an edge corner as an arc toward the weekly target."
+          }
+        }
+      }
+    },
     "Stunden der laufenden Woche, ab 2×2 als Balken pro Tag." : {
       "localizations" : {
         "en" : {
@@ -5135,6 +6035,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disruption"
+          }
+        }
+      }
+    },
+    "Subagents" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subagents"
           }
         }
       }
@@ -5175,6 +6085,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sum"
+          }
+        }
+      }
+    },
+    "Summe der heute erfassten Stunden als Zahl, in einer Rand-Ecke als Bogen bis zum Tagesziel." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hours logged today as a number, in an edge corner as an arc toward the daily target."
           }
         }
       }
@@ -5379,6 +6299,16 @@
         }
       }
     },
+    "Tokens liegen im macOS-Schlüsselbund und verlassen den Mac nie. Das iPhone bekommt nur Tickets, Pipelines und ungelesene Chat-Nachrichten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tokens live in the macOS keychain and never leave the Mac. The iPhone only receives tickets, pipelines and unread chat messages."
+          }
+        }
+      }
+    },
     "Tokens liegen im macOS-Schlüsselbund und verlassen den Mac nie. Das iPhone bekommt nur die Ticket- und Pipeline-Liste." : {
       "localizations" : {
         "en" : {
@@ -5399,12 +6329,32 @@
         }
       }
     },
+    "Trennen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disconnect"
+          }
+        }
+      }
+    },
     "Trenner" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Divider"
+          }
+        }
+      }
+    },
+    "Trägt den Server %@ in %@ ein. Er startet das mitgelieferte Skript mit Node und spricht nur mit dieser Bridge auf 127.0.0.1; den Kopplungscode liest er selbst aus ~/.config/duo-stand/token. Vorher wird eine Sicherungskopie angelegt.\n\nClaude Code danach neu starten." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adds the server %@ to %@. It runs the bundled script with Node and only talks to this Bridge on 127.0.0.1; it reads the pairing code itself from ~/.config/duo-stand/token. A backup is made first.\n\nRestart Claude Code afterwards."
           }
         }
       }
@@ -5425,6 +6375,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Clock in Accent Color"
+          }
+        }
+      }
+    },
+    "Uhrzeit" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
+    },
+    "Uhrzeit (HH:mm)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time (HH:mm)"
           }
         }
       }
@@ -5455,6 +6425,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Switch Over …"
+          }
+        }
+      }
+    },
+    "Unbekannt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown"
+          }
+        }
+      }
+    },
+    "Ungelesene Google-Chat-Nachrichten. Neues leuchtet kurz auf, ein Tipp öffnet den Chat am Mac." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unread Google Chat messages. New ones light up briefly, a tap opens the chat on the Mac."
           }
         }
       }
@@ -5595,6 +6585,46 @@
         }
       }
     },
+    "Verbindungen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connections"
+          }
+        }
+      }
+    },
+    "Verbunden als %1$@ · %2$lld ungelesen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connected as %1$@ · %2$lld unread"
+          }
+        }
+      }
+    },
+    "Verbunden als %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connected as %@"
+          }
+        }
+      }
+    },
+    "Verbunden als %@ · lese Postfach …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connected as %@ · reading inbox …"
+          }
+        }
+      }
+    },
     "Verbunden · %@" : {
       "localizations" : {
         "en" : {
@@ -5645,12 +6675,32 @@
         }
       }
     },
+    "Von" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From"
+          }
+        }
+      }
+    },
     "Vorab starten: Läuft zur Startzeit kein 5h-Fenster, schickt die Bridge einen Mini-Prompt mit Haiku. Das Fenster beginnt so früher und setzt im Arbeitstag einmal öfter zurück. Der Mac muss dafür wach sein; bis drei Stunden danach wird nachgeholt." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Start early: if no 5-hour window is running at the start time, the Bridge sends a tiny prompt with Haiku. The window starts earlier and resets once more during the workday. The Mac has to be awake for this; it catches up for up to three hours afterwards."
+          }
+        }
+      }
+    },
+    "Vorschau ausblenden" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide preview"
           }
         }
       }
@@ -5825,6 +6875,16 @@
         }
       }
     },
+    "Wetter darunter" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather below"
+          }
+        }
+      }
+    },
     "Wichtig" : {
       "localizations" : {
         "en" : {
@@ -5915,6 +6975,36 @@
         }
       }
     },
+    "Widget-MCP" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Widget MCP"
+          }
+        }
+      }
+    },
+    "Widget-MCP entfernen?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove the widget MCP?"
+          }
+        }
+      }
+    },
+    "Widget-MCP für Claude Code einrichten?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set up the widget MCP for Claude Code?"
+          }
+        }
+      }
+    },
     "Widgets" : {
       "localizations" : {
         "en" : {
@@ -5981,6 +7071,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Week"
+          }
+        }
+      }
+    },
+    "Wochentag" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weekday"
           }
         }
       }
@@ -6055,12 +7155,32 @@
         }
       }
     },
+    "Zeigt die offene Frage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows the open question"
+          }
+        }
+      }
+    },
     "Zeigt jetzt" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Showing now"
+          }
+        }
+      }
+    },
+    "Zeigt nur Absender, Bereich und Anzahl. Der Nachrichtentext verlässt den Mac dann nicht." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows only sender, space and count. The message text then never leaves the Mac."
           }
         }
       }
@@ -6085,6 +7205,26 @@
         }
       }
     },
+    "Zeilen-Label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Row label"
+          }
+        }
+      }
+    },
+    "Zeilen-Text" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Row text"
+          }
+        }
+      }
+    },
     "Zeilen: %lld" : {
       "localizations" : {
         "en" : {
@@ -6101,6 +7241,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Time"
+          }
+        }
+      }
+    },
+    "Ziel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Target"
           }
         }
       }
@@ -6161,6 +7311,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Credentials are stored in the macOS keychain, tied to this widget and %@. They only go to this host, never to the iPhone and never into an export."
+          }
+        }
+      }
+    },
+    "Zugriff in Google abgelehnt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Access denied in Google"
           }
         }
       }
@@ -6245,6 +7405,16 @@
         }
       }
     },
+    "abgebrochen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "aborted"
+          }
+        }
+      }
+    },
     "activities" : {
       "localizations" : {
         "en" : {
@@ -6295,6 +7465,16 @@
         }
       }
     },
+    "arbeitet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "working"
+          }
+        }
+      }
+    },
     "data.items (leer = Wurzel)" : {
       "localizations" : {
         "en" : {
@@ -6321,6 +7501,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "the host"
+          }
+        }
+      }
+    },
+    "fertig" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "done"
+          }
+        }
+      }
+    },
+    "fertig vor %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "done %@ ago"
+          }
+        }
+      }
+    },
+    "gerade eben" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "just now"
+          }
+        }
+      }
+    },
+    "gestoppt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "stopped"
           }
         }
       }
@@ -6365,16 +7585,6 @@
         }
       }
     },
-    "https://orbit.example.com" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "https://orbit.example.com"
-          }
-        }
-      }
-    },
     "iPhone" : {
       "localizations" : {
         "en" : {
@@ -6395,12 +7605,32 @@
         }
       }
     },
+    "in %lld min" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "in %lld min"
+          }
+        }
+      }
+    },
     "ist gleich" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "equals"
+          }
+        }
+      }
+    },
+    "jetzt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "now"
           }
         }
       }
@@ -6475,12 +7705,42 @@
         }
       }
     },
+    "startet …" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "starting …"
+          }
+        }
+      }
+    },
     "value >= 1" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "value >= 1"
+          }
+        }
+      }
+    },
+    "vor %lld Min." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min ago"
+          }
+        }
+      }
+    },
+    "wartet auf dich" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "waiting for you"
           }
         }
       }
@@ -6511,6 +7771,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "e.g. running >= 1"
+          }
+        }
+      }
+    },
+    "zuletzt %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "last %@"
           }
         }
       }
@@ -6555,6 +7825,26 @@
         }
       }
     },
+    "Öffis (ÖBB)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Public transport (ÖBB)"
+          }
+        }
+      }
+    },
+    "Öffnet den Chat am Mac" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the chat on the Mac"
+          }
+        }
+      }
+    },
     "Über Amberlight Bridge" : {
       "localizations" : {
         "en" : {
@@ -6571,6 +7861,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "About …"
+          }
+        }
+      }
+    },
+    "Überschrift" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heading"
           }
         }
       }
@@ -6611,6 +7911,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "“%@” looks like credentials – enter them under Authentication"
+          }
+        }
+      }
+    },
+    "„+ N ältere“" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“+ N older”"
           }
         }
       }

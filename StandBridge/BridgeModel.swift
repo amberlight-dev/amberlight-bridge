@@ -20,6 +20,8 @@ final class BridgeModel {
     private(set) var statuslineState = ClaudeSettings.StatuslineState.missing
     private(set) var codexHookState = CodexSettings.HookState.missing
     private(set) var codexUsageFound = false
+    private(set) var mcpState = McpSettings.State.missing
+    private(set) var nodeURL: URL?
     private(set) var message: String?
     var availableUpdate: String?
     let tokenRenewed = BridgeIdentity.isLegacyToken()
@@ -42,6 +44,7 @@ final class BridgeModel {
             let token = try BridgeIdentity.loadToken()
             server = BridgeServer(board: Board(claudeDir: Self.claudeDir), layout: layout, token: token, port: port, hostName: BridgeIdentity.localHostName)
             server?.custom = { [customWidgets] in customWidgets.feedJSON(only: $0) }
+            server?.studio = { [customWidgets] in await CustomStudioAPI.handle($0, store: customWidgets) }
             if !Self.isTestHost {
                 server?.start()
                 Task { [customWidgets] in await customWidgets.run() }
@@ -54,6 +57,7 @@ final class BridgeModel {
             message = String(localized: "Token konnte nicht angelegt werden: \(error.localizedDescription)")
         }
         refresh()
+        if !Self.isTestHost { refreshOutdatedMcpEntry() }
     }
 
     private static var launchSection: BridgeSidebarItem? {
@@ -80,6 +84,16 @@ final class BridgeModel {
         statuslineState = ClaudeSettings.statuslineState(settings)
         codexHookState = CodexSettings.hookState((try? ClaudeSettings.read(CodexSettings.hooksFile)) ?? [:])
         codexUsageFound = CodexUsage.provider(in: CodexSettings.sessionsDir) != nil
+        nodeURL = McpSettings.nodeURL()
+        mcpState = McpSettings.bundledScript.map {
+            McpSettings.state((try? ClaudeSettings.read(McpSettings.configFile)) ?? [:], script: $0.path)
+        } ?? .missing
+    }
+
+    private func refreshOutdatedMcpEntry() {
+        guard mcpState == .outdated, let script = McpSettings.bundledScript else { return }
+        try? ClaudeSettings.update(McpSettings.configFile, backup: false) { McpSettings.installing($0, script: script.path) }
+        refresh()
     }
 
     func setLoginItem(_ enabled: Bool) {
@@ -122,6 +136,19 @@ final class BridgeModel {
         guard confirm(String(localized: "Codex-Hooks entfernen?"),
                       String(localized: "Entfernt alle Amberlight-Bridge-Hooks aus \(CodexSettings.hooksFile.path). Vorher wird eine Sicherungskopie angelegt.")) else { return }
         updateSettings(CodexSettings.hooksFile, ClaudeSettings.removingHooks)
+    }
+
+    func installMcp() {
+        guard let script = McpSettings.bundledScript else { return }
+        guard confirm(String(localized: "Widget-MCP für Claude Code einrichten?"),
+                      String(localized: "Trägt den Server \(McpSettings.serverName) in \(McpSettings.configFile.path) ein. Er startet das mitgelieferte Skript mit Node und spricht nur mit dieser Bridge auf 127.0.0.1; den Kopplungscode liest er selbst aus ~/.config/duo-stand/token. Vorher wird eine Sicherungskopie angelegt.\n\nClaude Code danach neu starten.")) else { return }
+        updateSettings(McpSettings.configFile) { McpSettings.installing($0, script: script.path) }
+    }
+
+    func removeMcp() {
+        guard confirm(String(localized: "Widget-MCP entfernen?"),
+                      String(localized: "Entfernt den Eintrag \(McpSettings.serverName) aus \(McpSettings.configFile.path). Vorher wird eine Sicherungskopie angelegt.")) else { return }
+        updateSettings(McpSettings.configFile, McpSettings.removing)
     }
 
     func installStatusline() {

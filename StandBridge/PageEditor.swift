@@ -5,6 +5,7 @@ struct PageEditor: View {
     @Binding var selectedItem: PlacedWidget.ID?
     let shortcutCount: Int
     let edges: EdgeConfig
+    let globalTint: BackgroundTint
     let onEdges: (EdgeConfig) -> Void
     let onChange: (StandPage) -> Void
     let customWidgets: [CustomWidgetDefinition]
@@ -22,7 +23,7 @@ struct PageEditor: View {
         VStack(alignment: .leading, spacing: 16) {
             header
             if editsEdges {
-                EdgeEditor(page: page, edges: edges, onChange: onEdges)
+                EdgeEditor(page: page, edges: edges, customWidgets: customWidgets, onChange: onEdges)
             } else {
                 PageCanvas(
                     page: page,
@@ -111,7 +112,7 @@ struct PageEditor: View {
             }
             .frame(maxWidth: 300)
             if let style = page.style.background, style.usesTint {
-                PageTintButton(style: style, tint: page.style.tint) { tint in edit { $0.style.tint = tint; return true } }
+                PageTintButton(style: style, tint: page.style.tint, globalTint: globalTint) { tint in edit { $0.style.tint = tint; return true } }
             }
             Toggle("Gedimmt", isOn: Binding(
                 get: { page.style.dimmed },

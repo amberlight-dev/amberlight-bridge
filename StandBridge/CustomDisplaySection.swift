@@ -27,6 +27,8 @@ struct CustomDisplaySection: View {
                     TextField("Minimum", value: $display.gaugeMin, format: .number)
                     TextField("Maximum", value: $display.gaugeMax, format: .number)
                 }
+            } else {
+                TextField("Ziel", value: $display.target, format: .number, prompt: Text("optional, z. B. 38,5"))
             }
             if display.style == .status { rules }
         } header: {

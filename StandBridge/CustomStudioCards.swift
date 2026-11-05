@@ -112,6 +112,8 @@ struct CustomSetupCard: View {
             labeled(label) { SecureField(label, text: $secret.value, prompt: Text(prompt)) }
         case .query(let name, let label, let prompt):
             labeled(label) { TextField(label, text: query(name), prompt: Text(prompt)) }
+        case .variable(let name, let label, let prompt):
+            labeled(label) { TextField(label, text: variable(name), prompt: Text(prompt)) }
         }
     }
 
@@ -142,6 +144,21 @@ struct CustomSetupCard: View {
             set: { value in
                 let cleaned = value.trimmingCharacters(in: .whitespaces)
                 baseURL.wrappedValue = prefix + (cleaned.isEmpty ? CustomTemplate.mocoPlaceholder : cleaned) + suffix
+            }
+        )
+    }
+
+    private func variable(_ name: String) -> Binding<String> {
+        Binding(
+            get: { draft.variables?.first { $0.name == name }?.value ?? "" },
+            set: { value in
+                var variables = draft.variables ?? []
+                if let index = variables.firstIndex(where: { $0.name == name }) {
+                    variables[index].value = value
+                } else {
+                    variables.append(.init(name: name, value: value))
+                }
+                draft.variables = variables
             }
         )
     }

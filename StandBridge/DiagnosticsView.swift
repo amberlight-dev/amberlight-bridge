@@ -53,6 +53,16 @@ struct DiagnosticsView: View {
                         }
                     }
                 }
+                LabeledContent("Widget-MCP") {
+                    HStack(spacing: 12) {
+                        StateLabel(isOK: model.mcpState == .installed && model.nodeURL != nil, ok: String(localized: "Eingerichtet"), missing: mcpProblem)
+                        switch model.mcpState {
+                        case .installed: Button("Entfernen …") { model.removeMcp() }
+                        case .outdated: Button("Aktualisieren …") { model.installMcp() }.disabled(model.nodeURL == nil)
+                        case .missing: Button("Einrichten …") { model.installMcp() }.disabled(model.nodeURL == nil)
+                        }
+                    }
+                }
                 Toggle("5h-Fenster vorab starten (experimentell)", isOn: $primeWindow)
                 if primeWindow {
                     DatePicker("Startzeit", selection: primeTime, displayedComponents: .hourAndMinute)
@@ -144,6 +154,11 @@ struct DiagnosticsView: View {
         .formStyle(.grouped)
         .navigationTitle("Diagnose")
         .onAppear { model.refresh() }
+    }
+
+    private var mcpProblem: String {
+        if model.nodeURL == nil { return String(localized: "Node.js fehlt") }
+        return model.mcpState == .outdated ? String(localized: "Veraltet") : String(localized: "Nicht eingerichtet")
     }
 
     private var hookProblem: String {

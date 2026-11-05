@@ -47,6 +47,7 @@ struct BridgeWindow: View {
                     selectedItem: $selectedItem,
                     shortcutCount: store.shortcuts.count,
                     edges: store.edges,
+                    globalTint: BackgroundTint(json: store.preferences.backgroundTint),
                     onEdges: { store.updateEdges($0) },
                     onChange: replace,
                     customWidgets: model.customWidgets.definitions,

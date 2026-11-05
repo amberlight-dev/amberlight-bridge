@@ -87,7 +87,7 @@ final class HTTPRequestTests: XCTestCase {
     func testFocusChecksTokenAndKnownSession() async throws {
         let dir = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
         try FileManager.default.createDirectory(at: dir.appending(path: "sessions"), withIntermediateDirectories: true)
-        let entry: JSON = ["pid": Int(getpid()), "sessionId": "s1", "cwd": "/x/orbit", "entrypoint": "cli"]
+        let entry: JSON = ["pid": Int(getpid()), "sessionId": "s1", "cwd": "/x/app", "entrypoint": "cli"]
         try JSONSerialization.data(withJSONObject: entry).write(to: dir.appending(path: "sessions/1.json"))
         let server = BridgeServer(board: Board(claudeDir: dir), token: "abcd1234", port: 1, hostName: "mac.local")
         var focused: [String] = []

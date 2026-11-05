@@ -25,7 +25,7 @@ final class CustomWidgetTests: XCTestCase {
     private let sample: Any = try! JSONSerialization.jsonObject(with: Data("""
     {"data": {"items": [
         {"date": "2026-10-19", "hours": 2.5, "timer_started_at": null, "project": {"name": "Stand"}},
-        {"date": "2026-10-19", "hours": 1, "timer_started_at": "", "project": {"name": "Orbit"}},
+        {"date": "2026-10-19", "hours": 1, "timer_started_at": "", "project": {"name": "Acme"}},
         {"date": "2026-10-20", "hours": "3.25", "timer_started_at": "2026-10-20T08:00:00Z", "project": {"name": "Stand"}}
     ], "total": 6.75, "odd.key": {"x": true}}}
     """.utf8))
@@ -74,8 +74,8 @@ final class CustomWidgetTests: XCTestCase {
             CustomEvaluator.selectedValue(.init(arrayPath: "data.items", valueField: field, aggregation: .first, filter: filter), in: sample)
         }
         XCTAssertEqual(JSONPath.text(first("timer_started_at", field: "project.name")), "Stand")
-        XCTAssertEqual(JSONPath.text(first("project.name == orbit", field: "date")), "2026-10-19")
-        XCTAssertEqual(JSONPath.text(first("project.name != Stand", field: "project.name")), "Orbit")
+        XCTAssertEqual(JSONPath.text(first("project.name == acme", field: "date")), "2026-10-19")
+        XCTAssertEqual(JSONPath.text(first("project.name != Stand", field: "project.name")), "Acme")
         XCTAssertEqual(JSONPath.number(CustomEvaluator.selectedValue(.init(arrayPath: "data.items", valueField: "hours", aggregation: .sum, filter: "project.name == Stand"), in: sample)), 5.75)
     }
 
@@ -94,7 +94,7 @@ final class CustomWidgetTests: XCTestCase {
     }
 
     private let mocoDay: Any = try! JSONSerialization.jsonObject(with: Data("""
-    [{"hours": 2.5, "timer_started_at": null, "project": {"name": "Orbit"}},
+    [{"hours": 2.5, "timer_started_at": null, "project": {"name": "Acme"}},
      {"hours": 1.25, "timer_started_at": "2026-10-20T08:00:00+02:00", "project": {"name": "Stand"}}]
     """.utf8))
 
@@ -135,7 +135,7 @@ final class CustomWidgetTests: XCTestCase {
     func testMocoTimerLayoutHidesRunningPartsWithoutTimer() throws {
         var definition = CustomTemplate.mocoTimer.instantiate()
         definition.confirmedOrigin = definition.origin
-        let idle = try JSONSerialization.jsonObject(with: Data(#"[{"hours": 2, "timer_started_at": null, "project": {"name": "Orbit"}}]"#.utf8))
+        let idle = try JSONSerialization.jsonObject(with: Data(#"[{"hours": 2, "timer_started_at": null, "project": {"name": "Acme"}}]"#.utf8))
         let root = try XCTUnwrap(CustomEvaluator.display(for: definition, json: idle).root)
         XCTAssertEqual(root.children?.first?.tone, .blue)
         XCTAssertEqual(root.children?.first?.children?.map(\.text), ["2:00"])

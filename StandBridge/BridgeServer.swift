@@ -33,9 +33,10 @@ final class BridgeServer {
     @ObservationIgnored var open: @MainActor (JSON) async -> Bool = MacLauncher.open
     @ObservationIgnored var openFolder: @MainActor (String) -> Bool = MacLauncher.openFolder
     @ObservationIgnored var system: @MainActor () -> JSON = SystemStats.current
-    @ObservationIgnored var orbit: @MainActor () async -> JSON = { await OrbitClient.cachedReport() }
     @ObservationIgnored var gitlab: @MainActor () async -> JSON = { await GitLabClient.cachedReport() }
+    @ObservationIgnored var googleChat: @MainActor (Bool) async -> JSON = { await GoogleChatClient.cachedReport(preview: $0) }
     @ObservationIgnored var custom: @MainActor (UUID?) -> JSON = { _ in ["widgets": [JSON]()] }
+    @ObservationIgnored var studio: @MainActor (HTTPRequest) async -> (Int, JSON) = { _ in (404, [:]) }
     @ObservationIgnored var codexUsage: @MainActor () -> JSON? = { BridgeModel.isTestHost ? nil : CodexUsage.cachedProvider(in: CodexSettings.sessionsDir) }
     @ObservationIgnored var nowPlaying: @MainActor () async -> JSON = { BridgeModel.isTestHost ? [:] : await MacNowPlaying.info() }
     @ObservationIgnored var nowPlayingArtwork: @MainActor (String?) -> JSON? = MacNowPlaying.artworkPayload
@@ -175,7 +176,7 @@ final class BridgeServer {
             guard let sessionId = request.json["sessionId"] as? String, let entry = board.session(sessionId),
                   let noteId = request.json["noteId"] as? String, let option = request.json["option"] as? Int,
                   let text = board.redeemReply(of: sessionId, noteId: noteId, option: option) else { return (404, [:]) }
-            let result = await reply(text, entry)
+            let result = board.deliverHeldReply(text, to: sessionId) ? ["sent": true, "copied": false] : await reply(text, entry)
             if result["sent"] as? Bool == true {
                 replyLog = (replyLog + [MacReply.record(sessionId: sessionId, option: option)]).suffix(20)
             }
@@ -196,12 +197,12 @@ final class BridgeServer {
         case ("GET", "/system"):
             guard isAuthorized(request) else { return (401, [:]) }
             return (200, system())
-        case ("GET", "/orbit"):
-            guard isAuthorized(request) else { return (401, [:]) }
-            return (200, await orbit())
         case ("GET", "/gitlab"):
             guard isAuthorized(request) else { return (401, [:]) }
             return (200, await gitlab())
+        case ("GET", "/gchat"):
+            guard isAuthorized(request) else { return (401, [:]) }
+            return (200, await googleChat(request.query["preview"] != "0"))
         case ("GET", "/nowplaying"):
             guard isAuthorized(request) else { return (401, [:]) }
             return (200, await nowPlaying())
@@ -212,6 +213,10 @@ final class BridgeServer {
         case ("POST", "/nowplaying"):
             guard isAuthorized(request) else { return (401, [:]) }
             return (await nowPlayingControl(request.json) ? 200 : 400, [:])
+        case (_, let path) where path.hasPrefix("/studio/"):
+            guard fromLoopback, isLoopbackRequest(request) else { return (403, [:]) }
+            guard isAuthorized(request) else { return (401, [:]) }
+            return await studio(request)
         case ("GET", "/custom"):
             guard isAuthorized(request) else { return (401, [:]) }
             guard let raw = request.query["id"] else { return (200, custom(nil)) }

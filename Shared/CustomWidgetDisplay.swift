@@ -64,6 +64,7 @@ nonisolated struct CustomWidgetDisplay: Codable, Equatable, Identifiable {
     var text: String?
     var tone: Tone?
     var progress: Double?
+    var overflow: Double?
     var points: [Point] = []
     var history: [Sample] = []
     var lines: [String]?

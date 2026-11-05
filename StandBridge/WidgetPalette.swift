@@ -6,7 +6,7 @@ struct WidgetPalette: View {
 
     var body: some View {
         List {
-            ForEach(StandWidget.offered(orbitConfigured: Accounts.orbit != nil)) { widget in
+            ForEach(StandWidget.builtIn) { widget in
                 Button { onAdd(widget, nil, nil) } label: { row(widget.symbol, widget.title, widget.blurb, widget.defaultSpan) }
                     .buttonStyle(.plain)
                     .help("\(widget.title) hinzufügen")

@@ -4,17 +4,18 @@ extension StandWidget {
     var defaultSpan: GridSpan {
         switch self {
         case .clock: GridSpan(w: 2, h: 2)
-        case .claude: GridSpan(w: 3, h: 4)
+        case .agents: GridSpan(w: 6, h: 4)
         case .usage: GridSpan(w: 2, h: 2)
         case .mascot: GridSpan(w: 2, h: 1)
         case .nowPlaying: GridSpan(w: 3, h: 2)
+        case .radio: GridSpan(w: 3, h: 2)
         case .shortcuts: GridSpan(w: 3, h: 2)
         case .mac: GridSpan(w: 2, h: 1)
         case .calendar: GridSpan(w: 2, h: 2)
         case .weather: GridSpan(w: 3, h: 2)
         case .focus: GridSpan(w: 2, h: 1)
-        case .orbit: GridSpan(w: 3, h: 2)
         case .gitlab: GridSpan(w: 3, h: 2)
+        case .googleChat: GridSpan(w: 3, h: 2)
         case .custom: GridSpan(w: 2, h: 2)
         }
     }
@@ -22,17 +23,18 @@ extension StandWidget {
     var blurb: String {
         switch self {
         case .clock: String(localized: "Uhrzeit und Datum, groß und von Weitem lesbar.")
-        case .claude: String(localized: "Deine Claude- und Codex-Sessions mit Status, Fragen und Freigaben.")
+        case .agents: String(localized: "Deine laufenden Agent-Sessions mit Status, Fragen, Freigaben, Subagents und Aufgabenfortschritt – als Liste oder als Karten.")
         case .usage: String(localized: "Wie viel deine KI-Abos verbraucht haben – Claude und Codex.")
         case .mascot: String(localized: "Läuft mit, solange deine Sessions arbeiten.")
         case .nowPlaying: String(localized: "Was gerade läuft, mit Play, Pause und Skip.")
+        case .radio: String(localized: "Internetradio direkt auf dem iPhone: NTS live und Infinite Mixtapes oder dein eigener Stream.")
         case .shortcuts: String(localized: "Apps, Links und Ordner auf dem Mac mit einem Tipp öffnen.")
         case .mac: String(localized: "CPU, RAM und Netz deines Macs.")
         case .calendar: String(localized: "Deine nächsten Termine heute und morgen.")
         case .weather: String(localized: "Temperatur jetzt und für die nächsten Stunden.")
         case .focus: String(localized: "Ein Pomodoro-Timer: Tippen startet, lange drücken setzt zurück.")
-        case .orbit: String(localized: "Deine offenen Orbit-Tickets, ein Tipp öffnet sie am Mac.")
         case .gitlab: String(localized: "Pipelines und offene Merge Requests deiner Projekte.")
+        case .googleChat: String(localized: "Ungelesene Google-Chat-Nachrichten. Neues leuchtet kurz auf, ein Tipp öffnet den Chat am Mac.")
         case .custom: String(localized: "Daten aus einer eigenen API, eingerichtet in der Widget-Bibliothek am Mac.")
         }
     }

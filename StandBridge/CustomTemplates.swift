@@ -5,6 +5,7 @@ struct CustomTemplate: Identifiable {
         case subdomain(label: String, pattern: String, prompt: String)
         case secret(label: String, prompt: String)
         case query(name: String, label: String, prompt: String)
+        case variable(name: String, label: String, prompt: String)
     }
 
     let id: String
@@ -38,7 +39,7 @@ struct CustomTemplate: Identifiable {
         all.first { $0.id == id }
     }
 
-    static let all: [CustomTemplate] = [mocoToday, mocoWeek, mocoTimer, openMeteo, githubStatus]
+    static let all: [CustomTemplate] = [mocoToday, mocoWeek, mocoTimer, oebbTrips, oebbDepartures, openMeteo, githubStatus]
 
     static let mocoPlaceholder = "FIRMA"
     private static let mocoBase = "https://\(mocoPlaceholder).mocoapp.com/api/v1"
@@ -73,26 +74,26 @@ struct CustomTemplate: Identifiable {
 
     static let mocoToday = CustomTemplate(
         id: "moco-today", group: String(localized: "MOCO Zeiterfassung"), title: String(localized: "Heute erfasst"),
-        blurb: String(localized: "Summe der heute erfassten Stunden als Zahl."), needsAccount: true,
+        blurb: String(localized: "Summe der heute erfassten Stunden als Zahl, in einer Rand-Ecke als Bogen bis zum Tagesziel."), needsAccount: true,
         definition: CustomWidgetDefinition(
             name: "MOCO heute", symbol: "clock.badge.checkmark", baseURL: mocoBase, auth: mocoAuth,
             endpoint: mocoActivities(from: "{today}", to: "{today}"), interval: 300,
             selection: .init(arrayPath: "", valueField: "hours", aggregation: .sum),
             values: [.init(name: "booked", selection: .init(arrayPath: "", valueField: "hours", aggregation: .sum))],
-            display: .init(style: .text, caption: "Heute", format: .hoursMinutes, unit: "h", layout: CustomLayoutPresets.mocoToday.layout)
+            display: .init(style: .text, caption: "Heute", format: .hoursMinutes, unit: "h", target: 8, layout: CustomLayoutPresets.mocoToday.layout)
         ),
         inputs: mocoInputs, sample: mocoDaySample
     )
 
     static let mocoWeek = CustomTemplate(
         id: "moco-week", group: String(localized: "MOCO Zeiterfassung"), title: String(localized: "Diese Woche"),
-        blurb: String(localized: "Stunden der laufenden Woche, ab 2×2 als Balken pro Tag."), needsAccount: true,
+        blurb: String(localized: "Stunden der laufenden Woche, ab 2×2 als Balken pro Tag, in einer Rand-Ecke als Bogen bis zum Wochenziel."), needsAccount: true,
         definition: CustomWidgetDefinition(
             name: "MOCO Woche", symbol: "chart.bar.xaxis", baseURL: mocoBase, auth: mocoAuth,
             endpoint: mocoActivities(from: "{weekStart}", to: "{weekEnd}"), interval: 600,
             selection: .init(arrayPath: "", valueField: "hours", aggregation: .sum, seriesPath: "", labelField: "date",
                              seriesField: "hours", groupsLabels: true, labelsAreDates: true),
-            display: .init(style: .bar, caption: "Woche", format: .hoursMinutes, unit: "h")
+            display: .init(style: .bar, caption: "Woche", format: .hoursMinutes, unit: "h", target: 38.5)
         ),
         inputs: mocoInputs, sample: mocoWeekSample
     )
@@ -120,6 +121,50 @@ struct CustomTemplate: Identifiable {
                 compact: CustomLayoutPresets.mocoTimer.compact, wide: CustomLayoutPresets.mocoTimer.wide)
         ),
         inputs: mocoInputs, sample: mocoDaySample
+    )
+
+    private static let hafasEnvelope = #""lang":"de","ver":"1.45","ext":"OEBB.1","auth":{"type":"AID","aid":"OWDL4fE4ixNiPBBm"},"client":{"type":"IPH","id":"OEBB","v":"6030600","name":"oebbPROD-ADHOC"}"#
+    private static let hafasTrainsOnly = #""jnyFltrL":[{"type":"PROD","mode":"INC","value":"4157"}]"#
+
+    private static func hafas(_ method: String, _ request: String) -> CustomWidgetDefinition.Endpoint {
+        CustomWidgetDefinition.Endpoint(method: .post, path: "mgate.exe", body: #"{\#(hafasEnvelope),"svcReqL":[{"meth":"\#(method)","req":{\#(request)}}]}"#)
+    }
+
+    static let oebbTrips = CustomTemplate(
+        id: "oebb-trips", group: String(localized: "Öffis (ÖBB)"), title: String(localized: "Verbindungen"),
+        blurb: String(localized: "Die nächsten Züge von A nach B mit Echtzeit, Bahnsteig und Verspätung."), needsAccount: false,
+        definition: CustomWidgetDefinition(
+            name: "Zug", symbol: "tram.fill", baseURL: "https://fahrplan.oebb.at/bin",
+            endpoint: hafas("TripSearch", #""depLocL":[{"type":"S","lid":"A=1@O={from}@"}],"arrLocL":[{"type":"S","lid":"A=1@O={to}@"}],"outFrwd":true,"numF":6,"getPasslist":false,"getPolyline":false,\#(hafasTrainsOnly)"#),
+            interval: 120,
+            selection: .init(valuePath: "svcResL[0].res.outConL[0].dep.dTimeR??svcResL[0].res.outConL[0].dep.dTimeS", seriesPath: "svcResL[0].res.outConL", labelField: "dep.dTimeS", seriesField: "chg",
+                             labelTemplate: "{dep.dTimeR??dep.dTimeS|time}",
+                             textTemplate: "→ {arr.aTimeR??arr.aTimeS|time} · Gl. {dep.dPltfR.txt??dep.dPltfS.txt} · {dep.dTimeFR.txtA}"),
+            variables: [.init(name: "from", value: "Wels Hbf"), .init(name: "to", value: "Linz/Donau Hbf")],
+            display: .init(style: .list, caption: String(localized: "Nächster Zug"), format: .clock)
+        ),
+        inputs: [
+            .variable(name: "from", label: String(localized: "Von"), prompt: "Wels Hbf"),
+            .variable(name: "to", label: String(localized: "Nach"), prompt: "Linz/Donau Hbf"),
+        ],
+        sample: #"{"svcResL":[{"res":{"outConL":[{"date":"20261028","chg":0,"dep":{"dPltfS":{"txt":"1"},"dTimeS":"155000","dTimeR":"155100","dTimeFR":{"txtA":"1 Minuten später"}},"arr":{"aTimeS":"160400","aTimeR":"160400"}},{"date":"20261028","chg":0,"dep":{"dPltfS":{"txt":"2"},"dTimeS":"160800","dTimeR":"160800","dTimeFR":{"txtA":"pünktlich"}},"arr":{"aTimeS":"162600"}}]}}]}"#
+    )
+
+    static let oebbDepartures = CustomTemplate(
+        id: "oebb-departures", group: String(localized: "Öffis (ÖBB)"), title: String(localized: "Abfahrten"),
+        blurb: String(localized: "Abfahrtstafel einer Station: Zeit, Ziel und Bahnsteig in Echtzeit."), needsAccount: false,
+        definition: CustomWidgetDefinition(
+            name: "Abfahrten", symbol: "clock.arrow.2.circlepath", baseURL: "https://fahrplan.oebb.at/bin",
+            endpoint: hafas("StationBoard", #""stbLoc":{"type":"S","lid":"A=1@O={station}@"},"type":"DEP","maxJny":8,\#(hafasTrainsOnly)"#),
+            interval: 120,
+            selection: .init(valuePath: "svcResL[0].res.jnyL[0].stbStop.dTimeR??svcResL[0].res.jnyL[0].stbStop.dTimeS", seriesPath: "svcResL[0].res.jnyL", labelField: "stbStop.dTimeS", seriesField: "prodX",
+                             labelTemplate: "{stbStop.dTimeR??stbStop.dTimeS|time}",
+                             textTemplate: "{dirTxt} · Gl. {stbStop.dPltfR.txt??stbStop.dPltfS.txt}"),
+            variables: [.init(name: "station", value: "Wels Hbf")],
+            display: .init(style: .list, caption: String(localized: "Abfahrten"), format: .clock)
+        ),
+        inputs: [.variable(name: "station", label: String(localized: "Station"), prompt: "Wels Hbf")],
+        sample: #"{"svcResL":[{"res":{"jnyL":[{"dirTxt":"Linz/Donau Hbf","stbStop":{"dPltfS":{"txt":"1"},"dTimeS":"155000","dTimeR":"155100"}},{"dirTxt":"Passau Hbf","stbStop":{"dPltfS":{"txt":"4"},"dTimeS":"160200"}}]}}]}"#
     )
 
     static let openMeteo = CustomTemplate(

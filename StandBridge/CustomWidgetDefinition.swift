@@ -87,10 +87,12 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
         var seriesField = ""
         var groupsLabels = false
         var labelsAreDates = false
+        var labelTemplate: String?
+        var textTemplate: String?
     }
 
     enum NumberFormat: String, Codable, CaseIterable, Identifiable {
-        case number, percent, hoursMinutes
+        case number, percent, hoursMinutes, clock
 
         var id: Self { self }
 
@@ -99,6 +101,7 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
             case .number: String(localized: "Zahl")
             case .percent: String(localized: "Prozent")
             case .hoursMinutes: "Stunden:Minuten"
+            case .clock: String(localized: "Uhrzeit")
             }
         }
     }
@@ -175,6 +178,7 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
         var rules: [StatusRule] = []
         var gaugeMin = 0.0
         var gaugeMax = 100.0
+        var target: Double?
         var lines: [String]?
         var layout: CustomNode?
         var compact: CustomNode?
@@ -190,6 +194,7 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
     var interval = 300
     var selection = Selection()
     var values: [NamedValue]?
+    var variables: [Pair]?
     var display = Display()
     var confirmedOrigin: String?
     var template: String?

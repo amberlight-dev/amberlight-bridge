@@ -11,7 +11,7 @@ final class ReplyRouteTests: XCTestCase {
     override func setUp() async throws {
         dir = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
         try FileManager.default.createDirectory(at: dir.appending(path: "sessions"), withIntermediateDirectories: true)
-        let entry: JSON = ["pid": Int(getpid()), "sessionId": "s1", "cwd": "/x/orbit", "name": "Fix", "status": "idle"]
+        let entry: JSON = ["pid": Int(getpid()), "sessionId": "s1", "cwd": "/x/app", "name": "Fix", "status": "idle"]
         try JSONSerialization.data(withJSONObject: entry).write(to: dir.appending(path: "sessions/1.json"))
         let board = Board(claudeDir: dir)
         _ = await board.handleHook(["hook_event_name": "PostToolUse", "session_id": "s1", "tool_name": "mcp__ccd_turn__wrap_up",

@@ -12,8 +12,8 @@ struct GridSpan: Codable, Hashable {
 extension StandWidget {
     var minSpan: GridSpan {
         switch self {
-        case .claude: GridSpan(w: 2, h: 2)
-        case .clock, .usage, .mascot, .nowPlaying, .shortcuts, .mac, .calendar, .weather, .focus, .orbit, .gitlab, .custom: GridSpan(w: 1, h: 1)
+        case .agents: GridSpan(w: 2, h: 2)
+        case .clock, .usage, .mascot, .nowPlaying, .radio, .shortcuts, .mac, .calendar, .weather, .focus, .gitlab, .googleChat, .custom: GridSpan(w: 1, h: 1)
         }
     }
 

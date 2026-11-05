@@ -33,10 +33,21 @@ final class Board {
         }
     }
 
+    private final class HeldStop {
+        var reply: String?
+        var waiter: CheckedContinuation<Void, Never>?
+
+        func wake() {
+            waiter?.resume()
+            waiter = nil
+        }
+    }
+
     static let standOnlineSeconds: TimeInterval = 10
     static let atMacExpirySeconds: TimeInterval = 600
     static let maxEvents = 50
     static let nextStepTool = "mcp__ccd_turn__wrap_up"
+    static let subagentScanInterval: TimeInterval = 1
 
     let claudeDir: URL
     let standWaitSeconds: TimeInterval
@@ -44,18 +55,27 @@ final class Board {
     let doneDelay: TimeInterval
     private var questions: [String: Question] = [:]
     private var waiting: [String: JSON] = [:]
+    private var heldStops: [String: HeldStop] = [:]
     private var codexSessions: [String: JSON] = [:]
     private var pendingDone: [String: UUID] = [:]
     private var events: [JSON] = []
     private var nextEventId = 1
     private var standSeenAt = Date.distantPast
     private var standAnswers = false
+    private let subagents: SubagentScanner
+    private let todoScanner: TodoScanner
+    private var todoReports: [String: [TodoScanner.Todo]] = [:]
+    private var subagentReports: [String: SubagentScanner.Report] = [:]
+    private var subagentScan: Task<Void, Never>?
+    private var subagentsScannedAt = Date.distantPast
 
     init(claudeDir: URL, standWaitSeconds: TimeInterval = 120, replyLifetime: TimeInterval = 600, doneDelay: TimeInterval = 20) {
         self.claudeDir = claudeDir
         self.standWaitSeconds = standWaitSeconds
         self.replyLifetime = replyLifetime
         self.doneDelay = doneDelay
+        subagents = SubagentScanner(projectsDir: claudeDir.appending(path: "projects"))
+        todoScanner = TodoScanner(projectsDir: claudeDir.appending(path: "projects"))
     }
 
     func handleHook(_ payload: JSON) async -> JSON {
@@ -78,8 +98,31 @@ final class Board {
             noteNextStep(of: sessionId, payload["tool_input"] as? JSON ?? [:])
         } else if event == "Stop" {
             finishTurn(of: sessionId, message: payload["last_assistant_message"] as? String ?? "")
+            if payload["agent"] as? String != "codex", let held = await holdForReply(of: sessionId) { return held }
         }
         return [:]
+    }
+
+    private func holdForReply(of sessionId: String) async -> JSON? {
+        guard waiting[sessionId] != nil, isStandAnswering else { return nil }
+        let held = HeldStop()
+        heldStops[sessionId] = held
+        let timeout = Task { [standWaitSeconds] in
+            try? await Task.sleep(for: .seconds(standWaitSeconds))
+            held.wake()
+        }
+        await withCheckedContinuation { held.waiter = $0 }
+        timeout.cancel()
+        if heldStops[sessionId] === held { heldStops[sessionId] = nil }
+        guard let reply = held.reply else { return nil }
+        return ["decision": "block", "reason": String(localized: "Antwort des Users aus Amberlight: \(reply)")]
+    }
+
+    func deliverHeldReply(_ text: String, to sessionId: String) -> Bool {
+        guard let held = heldStops[sessionId], held.reply == nil else { return false }
+        held.reply = text
+        held.wake()
+        return true
     }
 
     func snapshot(standAnswers: Bool) -> JSON {
@@ -89,11 +132,37 @@ final class Board {
         codexSessions = codexSessions.filter { Self.isAlive($0.value) }
         let registry = liveRegistry()
         forgetEndedSessions(live: Set(registry.compactMap { $0["sessionId"] as? String }))
+        scanSubagents(registry)
         let pending = Dictionary(questions.values.map { ($0.sessionId, $0) }, uniquingKeysWith: { first, _ in first })
         let sessions = registry
             .map { sessionView($0, pending: pending) }
             .sorted { Self.sortKey($0) < Self.sortKey($1) }
         return ["sessions": sessions, "events": events]
+    }
+
+    func refreshSubagents() async {
+        await subagentScan?.value
+        let sessions = Self.subagentSessions(liveRegistry())
+        subagentReports = await subagents.scan(sessions)
+        todoReports = await todoScanner.scan(sessions)
+        subagentsScannedAt = .now
+    }
+
+    private func scanSubagents(_ registry: [JSON]) {
+        guard subagentScan == nil, Date.now.timeIntervalSince(subagentsScannedAt) >= Self.subagentScanInterval else { return }
+        let sessions = Self.subagentSessions(registry)
+        subagentScan = Task { [subagents, todoScanner] in
+            let reports = await subagents.scan(sessions)
+            let todos = await todoScanner.scan(sessions)
+            self.subagentReports = reports
+            self.todoReports = todos
+            self.subagentsScannedAt = .now
+            self.subagentScan = nil
+        }
+    }
+
+    private static func subagentSessions(_ registry: [JSON]) -> [SubagentScanner.SessionRef] {
+        registry.filter { $0["agent"] as? String != "codex" }.compactMap(SubagentScanner.SessionRef.init(entry:))
     }
 
     func session(_ id: String) -> JSON? {
@@ -286,6 +355,7 @@ final class Board {
         let repo = ((entry["cwd"] as? String ?? "") as NSString).lastPathComponent
         let state = question != nil || note != nil ? "waitingForYou" : (entry["status"] as? String == "busy" ? "working" : "idle")
         let name = entry["name"] as? String ?? ""
+        let report = subagentReports[sessionId] ?? SubagentScanner.Report()
         return [
             "id": sessionId,
             "agent": entry["agent"] as? String ?? "claude",
@@ -293,6 +363,10 @@ final class Board {
             "repo": repo,
             "state": state,
             "updatedAt": (entry["statusUpdatedAt"] as? Double ?? 0) / 1000,
+            "startedAt": (entry["startedAt"] as? Double).map { $0 / 1000 } ?? NSNull(),
+            "subagents": report.agents.map(\.json),
+            "subagentsOlder": report.older,
+            "todos": (todoReports[sessionId] ?? []).map(\.json),
             "waiting": note.map(visible) ?? NSNull(),
             "question": question.map { question -> JSON in [
                 "id": question.id,

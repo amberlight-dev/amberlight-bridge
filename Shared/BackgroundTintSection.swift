@@ -8,7 +8,7 @@ struct BackgroundTintSection: View {
 
     var body: some View {
         Section {
-            HStack(spacing: 10) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 28), spacing: 10)], alignment: .leading, spacing: 10) {
                 ForEach(BackgroundTint.palette, id: \.self) { hex in
                     swatch(hex)
                 }

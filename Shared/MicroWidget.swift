@@ -1,7 +1,7 @@
 import Foundation
 
 enum MicroWidget: String, Codable, CaseIterable, Identifiable {
-    case usageLine, sessionPips, mascot, secondsOrbit, battery, nextEvent, macPulse, nowPlaying
+    case usageLine, sessionPips, mascot, secondsOrbit, battery, nextEvent, macPulse, nowPlaying, custom
 
     var id: Self { self }
 
@@ -15,6 +15,7 @@ enum MicroWidget: String, Codable, CaseIterable, Identifiable {
         case .nextEvent: String(localized: "Nächster Termin")
         case .macPulse: String(localized: "Mac-Status")
         case .nowPlaying: "Now Playing"
+        case .custom: String(localized: "Eigenes Widget")
         }
     }
 
@@ -28,6 +29,7 @@ enum MicroWidget: String, Codable, CaseIterable, Identifiable {
         case .nextEvent: "calendar"
         case .macPulse: "desktopcomputer"
         case .nowPlaying: "music.note"
+        case .custom: "square.stack.3d.up"
         }
     }
 
@@ -41,6 +43,7 @@ enum MicroWidget: String, Codable, CaseIterable, Identifiable {
         case .usageLine: return edges.contains(slot)
         case .sessionPips, .macPulse: return edges.contains(slot) || ears.contains(slot)
         case .nextEvent, .nowPlaying: return slot == .top || slot == .bottom || ears.contains(slot)
+        case .custom: return slot.isCorner || slot == .top || slot == .bottom || ears.contains(slot)
         }
     }
 }
@@ -57,39 +60,47 @@ extension MicroWidget {
 
 struct EdgeConfig: Equatable, RawRepresentable {
     var slots: [MicroSlot: MicroWidget]
+    var customs: [MicroSlot: UUID]
     var hiddenPages: Set<UUID>
 
     static let standard = EdgeConfig(slots: [:], hiddenPages: [])
     private static let version = 2
     private static let formerDefaults: [MicroSlot: MicroWidget] = [.bottom: .usageLine, .top: .sessionPips]
 
-    init(slots: [MicroSlot: MicroWidget], hiddenPages: Set<UUID>) {
+    init(slots: [MicroSlot: MicroWidget], customs: [MicroSlot: UUID] = [:], hiddenPages: Set<UUID>) {
         self.slots = slots
+        self.customs = customs.filter { slots[$0.key] == .custom }
         self.hiddenPages = hiddenPages
     }
 
     init?(rawValue: String) {
         guard let stored = try? JSONDecoder().decode(Stored.self, from: Data(rawValue.utf8)) else { return nil }
         let slots = stored.version == nil ? stored.slots.filter { Self.formerDefaults[$0.key] != $0.value } : stored.slots
-        self.init(slots: slots, hiddenPages: stored.hiddenPages)
+        self.init(slots: slots, customs: stored.customs ?? [:], hiddenPages: stored.hiddenPages)
     }
 
     var rawValue: String {
-        guard let data = try? JSONEncoder().encode(Stored(version: Self.version, slots: slots, hiddenPages: hiddenPages)) else { return "{}" }
+        guard let data = try? JSONEncoder().encode(Stored(version: Self.version, slots: slots, customs: customs.isEmpty ? nil : customs, hiddenPages: hiddenPages)) else { return "{}" }
         return String(decoding: data, as: UTF8.self)
     }
 
     static func == (lhs: EdgeConfig, rhs: EdgeConfig) -> Bool {
-        lhs.slots == rhs.slots && lhs.hiddenPages == rhs.hiddenPages
+        lhs.slots == rhs.slots && lhs.customs == rhs.customs && lhs.hiddenPages == rhs.hiddenPages
     }
 
     private struct Stored: Codable {
         let version: Int?
         let slots: [MicroSlot: MicroWidget]
+        var customs: [MicroSlot: UUID]?
         let hiddenPages: Set<UUID>
     }
 
     func uses(_ widget: MicroWidget) -> Bool {
         slots.values.contains(widget)
+    }
+
+    mutating func place(_ widget: MicroWidget?, custom: UUID? = nil, in slot: MicroSlot) {
+        slots[slot] = widget
+        customs[slot] = widget == .custom ? custom : nil
     }
 }

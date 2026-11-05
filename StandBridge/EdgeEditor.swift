@@ -3,6 +3,7 @@ import SwiftUI
 struct EdgeEditor: View {
     let page: StandPage
     let edges: EdgeConfig
+    let customWidgets: [CustomWidgetDefinition]
     let onChange: (EdgeConfig) -> Void
 
     private static let rail: CGFloat = 84
@@ -35,7 +36,7 @@ struct EdgeEditor: View {
                 }
             }
             .toggleStyle(.switch)
-            Text("Platz anklicken und ein Micro-Widget wählen. Die Plätze gelten für alle Seiten, die Kamera sitzt hier links.")
+            Text("Platz anklicken und ein Micro-Widget wählen. Eigene Widgets zeigen in Ecken Wert und Ziel als Bogen, an Kanten als Laufschrift. Die Plätze gelten für alle Seiten, die Kamera sitzt hier links.")
                 .font(.callout)
                 .foregroundStyle(.secondary)
         }
@@ -87,8 +88,8 @@ struct EdgeEditor: View {
     }
 
     private func target(_ slot: MicroSlot) -> some View {
-        EdgeSlotTarget(slot: slot, title: title(of: slot), current: edges.slots[slot]) { widget in
-            change { $0.slots[slot] = widget }
+        EdgeSlotTarget(slot: slot, title: title(of: slot), current: edges.slots[slot], customs: customWidgets, currentCustom: edges.customs[slot]) { widget, custom in
+            change { $0.place(widget, custom: custom, in: slot) }
         }
     }
 
@@ -112,24 +113,35 @@ private struct EdgeSlotTarget: View {
     let slot: MicroSlot
     let title: String
     let current: MicroWidget?
-    let onPick: (MicroWidget?) -> Void
+    let customs: [CustomWidgetDefinition]
+    let currentCustom: UUID?
+    let onPick: (MicroWidget?, UUID?) -> Void
 
     private static let shape = RoundedRectangle(cornerRadius: 12, style: .continuous)
 
     var body: some View {
         Menu {
-            Picker(title, selection: Binding(get: { current }, set: { onPick($0) })) {
+            Picker(title, selection: Binding(get: { current == .custom ? nil : current }, set: { onPick($0, nil) })) {
                 Text("Leer").tag(MicroWidget?.none)
-                ForEach(MicroWidget.allCases.filter { $0.fits(slot) }) { widget in
+                ForEach(MicroWidget.allCases.filter { $0 != .custom && $0.fits(slot) }) { widget in
                     Label(widget.title, systemImage: widget.symbol).tag(MicroWidget?.some(widget))
                 }
             }
             .pickerStyle(.inline)
+            if MicroWidget.custom.fits(slot), !customs.isEmpty {
+                Section("Eigene Widgets") {
+                    ForEach(customs) { custom in
+                        Button { onPick(.custom, custom.id) } label: {
+                            Label(custom.name, systemImage: custom.id == currentCustom ? "checkmark" : custom.symbol)
+                        }
+                    }
+                }
+            }
         } label: {
             VStack(spacing: 3) {
-                Image(systemName: current?.symbol ?? "plus")
+                Image(systemName: pickedCustom?.symbol ?? current?.symbol ?? "plus")
                     .font(.system(size: 14, weight: .semibold))
-                Text(current?.title ?? title)
+                Text(label)
                     .font(.caption2.weight(.medium))
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
@@ -147,7 +159,13 @@ private struct EdgeSlotTarget: View {
         .menuStyle(.button)
         .buttonStyle(.plain)
         .menuIndicator(.hidden)
-        .help(current.map { "\(title): \($0.title)" } ?? "\(title): leer")
-        .accessibilityLabel("\(title): \(current?.title ?? "leer")")
+        .help(current == nil ? "\(title): leer" : "\(title): \(label)")
+        .accessibilityLabel("\(title): \(current == nil ? "leer" : label)")
     }
+
+    private var pickedCustom: CustomWidgetDefinition? {
+        current == .custom ? customs.first { $0.id == currentCustom } : nil
+    }
+
+    private var label: String { pickedCustom?.name ?? current?.title ?? title }
 }

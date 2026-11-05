@@ -16,6 +16,55 @@ struct WidgetSettings: Codable, Hashable {
         }
     }
 
+    enum AgentsDisplay: String, Codable, CaseIterable, Identifiable {
+        case list, cards
+
+        var id: Self { self }
+
+        var title: String {
+            switch self {
+            case .list: String(localized: "Liste")
+            case .cards: String(localized: "Karten")
+            }
+        }
+    }
+
+    enum AgentsGrouping: String, Codable, CaseIterable, Identifiable {
+        case none, repo, source
+
+        var id: Self { self }
+
+        var title: String {
+            switch self {
+            case .none: String(localized: "Keine")
+            case .repo: String(localized: "Projekt")
+            case .source: String(localized: "Quelle")
+            }
+        }
+    }
+
+    enum AgentsSource: String, Codable, CaseIterable, Identifiable {
+        case all, claudeCode, codex
+
+        var id: Self { self }
+
+        var title: String {
+            switch self {
+            case .all: String(localized: "Alle")
+            case .claudeCode: "Claude Code"
+            case .codex: "Codex"
+            }
+        }
+
+        func includes(agent: String?) -> Bool {
+            switch self {
+            case .all: true
+            case .claudeCode: agent != "codex"
+            case .codex: agent == "codex"
+            }
+        }
+    }
+
     var showsSeconds: Bool?
     var showsDate: Bool?
     var usageWindow: UsageWindow?
@@ -29,6 +78,20 @@ struct WidgetSettings: Codable, Hashable {
     var mascot: Mascot?
     var customID: UUID?
     var customName: String?
+    var fullscreenAlerts: Bool?
+    var showsOnlyActive: Bool?
+    var showsSessionHeader: Bool?
+    var showsOlderCount: Bool?
+    var showsWeatherBelow: Bool?
+    var prefersCompact: Bool?
+    var radioStream: String?
+    var radioName: String?
+    var chatHidesPreview: Bool?
+    var agentsDisplay: AgentsDisplay?
+    var agentsGrouping: AgentsGrouping?
+    var agentsSource: AgentsSource?
+    var showsSubagents: Bool?
+    var showsTodos: Bool?
 
     var seconds: Bool { showsSeconds ?? false }
     var date: Bool { showsDate ?? true }
@@ -37,6 +100,18 @@ struct WidgetSettings: Codable, Hashable {
     var calendarTitles: [String] { calendarNames ?? [] }
     var focusLength: Int { focusMinutes ?? 25 }
     var breakLength: Int { breakMinutes ?? 5 }
+    var fullscreen: Bool { fullscreenAlerts ?? false }
+    var onlyActive: Bool { showsOnlyActive ?? false }
+    var sessionHeader: Bool { !onlyActive && (showsSessionHeader ?? true) }
+    var olderCount: Bool { !onlyActive && (showsOlderCount ?? true) }
+    var weatherBelow: Bool { showsWeatherBelow ?? false }
+    var compact: Bool { prefersCompact ?? false }
+    var hidesChatPreview: Bool { chatHidesPreview ?? false }
+    var display: AgentsDisplay { agentsDisplay ?? .list }
+    var grouping: AgentsGrouping { agentsGrouping ?? .none }
+    var source: AgentsSource { agentsSource ?? .all }
+    var subagents: Bool { showsSubagents ?? true }
+    var todos: Bool { showsTodos ?? true }
 
     func includes(repo: String) -> Bool {
         guard let filter = repoFilter?.trimmingCharacters(in: .whitespaces), !filter.isEmpty else { return true }
@@ -47,8 +122,8 @@ struct WidgetSettings: Codable, Hashable {
 extension StandWidget {
     var hasOwnSettings: Bool {
         switch self {
-        case .clock, .claude, .usage, .mascot, .nowPlaying, .shortcuts, .calendar, .weather, .focus: true
-        case .mac, .orbit, .gitlab, .custom: false
+        case .clock, .agents, .usage, .mascot, .nowPlaying, .radio, .shortcuts, .calendar, .weather, .focus, .googleChat: true
+        case .mac, .gitlab, .custom: false
         }
     }
 }

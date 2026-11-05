@@ -22,6 +22,7 @@ struct CustomNodeEditing {
 
 extension EnvironmentValues {
     @Entry var customNodeEditing: CustomNodeEditing?
+    @Entry var rendersStill = false
 }
 
 struct CustomNodeView: View {
@@ -346,26 +347,37 @@ struct CustomPointList: View {
     let dimmed: Bool
 
     @Environment(\.standTypeface) private var typeface
+    @Environment(\.rendersStill) private var rendersStill
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 8) {
-                ForEach(Array(points.enumerated()), id: \.offset) { _, point in
-                    HStack(alignment: .firstTextBaseline) {
-                        Text(point.label)
-                            .foregroundStyle(ink(0.9))
-                        Spacer(minLength: 8)
-                        Text(point.text ?? "–")
-                            .monospacedDigit()
-                            .foregroundStyle(ink(0.6))
-                            .layoutPriority(1)
-                    }
-                    .font(typeface.font(size: 15, weight: .regular))
-                    .lineLimit(1)
+        if rendersStill {
+            rows
+                .frame(minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .clipped()
+        } else {
+            ScrollView { rows }
+                .scrollIndicators(.hidden)
+        }
+    }
+
+    private var rows: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ForEach(Array(points.enumerated()), id: \.offset) { _, point in
+                HStack(alignment: .firstTextBaseline) {
+                    Text(point.label)
+                        .foregroundStyle(ink(0.9))
+                        .layoutPriority(point.label.count < (point.text ?? "–").count ? 2 : 0)
+                    Spacer(minLength: 8)
+                    Text(point.text ?? "–")
+                        .monospacedDigit()
+                        .foregroundStyle(ink(0.6))
+                        .layoutPriority(1)
                 }
+                .font(typeface.font(size: 15, weight: .regular))
+                .lineLimit(1)
             }
         }
-        .scrollIndicators(.hidden)
     }
 
     private func ink(_ opacity: Double) -> Color { WidgetInk.text(opacity, dimmed: dimmed) }

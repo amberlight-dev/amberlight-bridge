@@ -16,7 +16,7 @@ enum ClaudeSettings {
         ("PermissionRequest", nil, true),
         ("PostToolUse", "AskUserQuestion|\(Board.nextStepTool)", false),
         ("UserPromptSubmit", nil, false),
-        ("Stop", nil, false),
+        ("Stop", nil, true),
         ("Notification", nil, false),
     ]
 
@@ -25,7 +25,8 @@ enum ClaudeSettings {
         if commands.contains(where: { $0.contains("stand_hook.py") }) { return .legacy }
         let ours = commands.filter { $0.contains(hookURL) }
         if ours.isEmpty { return .missing }
-        return ours.allSatisfy { $0.contains(hookHeader) } ? .installed : .outdated
+        let stopIsBlocking = stopCommands(settings).allSatisfy { $0 == blockingCommand }
+        return ours.allSatisfy { $0.contains(hookHeader) } && stopIsBlocking ? .installed : .outdated
     }
 
     static func installingHooks(_ settings: JSON) -> JSON {
@@ -87,9 +88,9 @@ enum ClaudeSettings {
     }
 
     @discardableResult
-    static func update(_ file: URL, _ transform: (JSON) -> JSON) throws -> URL? {
+    static func update(_ file: URL, backup makeBackup: Bool = true, _ transform: (JSON) -> JSON) throws -> URL? {
         let settings = try read(file)
-        let backup = FileManager.default.fileExists(atPath: file.path) ? try backUp(file) : nil
+        let backup = makeBackup && FileManager.default.fileExists(atPath: file.path) ? try backUp(file) : nil
         let data = try JSONSerialization.data(withJSONObject: transform(settings), options: [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes])
         try data.write(to: file, options: .atomic)
         return backup
@@ -105,6 +106,11 @@ enum ClaudeSettings {
 
     private static func isOurs(_ command: String) -> Bool {
         command.contains("stand_hook.py") || command.contains(hookURL)
+    }
+
+    private static func stopCommands(_ settings: JSON) -> [String] {
+        let groups = (settings["hooks"] as? JSON)?["Stop"] as? [JSON] ?? []
+        return groups.flatMap { $0["hooks"] as? [JSON] ?? [] }.compactMap { $0["command"] as? String }.filter { $0.contains(hookURL) }
     }
 
     private static func allCommands(_ settings: JSON) -> [String] {

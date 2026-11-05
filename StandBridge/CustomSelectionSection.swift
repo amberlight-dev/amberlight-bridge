@@ -28,11 +28,15 @@ struct CustomSelectionSection: View {
                 pathField(String(localized: "Feld für Wert"), text: $selection.seriesField, prompt: "hours")
                 Toggle("Gleiche Labels zusammenzählen", isOn: $selection.groupsLabels)
                 Toggle("Labels sind Datumswerte (als Wochentag zeigen)", isOn: $selection.labelsAreDates)
+                TextField("Zeilen-Label", text: template(\.labelTemplate), prompt: Text("optional: {dep.time|time}"))
+                    .font(.system(.body, design: .monospaced))
+                TextField("Zeilen-Text", text: template(\.textTemplate), prompt: Text("optional: Gl. {platform} · {name??title|upper}"))
+                    .font(.system(.body, design: .monospaced))
             }
         } header: {
             Text("Hauptwert")
         } footer: {
-            Text("Klick im Antwort-Baum rechts setzt den Pfad, das Menü ⋯ belegt Felder einer Liste. Pfade sind nur Schlüssel und Indizes wie data.items[0].hours – Der Filter kennt nur „Feld“, „Feld == Wert“ und „Feld != Wert“. Mehrere Werte und Zusatzzeilen definierst du im Code-Modus. Skripte gibt es bewusst nicht.")
+            Text("Klick im Antwort-Baum rechts setzt den Pfad, das Menü ⋯ belegt Felder einer Liste. Pfade sind nur Schlüssel und Indizes wie data.items[0].hours – Der Filter kennt nur „Feld“, „Feld == Wert“ und „Feld != Wert“. Zeilen-Vorlagen setzen Felder des Elements in {geschweifte Klammern}, a??b nimmt das erste vorhandene, |time, |date, |weekday, |minutes, |upper und |lower formatieren. Mehrere Werte und Zusatzzeilen definierst du im Code-Modus. Skripte gibt es bewusst nicht.")
         }
     }
 
@@ -48,6 +52,10 @@ struct CustomSelectionSection: View {
 
     private var hasSeries: Binding<Bool> {
         Binding(get: { selection.seriesPath != nil }, set: { selection.seriesPath = $0 ? (selection.arrayPath ?? "") : nil })
+    }
+
+    private func template(_ key: WritableKeyPath<CustomWidgetDefinition.Selection, String?>) -> Binding<String> {
+        Binding(get: { selection[keyPath: key] ?? "" }, set: { selection[keyPath: key] = $0.isEmpty ? nil : $0 })
     }
 
     private func optional(_ key: WritableKeyPath<CustomWidgetDefinition.Selection, String?>) -> Binding<String> {
