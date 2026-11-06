@@ -22,6 +22,45 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
         var kind = AuthKind.none
         var name = ""
         var prefix = ""
+
+        init(kind: AuthKind = .none, name: String = "", prefix: String = "") {
+            self.kind = kind
+            self.name = name
+            self.prefix = prefix
+        }
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            kind = try container.decodeIfPresent(AuthKind.self, forKey: .kind) ?? .none
+            name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
+            prefix = try container.decodeIfPresent(String.self, forKey: .prefix) ?? ""
+        }
+    }
+
+    struct ScriptHost: Codable, Hashable {
+        var url: String
+        var auth = Auth()
+        var writes = false
+
+        init(url: String, auth: Auth = Auth(), writes: Bool = false) {
+            self.url = url
+            self.auth = auth
+            self.writes = writes
+        }
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            url = try container.decode(String.self, forKey: .url)
+            auth = try container.decodeIfPresent(Auth.self, forKey: .auth) ?? Auth()
+            writes = try container.decodeIfPresent(Bool.self, forKey: .writes) ?? false
+        }
+
+        var origin: String? { CustomRequest.origin(of: url) }
+        var needsSecret: Bool { auth.kind != .none }
+
+        func covers(_ requested: ScriptHost) -> Bool {
+            origin != nil && origin == requested.origin && auth == requested.auth && (writes || !requested.writes)
+        }
     }
 
     enum Method: String, Codable, CaseIterable, Identifiable {
@@ -197,16 +236,42 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
     var variables: [Pair]?
     var display = Display()
     var confirmedOrigin: String?
+    var script: String?
+    var hosts: [ScriptHost]?
+    var confirmedHosts: [ScriptHost]?
     var template: String?
     var repairVersion: Int?
 
     static let minimumInterval = 30
     static let maximumInterval = 86_400
+    static let maxScriptBytes = 64 << 10
+    static let maxHosts = 8
 }
 
 nonisolated extension CustomWidgetDefinition {
     var origin: String? { CustomRequest.origin(of: baseURL) }
-    var needsSecret: Bool { auth.kind != .none }
-    var isConfirmed: Bool { origin != nil && confirmedOrigin == origin }
+    var isScripted: Bool { !(script ?? "").isEmpty }
+    var scriptHosts: [ScriptHost] { isScripted ? hosts ?? [] : [] }
+    var needsSecret: Bool { isScripted ? scriptHosts.contains(where: \.needsSecret) : auth.kind != .none }
+    var unconfirmedHosts: [ScriptHost] { scriptHosts.filter { host in !(confirmedHosts ?? []).contains { $0.covers(host) } } }
+    var isConfirmed: Bool { isScripted ? unconfirmedHosts.isEmpty : origin != nil && confirmedOrigin == origin }
+
+    var secretOrigins: Set<String> {
+        Set([origin].compactMap(\.self) + (hosts ?? []).compactMap(\.origin))
+    }
+
+    func scriptHost(for origin: String) -> ScriptHost? {
+        scriptHosts.first { $0.origin == origin }
+    }
+
+    mutating func confirmAll() {
+        confirmedOrigin = origin
+        confirmedHosts = isScripted ? scriptHosts : nil
+    }
+
+    mutating func clearConfirmations() {
+        confirmedOrigin = nil
+        confirmedHosts = nil
+    }
     var clampedInterval: Int { min(max(interval, Self.minimumInterval), Self.maximumInterval) }
 }

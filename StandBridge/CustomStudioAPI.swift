@@ -17,6 +17,8 @@ enum CustomStudioAPI {
             return (200, [:])
         case ("POST", "/studio/render"):
             return await render(request.json, store: store)
+        case ("POST", "/studio/run"):
+            return await run(request.json, store: store)
         default:
             return (404, [:])
         }
@@ -52,18 +54,38 @@ enum CustomStudioAPI {
             base = CustomWidgetDefinition()
         }
         guard var definition = definition(from: patch, base: base) else { return (400, ["error": "Definition passt nicht zum Schema"]) }
+        definition.confirmedOrigin = base.confirmedOrigin
+        definition.confirmedHosts = base.confirmedHosts
         do {
             try CustomRequest.validate(definition)
         } catch {
             return (400, ["error": error.message])
         }
-        definition.confirmedOrigin = definition.origin
         store.save(definition)
-        if let secret = body["secret"] as? JSON {
-            store.setSecret(CustomSecret(value: secret["value"] as? String ?? "", username: secret["username"] as? String ?? ""), for: definition)
-        }
         let display = await store.refresh(definition.id)
-        return (200, ["definition": encoded(definition) ?? [:], "display": display.flatMap(encoded) ?? NSNull()])
+        return (200, ["definition": encoded(definition) ?? [:], "display": display.flatMap(encoded) ?? NSNull(), "pending": pending(definition, store: store)])
+    }
+
+    static func pending(_ definition: CustomWidgetDefinition, store: CustomWidgetStore) -> [String] {
+        let place = "Amberlight Bridge → Widget-Bibliothek → „\(definition.name)“"
+        let hosts = definition.isScripted
+            ? definition.unconfirmedHosts.map { "\($0.origin ?? $0.url)\($0.writes ? " (auch schreibend)" : "")" }
+            : (definition.isConfirmed ? [] : [definition.origin ?? definition.baseURL])
+        return hosts.map { "Host \($0) muss der Mensch am Mac freigeben: \(place)" }
+            + store.missingSecrets(definition).map { "Zugangsdaten für \($0) trägt der Mensch am Mac ein: \(place)" }
+    }
+
+    private static func run(_ body: JSON, store: CustomWidgetStore) async -> (Int, JSON) {
+        guard let id = (body["id"] as? String).flatMap(UUID.init(uuidString:)), var definition = store.definition(id) else { return (404, ["error": "Widget nicht gefunden"]) }
+        if let script = body["script"] as? String { definition.script = script }
+        guard definition.isScripted else { return (400, ["error": "Widget hat kein Skript"]) }
+        let run = await store.runScript(definition)
+        var result: JSON = ["logs": run.logs, "pending": pending(definition, store: store)]
+        switch run.result {
+        case .success(let output): result["output"] = output
+        case .failure(let error): result["error"] = error.message
+        }
+        return (200, result)
     }
 
     private static func render(_ body: JSON, store: CustomWidgetStore) async -> (Int, JSON) {

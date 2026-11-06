@@ -25,7 +25,7 @@ struct WidgetLibraryView: View {
         .sheet(isPresented: Binding(get: { importText != nil }, set: { if !$0 { importText = nil } })) {
             CustomImportSheet(text: importText ?? "") { definition, confirmed in
                 var definition = definition
-                if confirmed { definition.confirmedOrigin = definition.origin }
+                if confirmed { definition.confirmAll() }
                 store.save(definition)
                 selection = definition.id
             }

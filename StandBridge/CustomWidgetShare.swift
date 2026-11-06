@@ -26,7 +26,7 @@ nonisolated enum CustomWidgetShare {
 
     static func export(_ definition: CustomWidgetDefinition) -> String {
         var shared = definition
-        shared.confirmedOrigin = nil
+        shared.clearConfirmations()
         shared.endpoint.headers.removeAll { CustomRequest.isSensitive($0.name) }
         shared.endpoint.query.removeAll { CustomRequest.isSensitive($0.name) }
         let encoder = JSONEncoder()
@@ -51,7 +51,7 @@ nonisolated enum CustomWidgetShare {
         guard payload.v <= version else { throw .unsupportedVersion }
         var definition = payload.widget
         definition.id = UUID()
-        definition.confirmedOrigin = nil
+        definition.clearConfirmations()
         definition.interval = definition.clampedInterval
         do {
             try CustomRequest.validate(definition)

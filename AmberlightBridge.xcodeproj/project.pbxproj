@@ -95,6 +95,7 @@
 				DB0000000000000000000003 /* Frameworks */,
 				DB0000000000000000000005 /* Resources */,
 				DB0000000000000000000040 /* Build Now Playing Helper */,
+				DB0000000000000000000041 /* Build Script Runner */,
 			);
 			buildRules = (
 			);
@@ -216,6 +217,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -eu\nout=\"$SCRIPT_OUTPUT_FILE_0\"\nmkdir -p \"$(dirname \"$out\")\"\narch_flags=\"\"\nfor arch in $ARCHS; do arch_flags=\"$arch_flags -arch $arch\"; done\nxcrun clang -dynamiclib -fobjc-arc $arch_flags -isysroot \"$SDKROOT\" -mmacosx-version-min=\"$MACOSX_DEPLOYMENT_TARGET\" -framework Foundation -Wl,-adhoc_codesign -install_name @rpath/libNowPlaying.dylib \"$SCRIPT_INPUT_FILE_0\" -o \"$out\"\n";
+		};
+		DB0000000000000000000041 /* Build Script Runner */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/ScriptRunner/ScriptRunner.m",
+			);
+			name = "Build Script Runner";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_FOLDER_PATH)/amberlight-script",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -eu\nout=\"$SCRIPT_OUTPUT_FILE_0\"\nmkdir -p \"$(dirname \"$out\")\"\narch_flags=\"\"\nfor arch in $ARCHS; do arch_flags=\"$arch_flags -arch $arch\"; done\nxcrun clang -fobjc-arc $arch_flags -isysroot \"$SDKROOT\" -mmacosx-version-min=\"$MACOSX_DEPLOYMENT_TARGET\" -framework Foundation -framework JavaScriptCore -Wl,-adhoc_codesign \"$SCRIPT_INPUT_FILE_0\" -o \"$out\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -11,6 +11,8 @@ struct CustomWidgetEditor: View {
     @State private var draft: CustomWidgetDefinition
     @State private var secret: CustomSecret
     @State private var savedSecret: CustomSecret
+    @State private var hostSecrets: [String: CustomSecret]
+    @State private var savedHostSecrets: [String: CustomSecret]
     @State private var response: CustomFetcher.Response?
     @State private var testError: String?
     @State private var testing = false
@@ -41,6 +43,11 @@ struct CustomWidgetEditor: View {
         _draft = State(initialValue: saved)
         _secret = State(initialValue: stored)
         _savedSecret = State(initialValue: stored)
+        let storedHosts = Dictionary(saved.scriptHosts.compactMap { host in
+            host.origin.flatMap { origin in store.secret(for: saved, origin: origin).map { (origin, $0) } }
+        }, uniquingKeysWith: { first, _ in first })
+        _hostSecrets = State(initialValue: storedHosts)
+        _savedHostSecrets = State(initialValue: storedHosts)
     }
 
     var body: some View {
@@ -115,7 +122,11 @@ struct CustomWidgetEditor: View {
                         .textFieldStyle(.plain)
                         .font(.title.weight(.semibold))
                 }
-                CustomSetupCard(draft: $draft, secret: $secret, status: connection, onTest: test)
+                if draft.isScripted {
+                    CustomScriptCard(draft: $draft, secrets: $hostSecrets, status: connection, onTest: test)
+                } else {
+                    CustomSetupCard(draft: $draft, secret: $secret, status: connection, onTest: test)
+                }
                 CustomValuesCard(draft: $draft, texts: CustomLayout.scope(for: draft, json: previewJSON ?? [:], at: .now).text)
                 CustomLayoutCard(draft: $draft, json: previewJSON, onCustomize: { mode = .builder })
             }
@@ -143,9 +154,15 @@ struct CustomWidgetEditor: View {
 
     private var form: some View {
         Form {
-            apiSection
-            authSection
-            endpointSection
+            if draft.isScripted {
+                Section("Skript") {
+                    CustomScriptCard(draft: $draft, secrets: $hostSecrets, status: connection, onTest: test)
+                }
+            } else {
+                apiSection
+                authSection
+                endpointSection
+            }
             intervalSection
             CustomSelectionSection(selection: $draft.selection)
             CustomDisplaySection(display: $draft.display)
@@ -201,6 +218,7 @@ struct CustomWidgetEditor: View {
             var decoded = try JSONDecoder().decode(CustomWidgetDefinition.self, from: Data(text.utf8))
             decoded.id = draft.id
             decoded.confirmedOrigin = decoded.origin == draft.origin ? draft.confirmedOrigin : nil
+            decoded.confirmedHosts = draft.confirmedHosts
             codeError = nil
             if decoded != draft { draft = decoded }
         } catch {
@@ -210,7 +228,7 @@ struct CustomWidgetEditor: View {
 
     private static func json(of definition: CustomWidgetDefinition) -> String {
         var shared = definition
-        shared.confirmedOrigin = nil
+        shared.clearConfirmations()
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
         return (try? encoder.encode(shared)).flatMap { String(data: $0, encoding: .utf8) } ?? ""
@@ -366,7 +384,7 @@ struct CustomWidgetEditor: View {
         }
     }
 
-    private var isDirty: Bool { draft != saved || secret != savedSecret }
+    private var isDirty: Bool { draft != saved || secret != savedSecret || hostSecrets != savedHostSecrets }
 
     private var selectedPaths: Set<String> {
         let selection = draft.selection
@@ -390,7 +408,7 @@ struct CustomWidgetEditor: View {
         testing = true
         connection = .testing
         defer { testing = false }
-        switch await store.test(draft, typed: secret) {
+        switch await store.test(draft, typed: secret, typedHosts: hostSecrets) {
         case .success(let result):
             response = result
             testError = nil
@@ -404,8 +422,16 @@ struct CustomWidgetEditor: View {
 
     private func save() {
         store.save(draft)
-        store.setSecret(draft.needsSecret ? secret : nil, for: draft)
-        savedSecret = draft.needsSecret ? secret : CustomSecret()
+        if draft.isScripted {
+            for host in draft.scriptHosts where host.needsSecret {
+                guard let origin = host.origin else { continue }
+                store.setSecret(hostSecrets[origin], for: draft, origin: origin)
+            }
+            savedHostSecrets = hostSecrets
+        } else {
+            store.setSecret(draft.needsSecret ? secret : nil, for: draft)
+            savedSecret = draft.needsSecret ? secret : CustomSecret()
+        }
         onSaved(draft)
         Task { await store.refresh(draft.id) }
     }

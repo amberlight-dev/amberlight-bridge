@@ -8,6 +8,7 @@ nonisolated struct CustomSecret: Codable, Equatable {
 nonisolated enum CustomRequestError: Error, Equatable {
     case invalidURL, insecureScheme, userInfo, sensitiveName(String), missingSecret, unconfirmed
     case layoutTooComplex, tooLarge, timeout, unreachable, unauthorized, status(Int), notJSON, redirected
+    case scriptTooLarge, tooManyHosts, hostNotAllowed(String), writeNotAllowed(String), tooManyRequests, scriptTimeout, scriptFailed(String), runnerMissing
 
     var message: String {
         switch self {
@@ -25,6 +26,14 @@ nonisolated enum CustomRequestError: Error, Equatable {
         case .status(let code): String(localized: "API antwortet mit \(code)")
         case .notJSON: String(localized: "Antwort ist kein JSON")
         case .redirected: String(localized: "Weiterleitung auf einen anderen Host blockiert")
+        case .scriptTooLarge: String(localized: "Skript größer als \(CustomWidgetDefinition.maxScriptBytes >> 10) KB")
+        case .tooManyHosts: String(localized: "Höchstens \(CustomWidgetDefinition.maxHosts) Hosts pro Widget")
+        case .hostNotAllowed(let origin): String(localized: "\(origin) ist für dieses Widget nicht freigegeben")
+        case .writeNotAllowed(let origin): String(localized: "Schreibende Anfragen an \(origin) sind nicht freigegeben")
+        case .tooManyRequests: String(localized: "Höchstens \(CustomScriptRunner.maxRequests) Anfragen pro Lauf")
+        case .scriptTimeout: String(localized: "Skript nach \(Int(CustomScriptRunner.timeout)) s abgebrochen")
+        case .scriptFailed(let reason): String(localized: "Skriptfehler: \(reason)")
+        case .runnerMissing: String(localized: "Skript-Umgebung fehlt im App-Bundle")
         }
     }
 }
@@ -72,14 +81,9 @@ nonisolated enum CustomRequest {
     }
 
     static func validate(_ definition: CustomWidgetDefinition) throws(CustomRequestError) {
-        guard let components = URLComponents(string: definition.baseURL.trimmingCharacters(in: .whitespaces)),
-              let scheme = components.scheme?.lowercased(), let host = components.host, !host.isEmpty else { throw .invalidURL }
-        guard components.user == nil, components.password == nil else { throw .userInfo }
-        switch scheme {
-        case "https": break
-        case "http" where isPrivate(host: host): break
-        default: throw .insecureScheme
-        }
+        if definition.isScripted { return try validateScripted(definition) }
+        try validateHost(definition.baseURL)
+        guard let components = URLComponents(string: definition.baseURL.trimmingCharacters(in: .whitespaces)) else { throw .invalidURL }
         if [definition.display.layout, definition.display.compact, definition.display.wide].contains(where: { $0?.isTooComplex == true }) { throw .layoutTooComplex }
         for pair in definition.endpoint.headers where !pair.name.isEmpty {
             if isSensitive(pair.name) || reservedHeaders.contains(pair.name.lowercased()) { throw .sensitiveName(pair.name) }
@@ -87,6 +91,28 @@ nonisolated enum CustomRequest {
         for pair in definition.endpoint.query + queryItems(of: components).map({ .init(name: $0.name, value: $0.value ?? "") }) where isSensitive(pair.name) {
             throw .sensitiveName(pair.name)
         }
+    }
+
+    static func validateScripted(_ definition: CustomWidgetDefinition) throws(CustomRequestError) {
+        guard (definition.script ?? "").utf8.count <= CustomWidgetDefinition.maxScriptBytes else { throw .scriptTooLarge }
+        guard definition.scriptHosts.count <= CustomWidgetDefinition.maxHosts else { throw .tooManyHosts }
+        for host in definition.scriptHosts { try validateHost(host.url) }
+        if [definition.display.layout, definition.display.compact, definition.display.wide].contains(where: { $0?.isTooComplex == true }) { throw .layoutTooComplex }
+    }
+
+    static func validateHost(_ url: String) throws(CustomRequestError) {
+        guard let components = URLComponents(string: url.trimmingCharacters(in: .whitespaces)),
+              let scheme = components.scheme?.lowercased(), let host = components.host, !host.isEmpty else { throw .invalidURL }
+        guard components.user == nil, components.password == nil else { throw .userInfo }
+        switch scheme {
+        case "https": break
+        case "http" where isPrivate(host: host): break
+        default: throw .insecureScheme
+        }
+    }
+
+    static func checkScriptHeader(_ name: String) throws(CustomRequestError) {
+        if isSensitive(name) || reservedHeaders.contains(name.lowercased()) { throw .sensitiveName(name) }
     }
 
     static func build(_ definition: CustomWidgetDefinition, now: Date = .now, secret: (String) -> CustomSecret?) throws(CustomRequestError) -> URLRequest {
@@ -163,7 +189,7 @@ nonisolated enum CustomRequest {
         }
     }
 
-    private static func authorize(_ request: inout URLRequest, auth: CustomWidgetDefinition.Auth, secret: CustomSecret) {
+    static func authorize(_ request: inout URLRequest, auth: CustomWidgetDefinition.Auth, secret: CustomSecret) {
         switch auth.kind {
         case .none, .queryKey: break
         case .bearer: request.setValue("Bearer " + secret.value, forHTTPHeaderField: "Authorization")

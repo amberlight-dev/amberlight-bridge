@@ -63,10 +63,10 @@ final class CustomWidgetStore {
         definition.interval = definition.clampedInterval
         if let index = definitions.firstIndex(where: { $0.id == definition.id }) {
             let previous = definitions[index]
-            if let old = previous.origin, old != definition.origin {
+            for old in previous.secretOrigins.subtracting(definition.secretOrigins) {
                 vault.delete(Self.secretKey(id: definition.id, origin: old))
             }
-            if previous.endpoint != definition.endpoint || previous.selection != definition.selection || previous.origin != definition.origin {
+            if previous.endpoint != definition.endpoint || previous.selection != definition.selection || previous.origin != definition.origin || previous.script != definition.script {
                 history[definition.id] = nil
             }
             definitions[index] = definition
@@ -80,7 +80,7 @@ final class CustomWidgetStore {
 
     func delete(_ id: UUID) {
         guard let definition = definition(id) else { return }
-        if let origin = definition.origin { vault.delete(Self.secretKey(id: id, origin: origin)) }
+        for origin in definition.secretOrigins { vault.delete(Self.secretKey(id: id, origin: origin)) }
         definitions.removeAll { $0.id == id }
         displays[id] = nil
         history[id] = nil
@@ -90,7 +90,7 @@ final class CustomWidgetStore {
 
     func confirm(_ id: UUID) {
         guard var definition = definition(id) else { return }
-        definition.confirmedOrigin = definition.origin
+        definition.confirmAll()
         save(definition)
     }
 
@@ -98,8 +98,16 @@ final class CustomWidgetStore {
         definition.origin.flatMap { secret(id: definition.id, origin: $0) }
     }
 
+    func secret(for definition: CustomWidgetDefinition, origin: String) -> CustomSecret? {
+        secret(id: definition.id, origin: origin)
+    }
+
     func setSecret(_ secret: CustomSecret?, for definition: CustomWidgetDefinition) {
         guard let origin = definition.origin else { return }
+        setSecret(secret, for: definition, origin: origin)
+    }
+
+    func setSecret(_ secret: CustomSecret?, for definition: CustomWidgetDefinition, origin: String) {
         let key = Self.secretKey(id: definition.id, origin: origin)
         if let secret, !secret.value.isEmpty, let data = try? JSONEncoder().encode(secret) {
             vault.write(data, key)
@@ -110,7 +118,14 @@ final class CustomWidgetStore {
     }
 
     func hasSecret(_ definition: CustomWidgetDefinition) -> Bool {
-        !definition.needsSecret || !(secret(for: definition)?.value.isEmpty ?? true)
+        missingSecrets(definition).isEmpty
+    }
+
+    func missingSecrets(_ definition: CustomWidgetDefinition) -> [String] {
+        guard definition.isScripted else {
+            return definition.needsSecret && (secret(for: definition)?.value.isEmpty ?? true) ? [definition.origin ?? definition.baseURL] : []
+        }
+        return definition.scriptHosts.filter(\.needsSecret).compactMap(\.origin).filter { secret(id: definition.id, origin: $0)?.value.isEmpty ?? true }
     }
 
     func request(for definition: CustomWidgetDefinition, typed: CustomSecret? = nil, now: Date = .now) throws(CustomRequestError) -> URLRequest {
@@ -121,7 +136,25 @@ final class CustomWidgetStore {
         }
     }
 
-    func test(_ definition: CustomWidgetDefinition, typed: CustomSecret? = nil, now: Date = .now) async -> Result<CustomFetcher.Response, CustomRequestError> {
+    func runScript(_ definition: CustomWidgetDefinition, typed: [String: CustomSecret] = [:], now: Date = .now) async -> CustomScriptRunner.Run {
+        guard definition.isConfirmed else { return CustomScriptRunner.Run(result: .failure(.unconfirmed), logs: []) }
+        do {
+            try CustomRequest.validate(definition)
+        } catch {
+            return CustomScriptRunner.Run(result: .failure(error), logs: [])
+        }
+        return await CustomScriptRunner.run(definition, now: now, secret: { origin in
+            guard let entered = typed[origin], !entered.value.isEmpty else { return self.secret(id: definition.id, origin: origin) }
+            return entered
+        }, fetch: fetch)
+    }
+
+    func test(_ definition: CustomWidgetDefinition, typed: CustomSecret? = nil, typedHosts: [String: CustomSecret] = [:], now: Date = .now) async -> Result<CustomFetcher.Response, CustomRequestError> {
+        if definition.isScripted {
+            return await runScript(definition, typed: typedHosts, now: now).result.map { json in
+                CustomFetcher.Response(json: json, data: (try? JSONSerialization.data(withJSONObject: json, options: .fragmentsAllowed)) ?? Data())
+            }
+        }
         do {
             return .success(try await fetch(try request(for: definition, typed: typed, now: now)))
         } catch {
