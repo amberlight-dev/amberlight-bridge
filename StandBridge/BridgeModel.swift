@@ -73,7 +73,9 @@ final class BridgeModel {
     }
 
     var pairingLink: String? {
-        server.map { BridgeIdentity.pairingLink(baseURL: $0.baseURL, token: $0.token) }
+        server.map { server in
+            BridgeIdentity.pairingLink(baseURL: server.baseURL, fallbackURL: BridgeIdentity.lanIPv4.map { "http://\($0):\(server.port)" }, token: server.token)
+        }
     }
 
     func refresh() {

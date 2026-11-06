@@ -33,9 +33,26 @@ enum BridgeIdentity {
         (SCDynamicStoreCopyLocalHostName(nil) as String? ?? "localhost") + ".local"
     }
 
-    static func pairingLink(baseURL: String, token: String) -> String {
+    static func pairingLink(baseURL: String, fallbackURL: String?, token: String) -> String {
         var components = URLComponents(string: "duostand://pair")!
         components.queryItems = [URLQueryItem(name: "url", value: baseURL), URLQueryItem(name: "token", value: token)]
+            + (fallbackURL.map { [URLQueryItem(name: "fallback", value: $0)] } ?? [])
         return components.string!
+    }
+
+    static var lanIPv4: String? {
+        var list: UnsafeMutablePointer<ifaddrs>?
+        guard getifaddrs(&list) == 0, let first = list else { return nil }
+        defer { freeifaddrs(list) }
+        for entry in sequence(first: first, next: { $0.pointee.ifa_next }).map(\.pointee) {
+            let flags = Int32(entry.ifa_flags)
+            guard String(cString: entry.ifa_name).hasPrefix("en"), flags & IFF_UP != 0, flags & IFF_RUNNING != 0,
+                  let address = entry.ifa_addr, address.pointee.sa_family == UInt8(AF_INET) else { continue }
+            var host = [CChar](repeating: 0, count: Int(NI_MAXHOST))
+            guard getnameinfo(address, socklen_t(address.pointee.sa_len), &host, socklen_t(host.count), nil, 0, NI_NUMERICHOST) == 0 else { continue }
+            let ip = String(cString: host)
+            if !ip.hasPrefix("169.254.") { return ip }
+        }
+        return nil
     }
 }
