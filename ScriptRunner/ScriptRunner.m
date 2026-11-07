@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 #import <JavaScriptCore/JavaScriptCore.h>
 #include <sandbox.h>
+#include <sys/resource.h>
+#include <unistd.h>
 
 static NSString *const Prelude = @"(() => {\n"
     "const show = (value) => { if (typeof value === 'string') return value; try { return JSON.stringify(value); } catch (e) { return String(value); } };\n"
@@ -15,14 +17,14 @@ static NSString *const Prelude = @"(() => {\n"
     "const request = (method, url, options = {}) => {\n"
     "  const body = options.json !== undefined ? JSON.stringify(options.json) : options.body;\n"
     "  const answer = __request({ method, url: withQuery(url, options.query), headers: options.headers || {}, body: body === undefined || body === null ? null : String(body) });\n"
-    "  if (answer.error) throw new Error(answer.error);\n"
+    "  if (answer.error) { const error = new Error(answer.error); error.fromBridge = true; throw error; }\n"
     "  let parsed;\n"
     "  return { status: answer.status, ok: true, text: answer.body, get json() { if (parsed === undefined) parsed = JSON.parse(answer.body); return parsed; } };\n"
     "};\n"
     "globalThis.http = { request, get: (u, o) => request('GET', u, o), post: (u, o) => request('POST', u, o), put: (u, o) => request('PUT', u, o),\n"
     "  patch: (u, o) => request('PATCH', u, o), delete: (u, o) => request('DELETE', u, o) };\n"
     "const AsyncFunction = (async () => {}).constructor;\n"
-    "const describe = (e) => e && e.message ? e.message + (e.line ? ' (Zeile ' + Math.max(1, e.line - 2) + ')' : '') : String(e);\n"
+    "const describe = (e) => e && e.message ? e.message + (e.line && !e.fromBridge ? ' (Zeile ' + Math.max(1, e.line - 2) + ')' : '') : String(e);\n"
     "globalThis.__start = (source, vars) => {\n"
     "  let run;\n"
     "  try { run = new AsyncFunction('vars', source); } catch (e) { __fail('Syntax: ' + describe(e)); return; }\n"
@@ -65,6 +67,13 @@ static BOOL enterSandbox(void) {
     return status == 0;
 }
 
+static void limitRuntime(NSNumber *seconds) {
+    unsigned int limit = seconds.unsignedIntValue > 0 ? seconds.unsignedIntValue : 20;
+    struct rlimit cpu = {limit, limit};
+    setrlimit(RLIMIT_CPU, &cpu);
+    alarm(limit);
+}
+
 static void warmUp(JSContext *context) {
     [context evaluateScript:@"new Date().toString(); (1234.5).toLocaleString('de-AT'); 'a'.localeCompare('b'); new Intl.DateTimeFormat('de-AT').format(new Date()); JSON.parse('{}')"];
 }
@@ -78,6 +87,7 @@ int main(void) {
             return 1;
         }
         NSDictionary *job = readMessage();
+        limitRuntime([job[@"seconds"] isKindOfClass:NSNumber.class] ? job[@"seconds"] : nil);
         NSString *script = job[@"script"];
         if (![script isKindOfClass:NSString.class]) {
             emit(@{@"error": @"Kein Skript erhalten"});

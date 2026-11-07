@@ -21,6 +21,7 @@ struct CustomWidgetEditor: View {
     @State private var history = LayoutHistory()
     @State private var code = ""
     @State private var codeError: String?
+    @State private var pendingSave: Task<Void, Never>?
 
     enum Mode: String, CaseIterable, Identifiable {
         case simple = "Einfach", builder = "Gestalten", advanced = "Erweitert", code = "Code"
@@ -72,11 +73,12 @@ struct CustomWidgetEditor: View {
                     .help("Widget aus der Bibliothek löschen")
                 Button("Exportieren", systemImage: "square.and.arrow.up") { onExport(saved) }
                     .help("Konfiguration ohne Zugangsdaten in die Zwischenablage kopieren")
-                Button("Sichern", systemImage: "checkmark", action: save)
-                    .keyboardShortcut("s")
-                    .disabled(!isDirty || validation != nil)
             }
         }
+        .onChange(of: draft) { scheduleSave() }
+        .onChange(of: secret) { scheduleSave() }
+        .onChange(of: hostSecrets) { scheduleSave() }
+        .onDisappear { saveIfNeeded() }
         .onChange(of: draft.origin) { _, origin in
             secret = origin == saved.origin ? savedSecret : CustomSecret()
             response = nil
@@ -319,13 +321,13 @@ struct CustomWidgetEditor: View {
     @ViewBuilder
     private var secretStatus: some View {
         if draft.origin != saved.origin, !savedSecret.value.isEmpty {
-            Label("Host geändert – die gespeicherten Zugangsdaten werden beim Sichern verworfen. Bitte neu eintragen.", systemImage: "key.slash")
+            Label("Host geändert – die gespeicherten Zugangsdaten werden verworfen. Bitte neu eintragen.", systemImage: "key.slash")
                 .foregroundStyle(.orange)
         } else if secret.value.isEmpty {
             Label("Zugangsdaten fehlen", systemImage: "key.slash")
                 .foregroundStyle(.orange)
         } else {
-            Label(secret == savedSecret ? "Im Schlüsselbund" : "Wird beim Sichern im Schlüsselbund abgelegt", systemImage: "key.fill")
+            Label("Im Schlüsselbund", systemImage: "key.fill")
                 .foregroundStyle(.secondary)
         }
     }
@@ -420,6 +422,21 @@ struct CustomWidgetEditor: View {
         }
     }
 
+    private func scheduleSave() {
+        pendingSave?.cancel()
+        pendingSave = Task {
+            try? await Task.sleep(for: .milliseconds(700))
+            guard !Task.isCancelled else { return }
+            saveIfNeeded()
+        }
+    }
+
+    private func saveIfNeeded() {
+        pendingSave?.cancel()
+        guard isDirty, validation == nil else { return }
+        save()
+    }
+
     private func save() {
         store.save(draft)
         if draft.isScripted {
@@ -433,6 +450,7 @@ struct CustomWidgetEditor: View {
             savedSecret = draft.needsSecret ? secret : CustomSecret()
         }
         onSaved(draft)
+        CustomApprovalNotice.update(draft, store: store)
         Task { await store.refresh(draft.id) }
     }
 }

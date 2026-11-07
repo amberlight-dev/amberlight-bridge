@@ -62,15 +62,15 @@ enum CustomStudioAPI {
             return (400, ["error": error.message])
         }
         store.save(definition)
+        CustomApprovalNotice.update(definition, store: store)
         let display = await store.refresh(definition.id)
         return (200, ["definition": encoded(definition) ?? [:], "display": display.flatMap(encoded) ?? NSNull(), "pending": pending(definition, store: store)])
     }
 
     static func pending(_ definition: CustomWidgetDefinition, store: CustomWidgetStore) -> [String] {
-        let place = "Amberlight Bridge → Widget-Bibliothek → „\(definition.name)“"
-        let hosts = definition.isScripted
-            ? definition.unconfirmedHosts.map { "\($0.origin ?? $0.url)\($0.writes ? " (auch schreibend)" : "")" }
-            : (definition.isConfirmed ? [] : [definition.origin ?? definition.baseURL])
+        let place = "Amberlight Bridge → Widget-Bibliothek → „\(definition.name)“ (öffnet direkt: \(CustomApprovalNotice.link(for: definition.id)); die Bridge zeigt dazu auch eine Mitteilung)"
+        let writers = Set(definition.unconfirmedHosts.filter(\.writes).compactMap(\.origin))
+        let hosts = CustomApprovalNotice.unapprovedOrigins(of: definition).map { writers.contains($0) ? "\($0) (auch schreibend)" : $0 }
         return hosts.map { "Host \($0) muss der Mensch am Mac freigeben: \(place)" }
             + store.missingSecrets(definition).map { "Zugangsdaten für \($0) trägt der Mensch am Mac ein: \(place)" }
     }

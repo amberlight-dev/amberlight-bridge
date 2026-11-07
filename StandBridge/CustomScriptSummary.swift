@@ -102,6 +102,7 @@ struct CustomScriptCard: View {
                 Spacer()
                 if draft.unconfirmedHosts.contains(host) {
                     Button(host.writes ? "Lesen & Schreiben freigeben" : "Freigeben") { confirm(host) }
+                        .buttonStyle(.borderedProminent)
                 } else {
                     Label("Freigegeben", systemImage: "checkmark.shield.fill")
                         .foregroundStyle(.green)
@@ -122,14 +123,20 @@ struct CustomScriptCard: View {
     @ViewBuilder
     private func secretFields(_ kind: CustomWidgetDefinition.AuthKind, origin: String) -> some View {
         let binding = Binding(get: { secrets[origin] ?? CustomSecret() }, set: { secrets[origin] = $0 })
-        if kind == .basic {
-            TextField("Benutzer", text: binding.username)
-        }
-        SecureField(kind.title, text: binding.value)
-        if binding.wrappedValue.value.isEmpty {
-            Label("Zugangsdaten fehlen", systemImage: "key.slash")
-                .font(.callout)
-                .foregroundStyle(.orange)
+        VStack(alignment: .leading, spacing: 6) {
+            if kind == .basic {
+                TextField("Benutzer", text: binding.username, prompt: Text("Benutzername"))
+                    .textFieldStyle(.roundedBorder)
+            }
+            HStack(spacing: 6) {
+                Image(systemName: binding.wrappedValue.value.isEmpty ? "key.slash" : "key.fill")
+                    .foregroundStyle(binding.wrappedValue.value.isEmpty ? Color.orange : Color.secondary)
+                SecureField(kind.title, text: binding.value, prompt: Text("\(kind.title) hier einfügen"))
+                    .textFieldStyle(.roundedBorder)
+            }
+            Text(binding.wrappedValue.value.isEmpty ? "Zugangsdaten fehlen – sie landen im Schlüsselbund und gehen nur an \(origin)." : "Im Schlüsselbund gespeichert.")
+                .font(.caption)
+                .foregroundStyle(binding.wrappedValue.value.isEmpty ? Color.orange : Color.secondary)
         }
     }
 

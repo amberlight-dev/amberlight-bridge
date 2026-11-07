@@ -134,7 +134,7 @@ nonisolated enum CustomScriptRunner {
 
         let reader = output.fileHandleForReading
         defer { reader.readabilityHandler = nil }
-        send(["script": definition.script ?? "", "vars": variables(of: definition, now: now)])
+        send(["script": definition.script ?? "", "vars": variables(of: definition, now: now), "seconds": Int(timeout) + 1])
         var buffer = Data()
         for await chunk in chunks(of: reader) {
             guard Date.now < deadline else { return finish(.failure(.scriptTimeout)) }

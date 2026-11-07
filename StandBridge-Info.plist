@@ -2,13 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>at.lab73.amberlight-bridge.widget</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>amberlight-bridge</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSHumanReadableCopyright</key>
 	<string>© 2026 lab73 GmbH, Wels, Österreich</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
 	<key>SUFeedURL</key>
 	<string>https://amberlight.dev/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>sSz+2pyX+ZgqwVurHHk0U9qCwxjmpRNESOMB2KKXJKA=</string>
-	<key>SUEnableAutomaticChecks</key>
-	<true/>
 </dict>
 </plist>

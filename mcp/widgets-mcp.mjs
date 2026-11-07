@@ -50,7 +50,8 @@ It runs in a sandboxed process without file or network access. Available:
 
 SECURITY – what only the human can do, in Amberlight Bridge on the Mac:
   approve every host (and write access) and enter credentials. You cannot approve or pass secrets; never ask the user to paste an API key into the chat.
-  save_widget returns "pending" with exactly what the human still has to do; relay it to the user.`;
+  save_widget returns "pending" with exactly what the human still has to do; relay it to the user word for word, including the
+  amberlight-bridge://widget/<id> link that opens the right page. The Bridge also shows the human a notification.`;
 
 const tools = [
   {
