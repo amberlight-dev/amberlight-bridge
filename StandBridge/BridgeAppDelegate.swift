@@ -1,9 +1,10 @@
 import AppKit
 import Sparkle
 import SwiftUI
+import UserNotifications
 
 @MainActor
-final class BridgeAppDelegate: NSObject, NSApplicationDelegate, SPUUpdaterDelegate, SPUStandardUserDriverDelegate {
+final class BridgeAppDelegate: NSObject, NSApplicationDelegate, SPUUpdaterDelegate, SPUStandardUserDriverDelegate, UNUserNotificationCenterDelegate {
     static var quitRequested = false
     private static weak var shared: BridgeAppDelegate?
 
@@ -40,6 +41,7 @@ final class BridgeAppDelegate: NSObject, NSApplicationDelegate, SPUUpdaterDelega
     func applicationDidFinishLaunching(_ notification: Notification) {
         guard !BridgeModel.isTestHost else { return }
         statusItem = BridgeStatusItem(model: model, updater: updaterController.updater)
+        UNUserNotificationCenter.current().delegate = self
         if !BridgeStatusItem.isVisibleSetting && !launchedAsLoginItem { showMainWindow() }
     }
 
@@ -83,6 +85,28 @@ final class BridgeAppDelegate: NSObject, NSApplicationDelegate, SPUUpdaterDelega
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         showMainWindow()
         return false
+    }
+
+    func application(_ application: NSApplication, open urls: [URL]) {
+        guard let id = urls.lazy.compactMap(CustomApprovalNotice.widgetID(in:)).first else { return }
+        openWidget(id)
+    }
+
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        [.banner, .sound]
+    }
+
+    nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        guard let raw = response.notification.request.content.userInfo[CustomApprovalNotice.widgetIDKey] as? String,
+              let id = UUID(uuidString: raw) else { return }
+        await openWidget(id)
+    }
+
+    private func openWidget(_ id: UUID) {
+        guard model.customWidgets.definition(id) != nil else { return showMainWindow() }
+        model.librarySelection = id
+        model.sidebar = .library
+        showMainWindow()
     }
 
     private func showMainWindow() {

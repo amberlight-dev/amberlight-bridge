@@ -11,6 +11,8 @@ struct CustomWidgetEditor: View {
     @State private var draft: CustomWidgetDefinition
     @State private var secret: CustomSecret
     @State private var savedSecret: CustomSecret
+    @State private var hostSecrets: [String: CustomSecret]
+    @State private var savedHostSecrets: [String: CustomSecret]
     @State private var response: CustomFetcher.Response?
     @State private var testError: String?
     @State private var testing = false
@@ -19,6 +21,7 @@ struct CustomWidgetEditor: View {
     @State private var history = LayoutHistory()
     @State private var code = ""
     @State private var codeError: String?
+    @State private var pendingSave: Task<Void, Never>?
 
     enum Mode: String, CaseIterable, Identifiable {
         case simple = "Einfach", builder = "Gestalten", advanced = "Erweitert", code = "Code"
@@ -41,6 +44,11 @@ struct CustomWidgetEditor: View {
         _draft = State(initialValue: saved)
         _secret = State(initialValue: stored)
         _savedSecret = State(initialValue: stored)
+        let storedHosts = Dictionary(saved.scriptHosts.compactMap { host in
+            host.origin.flatMap { origin in store.secret(for: saved, origin: origin).map { (origin, $0) } }
+        }, uniquingKeysWith: { first, _ in first })
+        _hostSecrets = State(initialValue: storedHosts)
+        _savedHostSecrets = State(initialValue: storedHosts)
     }
 
     var body: some View {
@@ -65,11 +73,12 @@ struct CustomWidgetEditor: View {
                     .help("Widget aus der Bibliothek löschen")
                 Button("Exportieren", systemImage: "square.and.arrow.up") { onExport(saved) }
                     .help("Konfiguration ohne Zugangsdaten in die Zwischenablage kopieren")
-                Button("Sichern", systemImage: "checkmark", action: save)
-                    .keyboardShortcut("s")
-                    .disabled(!isDirty || validation != nil)
             }
         }
+        .onChange(of: draft) { scheduleSave() }
+        .onChange(of: secret) { scheduleSave() }
+        .onChange(of: hostSecrets) { scheduleSave() }
+        .onDisappear { saveIfNeeded() }
         .onChange(of: draft.origin) { _, origin in
             secret = origin == saved.origin ? savedSecret : CustomSecret()
             response = nil
@@ -115,7 +124,11 @@ struct CustomWidgetEditor: View {
                         .textFieldStyle(.plain)
                         .font(.title.weight(.semibold))
                 }
-                CustomSetupCard(draft: $draft, secret: $secret, status: connection, onTest: test)
+                if draft.isScripted {
+                    CustomScriptCard(draft: $draft, secrets: $hostSecrets, status: connection, onTest: test)
+                } else {
+                    CustomSetupCard(draft: $draft, secret: $secret, status: connection, onTest: test)
+                }
                 CustomValuesCard(draft: $draft, texts: CustomLayout.scope(for: draft, json: previewJSON ?? [:], at: .now).text)
                 CustomLayoutCard(draft: $draft, json: previewJSON, onCustomize: { mode = .builder })
             }
@@ -143,9 +156,15 @@ struct CustomWidgetEditor: View {
 
     private var form: some View {
         Form {
-            apiSection
-            authSection
-            endpointSection
+            if draft.isScripted {
+                Section("Skript") {
+                    CustomScriptCard(draft: $draft, secrets: $hostSecrets, status: connection, onTest: test)
+                }
+            } else {
+                apiSection
+                authSection
+                endpointSection
+            }
             intervalSection
             CustomSelectionSection(selection: $draft.selection)
             CustomDisplaySection(display: $draft.display)
@@ -201,6 +220,7 @@ struct CustomWidgetEditor: View {
             var decoded = try JSONDecoder().decode(CustomWidgetDefinition.self, from: Data(text.utf8))
             decoded.id = draft.id
             decoded.confirmedOrigin = decoded.origin == draft.origin ? draft.confirmedOrigin : nil
+            decoded.confirmedHosts = draft.confirmedHosts
             codeError = nil
             if decoded != draft { draft = decoded }
         } catch {
@@ -210,7 +230,7 @@ struct CustomWidgetEditor: View {
 
     private static func json(of definition: CustomWidgetDefinition) -> String {
         var shared = definition
-        shared.confirmedOrigin = nil
+        shared.clearConfirmations()
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
         return (try? encoder.encode(shared)).flatMap { String(data: $0, encoding: .utf8) } ?? ""
@@ -301,13 +321,13 @@ struct CustomWidgetEditor: View {
     @ViewBuilder
     private var secretStatus: some View {
         if draft.origin != saved.origin, !savedSecret.value.isEmpty {
-            Label("Host geändert – die gespeicherten Zugangsdaten werden beim Sichern verworfen. Bitte neu eintragen.", systemImage: "key.slash")
+            Label("Host geändert – die gespeicherten Zugangsdaten werden verworfen. Bitte neu eintragen.", systemImage: "key.slash")
                 .foregroundStyle(.orange)
         } else if secret.value.isEmpty {
             Label("Zugangsdaten fehlen", systemImage: "key.slash")
                 .foregroundStyle(.orange)
         } else {
-            Label(secret == savedSecret ? "Im Schlüsselbund" : "Wird beim Sichern im Schlüsselbund abgelegt", systemImage: "key.fill")
+            Label("Im Schlüsselbund", systemImage: "key.fill")
                 .foregroundStyle(.secondary)
         }
     }
@@ -366,7 +386,7 @@ struct CustomWidgetEditor: View {
         }
     }
 
-    private var isDirty: Bool { draft != saved || secret != savedSecret }
+    private var isDirty: Bool { draft != saved || secret != savedSecret || hostSecrets != savedHostSecrets }
 
     private var selectedPaths: Set<String> {
         let selection = draft.selection
@@ -390,7 +410,7 @@ struct CustomWidgetEditor: View {
         testing = true
         connection = .testing
         defer { testing = false }
-        switch await store.test(draft, typed: secret) {
+        switch await store.test(draft, typed: secret, typedHosts: hostSecrets) {
         case .success(let result):
             response = result
             testError = nil
@@ -402,11 +422,35 @@ struct CustomWidgetEditor: View {
         }
     }
 
+    private func scheduleSave() {
+        pendingSave?.cancel()
+        pendingSave = Task {
+            try? await Task.sleep(for: .milliseconds(700))
+            guard !Task.isCancelled else { return }
+            saveIfNeeded()
+        }
+    }
+
+    private func saveIfNeeded() {
+        pendingSave?.cancel()
+        guard isDirty, validation == nil else { return }
+        save()
+    }
+
     private func save() {
         store.save(draft)
-        store.setSecret(draft.needsSecret ? secret : nil, for: draft)
-        savedSecret = draft.needsSecret ? secret : CustomSecret()
+        if draft.isScripted {
+            for host in draft.scriptHosts where host.needsSecret {
+                guard let origin = host.origin else { continue }
+                store.setSecret(hostSecrets[origin], for: draft, origin: origin)
+            }
+            savedHostSecrets = hostSecrets
+        } else {
+            store.setSecret(draft.needsSecret ? secret : nil, for: draft)
+            savedSecret = draft.needsSecret ? secret : CustomSecret()
+        }
         onSaved(draft)
+        CustomApprovalNotice.update(draft, store: store)
         Task { await store.refresh(draft.id) }
     }
 }

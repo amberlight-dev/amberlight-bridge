@@ -24,13 +24,24 @@ struct CustomImportSheet: View {
             }
         }
         .padding(24)
-        .frame(width: 480)
+        .frame(width: 560)
     }
 
     private func summary(_ definition: CustomWidgetDefinition) -> some View {
         VStack(alignment: .leading, spacing: 14) {
             Label(definition.name, systemImage: definition.symbol)
                 .font(.headline)
+            if definition.isScripted {
+                CustomScriptSummary(definition: definition)
+            } else {
+                requestSummary(definition)
+            }
+            buttons(definition)
+        }
+    }
+
+    private func requestSummary(_ definition: CustomWidgetDefinition) -> some View {
+        VStack(alignment: .leading, spacing: 14) {
             GroupBox {
                 VStack(alignment: .leading, spacing: 8) {
                     LabeledContent("Kontaktiert", value: definition.origin ?? "–")
@@ -49,7 +60,6 @@ struct CustomImportSheet: View {
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
-            buttons(definition)
         }
     }
 
@@ -63,7 +73,7 @@ struct CustomImportSheet: View {
                     onImport(definition, false)
                     dismiss()
                 }
-                Button("Importieren und freigeben") {
+                Button(definition.scriptHosts.contains(where: \.writes) ? "Importieren und Lesen & Schreiben freigeben" : "Importieren und freigeben") {
                     onImport(definition, true)
                     dismiss()
                 }
