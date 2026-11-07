@@ -248,6 +248,24 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
     static let maxHosts = 8
 }
 
+nonisolated extension CustomWidgetDefinition.Selection {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        valuePath = try container.decodeIfPresent(String.self, forKey: .valuePath) ?? ""
+        arrayPath = try container.decodeIfPresent(String.self, forKey: .arrayPath)
+        valueField = try container.decodeIfPresent(String.self, forKey: .valueField) ?? ""
+        aggregation = try container.decodeIfPresent(CustomWidgetDefinition.Aggregation.self, forKey: .aggregation) ?? .sum
+        seriesPath = try container.decodeIfPresent(String.self, forKey: .seriesPath)
+        filter = try container.decodeIfPresent(String.self, forKey: .filter)
+        labelField = try container.decodeIfPresent(String.self, forKey: .labelField) ?? ""
+        seriesField = try container.decodeIfPresent(String.self, forKey: .seriesField) ?? ""
+        groupsLabels = try container.decodeIfPresent(Bool.self, forKey: .groupsLabels) ?? false
+        labelsAreDates = try container.decodeIfPresent(Bool.self, forKey: .labelsAreDates) ?? false
+        labelTemplate = try container.decodeIfPresent(String.self, forKey: .labelTemplate)
+        textTemplate = try container.decodeIfPresent(String.self, forKey: .textTemplate)
+    }
+}
+
 nonisolated extension CustomWidgetDefinition {
     var origin: String? { CustomRequest.origin(of: baseURL) }
     var isScripted: Bool { !(script ?? "").isEmpty }

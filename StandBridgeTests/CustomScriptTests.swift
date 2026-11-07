@@ -45,6 +45,21 @@ final class CustomScriptTests: XCTestCase {
         XCTAssertTrue(try XCTUnwrap(store.definition(saved.id)).isConfirmed, "Patch kann Freigaben weder setzen noch löschen")
     }
 
+    func testStudioAcceptsPartialValueSelectionsAndNamesSchemaErrors() async throws {
+        let store = CustomWidgetStore(file: nil, vault: .memory())
+        let (status, _) = await studio("POST", "/studio/widgets", ["definition": ["script": "return {a: {b: 1}}", "hosts": [], "values": [["name": "b", "selection": ["valuePath": "a.b"]]]]], store: store)
+        XCTAssertEqual(status, 200)
+        XCTAssertEqual(store.definitions.first?.values?.first?.selection.valuePath, "a.b")
+
+        var templated = CustomLayout.Scope()
+        templated.text["icon"] = "checkmark"
+        XCTAssertEqual(CustomLayout.resolve(CustomNode(type: .symbol, text: "{icon}"), scope: templated)?.text, "checkmark")
+
+        let (bad, json) = await studio("POST", "/studio/widgets", ["definition": ["display": ["style": "nope"]]], store: store)
+        XCTAssertEqual(bad, 400)
+        XCTAssertTrue((json["error"] as? String)?.contains("display.style") == true, "\(json)")
+    }
+
     func testScriptHostsNeedHumanApprovalAndWriteRights() {
         var definition = scripted("return 1", confirmed: false)
         XCTAssertFalse(definition.isConfirmed)

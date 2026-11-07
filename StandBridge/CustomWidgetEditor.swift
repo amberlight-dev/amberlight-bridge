@@ -75,6 +75,9 @@ struct CustomWidgetEditor: View {
                     .help("Konfiguration ohne Zugangsdaten in die Zwischenablage kopieren")
             }
         }
+        .onChange(of: saved) { previous, current in
+            if draft == previous { draft = current }
+        }
         .onChange(of: draft) { scheduleSave() }
         .onChange(of: secret) { scheduleSave() }
         .onChange(of: hostSecrets) { scheduleSave() }
@@ -236,7 +239,7 @@ struct CustomWidgetEditor: View {
         return (try? encoder.encode(shared)).flatMap { String(data: $0, encoding: .utf8) } ?? ""
     }
 
-    private static func describe(_ error: Error) -> String {
+    static func describe(_ error: Error) -> String {
         switch error {
         case DecodingError.keyNotFound(let key, _): String(localized: "Feld „\(key.stringValue)“ fehlt")
         case DecodingError.typeMismatch(_, let context), DecodingError.valueNotFound(_, let context), DecodingError.dataCorrupted(let context):

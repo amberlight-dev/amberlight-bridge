@@ -56,6 +56,8 @@ nonisolated enum CustomLayout {
         case .text:
             guard let template = node.text, let filled = fill(template, scope), !filled.trimmingCharacters(in: .whitespaces).isEmpty else { return nil }
             out.text = filled
+        case .symbol:
+            out.text = node.text.flatMap { fill($0, scope) }
         case .pill:
             if let label = rule?.label, !label.isEmpty {
                 out.text = label

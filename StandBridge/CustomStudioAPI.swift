@@ -25,9 +25,14 @@ enum CustomStudioAPI {
     }
 
     static func definition(from patch: JSON, base: CustomWidgetDefinition) -> CustomWidgetDefinition? {
-        guard let current = encoded(base),
-              let data = try? JSONSerialization.data(withJSONObject: merged(current, patch)) else { return nil }
-        return try? JSONDecoder().decode(CustomWidgetDefinition.self, from: data)
+        try? decoded(patch, base: base).get()
+    }
+
+    static func decoded(_ patch: JSON, base: CustomWidgetDefinition) -> Result<CustomWidgetDefinition, Error> {
+        Result {
+            let data = try JSONSerialization.data(withJSONObject: merged(encoded(base) ?? [:], patch))
+            return try JSONDecoder().decode(CustomWidgetDefinition.self, from: data)
+        }
     }
 
     static func merged(_ base: JSON, _ patch: JSON) -> JSON {
@@ -53,7 +58,11 @@ enum CustomStudioAPI {
         } else {
             base = CustomWidgetDefinition()
         }
-        guard var definition = definition(from: patch, base: base) else { return (400, ["error": "Definition passt nicht zum Schema"]) }
+        var definition: CustomWidgetDefinition
+        switch decoded(patch, base: base) {
+        case .success(let value): definition = value
+        case .failure(let error): return (400, ["error": "Definition passt nicht zum Schema: " + CustomWidgetEditor.describe(error)])
+        }
         definition.confirmedOrigin = base.confirmedOrigin
         definition.confirmedHosts = base.confirmedHosts
         do {
