@@ -9,7 +9,7 @@ final class SystemStatsTests: XCTestCase {
     }
 
     private func makeServer() -> BridgeServer {
-        BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), token: "abcd1234", port: 1, hostName: "mac.local")
+        BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), deviceToken: "abcd1234", localToken: "hook5678", port: 1, hostName: "mac.local")
     }
 
     func testSystemRouteRequiresToken() async throws {

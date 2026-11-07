@@ -5,37 +5,36 @@ enum ClaudeSettings {
     enum StatuslineState { case missing, installed, insertable(URL), manual }
 
     static let hookURL = "http://127.0.0.1:7420/hook"
+    static let awaitURL = "\(hookURL)/await"
     static let hookHeaderName = "x-stand-hook"
     static let hookHeader = #"-H "x-stand-hook: $(cat "$HOME/.config/duo-stand/token")""#
-    static let blockingCommand = "curl -s -m 140 -H 'Expect:' \(hookHeader) --data-binary @- \(hookURL) || true"
+    static let permissionCommand = "curl -s -m 3590 -H 'Expect:' \(hookHeader) --data-binary @- \(hookURL) || true"
     static let asyncCommand = "curl -s -m 5 -H 'Expect:' \(hookHeader) --data-binary @- \(hookURL) >/dev/null || true"
+    static let awaitCommand = #"r=$(curl -sf -m 28790 -H 'Expect:' \#(hookHeader) --data-binary @- \#(awaitURL)) || exit 0; [ -n "$r" ] || exit 0; printf '%s\n' "$r" >&2; exit 2"#
     static let usageLine = #"printf '%s' "$input" > "$HOME/.claude/stand-usage.json.$$" && mv "$HOME/.claude/stand-usage.json.$$" "$HOME/.claude/stand-usage.json""#
 
-    private static let entries: [(event: String, matcher: String?, blocking: Bool)] = [
-        ("PreToolUse", "AskUserQuestion", true),
-        ("PermissionRequest", nil, true),
-        ("PostToolUse", "AskUserQuestion|\(Board.nextStepTool)", false),
-        ("UserPromptSubmit", nil, false),
-        ("Stop", nil, true),
-        ("Notification", nil, false),
-    ]
+    private static let asyncHook: JSON = ["type": "command", "command": asyncCommand, "async": true]
+    private static var entries: [(event: String, matcher: String?, hook: JSON)] { [
+        ("PermissionRequest", nil, ["type": "command", "command": permissionCommand, "timeout": 3600]),
+        ("PostToolUse", nil, asyncHook),
+        ("UserPromptSubmit", nil, asyncHook),
+        ("Stop", nil, ["type": "command", "command": awaitCommand, "asyncRewake": true, "timeout": 28800,
+                       "rewakeSummary": String(localized: "Antwort von Amberlight")]),
+        ("Notification", nil, asyncHook),
+    ] }
 
     static func hookState(_ settings: JSON) -> HookState {
-        let commands = allCommands(settings)
-        if commands.contains(where: { $0.contains("stand_hook.py") }) { return .legacy }
-        let ours = commands.filter { $0.contains(hookURL) }
+        if allCommands(settings).contains(where: { $0.contains("stand_hook.py") }) { return .legacy }
+        let ours = ourSignatures(settings)
         if ours.isEmpty { return .missing }
-        let stopIsBlocking = stopCommands(settings).allSatisfy { $0 == blockingCommand }
-        return ours.allSatisfy { $0.contains(hookHeader) } && stopIsBlocking ? .installed : .outdated
+        return ours.sorted() == entries.map { signature($0.event, $0.matcher, $0.hook) }.sorted() ? .installed : .outdated
     }
 
     static func installingHooks(_ settings: JSON) -> JSON {
         var result = removingHooks(settings)
         var hooks = result["hooks"] as? JSON ?? [:]
         for entry in entries {
-            var hook: JSON = ["type": "command", "command": entry.blocking ? blockingCommand : asyncCommand]
-            if entry.blocking { hook["timeout"] = 150 } else { hook["async"] = true }
-            var group: JSON = ["hooks": [hook]]
+            var group: JSON = ["hooks": [entry.hook]]
             if let matcher = entry.matcher { group["matcher"] = matcher }
             hooks[entry.event] = (hooks[entry.event] as? [JSON] ?? []) + [group]
         }
@@ -108,9 +107,19 @@ enum ClaudeSettings {
         command.contains("stand_hook.py") || command.contains(hookURL)
     }
 
-    private static func stopCommands(_ settings: JSON) -> [String] {
-        let groups = (settings["hooks"] as? JSON)?["Stop"] as? [JSON] ?? []
-        return groups.flatMap { $0["hooks"] as? [JSON] ?? [] }.compactMap { $0["command"] as? String }.filter { $0.contains(hookURL) }
+    private static func signature(_ event: String, _ matcher: String?, _ hook: JSON) -> String {
+        let flags = [hook["async"] as? Bool ?? false, hook["asyncRewake"] as? Bool ?? false]
+        return "\(event)|\(matcher ?? "")|\(hook["command"] as? String ?? "")|\(flags)|\(hook["timeout"] as? Int ?? 0)|\(hook["rewakeSummary"] as? String ?? "")"
+    }
+
+    private static func ourSignatures(_ settings: JSON) -> [String] {
+        (settings["hooks"] as? JSON ?? [:]).flatMap { event, groups in
+            (groups as? [JSON] ?? []).flatMap { group in
+                (group["hooks"] as? [JSON] ?? [])
+                    .filter { isOurs($0["command"] as? String ?? "") }
+                    .map { signature(event, group["matcher"] as? String, $0) }
+            }
+        }
     }
 
     private static func allCommands(_ settings: JSON) -> [String] {

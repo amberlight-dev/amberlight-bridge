@@ -1021,6 +1021,16 @@
         }
       }
     },
+    "Antwort des Users über Amberlight auf „%@“:\n%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The user's reply via Amberlight to “%1$@”:\n%2$@"
+          }
+        }
+      }
+    },
     "Antwort größer als %lld KB" : {
       "localizations" : {
         "en" : {
@@ -1047,6 +1057,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Answer from iPhone"
+          }
+        }
+      }
+    },
+    "Antwort von Amberlight" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reply from Amberlight"
           }
         }
       }
@@ -4047,6 +4067,16 @@
         }
       }
     },
+    "Kopplungscode erneuert – Stand einmal neu koppeln." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pairing code renewed – pair the Stand once more."
+          }
+        }
+      }
+    },
     "LED blinkt bei Ereignissen" : {
       "localizations" : {
         "en" : {
@@ -4623,6 +4653,16 @@
         }
       }
     },
+    "Nachricht des Users über Amberlight:\n%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Message from the user via Amberlight:\n%@"
+          }
+        }
+      }
+    },
     "Nachricht ohne Text" : {
       "localizations" : {
         "en" : {
@@ -4679,26 +4719,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "New Page"
-          }
-        }
-      }
-    },
-    "Neuer Kopplungscode – iPhone bitte neu koppeln" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "New pairing code – please pair the iPhone again"
-          }
-        }
-      }
-    },
-    "Neuer, längerer Kopplungscode – iPhone bitte neu koppeln" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "New, longer pairing code – please pair the iPhone again"
           }
         }
       }
@@ -5583,12 +5603,12 @@
         }
       }
     },
-    "Schreibt sechs Hooks in %@, die Fragen und Freigaben per curl an Amberlight Bridge melden. Alte stand_hook.py-Einträge werden ersetzt, alles andere bleibt. Vorher wird eine Sicherungskopie angelegt." : {
+    "Schreibt fünf Hooks in %@, die Fragen und Freigaben per curl an Amberlight Bridge melden. Alte stand_hook.py-Einträge werden ersetzt, alles andere bleibt. Vorher wird eine Sicherungskopie angelegt." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Writes six hooks to %@ that report questions and permission requests to Amberlight Bridge via curl. Old stand_hook.py entries are replaced, everything else stays. A backup is made first."
+            "value" : "Writes five hooks to %@ that report questions and permission requests to Amberlight Bridge via curl. Old stand_hook.py entries are replaced, everything else stays. A backup is made first."
           }
         }
       }
@@ -6349,12 +6369,12 @@
         }
       }
     },
-    "Trägt den Server %@ in %@ ein. Er startet das mitgelieferte Skript mit Node und spricht nur mit dieser Bridge auf 127.0.0.1; den Kopplungscode liest er selbst aus ~/.config/duo-stand/token. Vorher wird eine Sicherungskopie angelegt.\n\nClaude Code danach neu starten." : {
+    "Trägt den Server %@ in %@ ein. Er startet das mitgelieferte Skript mit Node und spricht nur mit dieser Bridge auf 127.0.0.1; den lokalen Schlüssel liest er selbst aus ~/.config/duo-stand/token. Vorher wird eine Sicherungskopie angelegt.\n\nClaude Code danach neu starten." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adds the server %@ to %@. It runs the bundled script with Node and only talks to this Bridge on 127.0.0.1; it reads the pairing code itself from ~/.config/duo-stand/token. A backup is made first.\n\nRestart Claude Code afterwards."
+            "value" : "Adds the server %@ to %@. It runs the bundled script with Node and only talks to this Bridge on 127.0.0.1; it reads the local key itself from ~/.config/duo-stand/token. A backup is made first.\n\nRestart Claude Code afterwards."
           }
         }
       }

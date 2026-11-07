@@ -9,7 +9,7 @@ final class NowPlayingRouteTests: XCTestCase {
     }
 
     private func makeServer() -> BridgeServer {
-        let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), token: "abcd1234", port: 1, hostName: "mac.local")
+        let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), deviceToken: "abcd1234", localToken: "hook5678", port: 1, hostName: "mac.local")
         server.nowPlaying = { ["title": "egoist", "playing": true, "artworkId": "a1"] }
         server.nowPlayingArtwork = { $0 == "a1" ? ["id": "a1", "data": "AAAA"] : nil }
         return server

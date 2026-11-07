@@ -23,7 +23,7 @@ final class LayoutConflictTests: XCTestCase {
 
     func testStaleBaseRevisionIsRejectedWithCurrentLayout() async throws {
         let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), layout: LayoutStore(file: file),
-                                  token: "abcd1234", port: 1, hostName: "mac.local")
+                                  deviceToken: "abcd1234", localToken: "hook5678", port: 1, hostName: "mac.local")
         let first = try await put(server, pages: [.desk()], base: 0).0
         let stale = try await put(server, pages: [.turntable()], base: 0)
         let current = try await put(server, pages: [.nightstand()], base: 1).0
@@ -35,7 +35,7 @@ final class LayoutConflictTests: XCTestCase {
 
     func testDeviceBackupIsStoredRotatedAndValidated() async throws {
         let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), layout: LayoutStore(file: file),
-                                  token: "abcd1234", port: 1, hostName: "mac.local")
+                                  deviceToken: "abcd1234", localToken: "hook5678", port: 1, hostName: "mac.local")
         func post(_ body: JSON, token: String = "abcd1234") async throws -> Int {
             let data = try JSONSerialization.data(withJSONObject: body)
             let head = "POST /layout/backup HTTP/1.1\r\nAuthorization: Bearer \(token)\r\nContent-Length: \(data.count)\r\n\r\n"

@@ -26,7 +26,7 @@ struct DevicesView: View {
                             .accessibilityLabel("QR-Code zum Koppeln")
                         VStack(alignment: .leading, spacing: 10) {
                             if model.tokenRenewed {
-                                StatusLabel(text: String(localized: "Neuer, längerer Kopplungscode – iPhone bitte neu koppeln"), symbol: "exclamationmark.triangle.fill", tint: .yellow)
+                                StatusLabel(text: String(localized: "Kopplungscode erneuert – Stand einmal neu koppeln."), symbol: "exclamationmark.triangle.fill", tint: .yellow)
                             }
                             Text("Gekoppelt wird nur über diesen QR-Code: In der Amberlight-App beim Einrichten oder unter Einstellungen „Neu koppeln“ wählen und scannen.")
                                 .foregroundStyle(.secondary)

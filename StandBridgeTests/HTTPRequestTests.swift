@@ -1,3 +1,4 @@
+import Security
 import XCTest
 @testable import StandBridge
 
@@ -25,36 +26,73 @@ final class HTTPRequestTests: XCTestCase {
     }
 
     func testHookRejectsBrowserLikeRequests() async throws {
-        let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), token: "abcd1234", port: 1, hostName: "mac.local")
+        let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), deviceToken: "abcd1234", localToken: "hook5678", port: 1, hostName: "mac.local")
         func hook(_ headers: String) async throws -> Int {
             let raw = "POST /hook HTTP/1.1\r\n\(headers)Content-Length: 2\r\n\r\n{}"
             return await server.route(try XCTUnwrap(HTTPRequest.parse(Data(raw.utf8))), fromLoopback: true).0
         }
-        let curl = try await hook("Host: 127.0.0.1:1\r\nX-Stand-Hook: abcd1234\r\n")
-        let ipv6 = try await hook("Host: [::1]:1\r\nX-Stand-Hook: abcd1234\r\n")
+        let curl = try await hook("Host: 127.0.0.1:1\r\nX-Stand-Hook: hook5678\r\n")
+        let ipv6 = try await hook("Host: [::1]:1\r\nX-Stand-Hook: hook5678\r\n")
         let noHeader = try await hook("Host: 127.0.0.1:1\r\n")
         let wrongToken = try await hook("Host: 127.0.0.1:1\r\nX-Stand-Hook: nope\r\n")
-        let withOrigin = try await hook("Host: 127.0.0.1:1\r\nX-Stand-Hook: abcd1234\r\nOrigin: https://evil.example\r\n")
-        let rebound = try await hook("Host: evil.example:1\r\nX-Stand-Hook: abcd1234\r\n")
-        let noHost = try await hook("X-Stand-Hook: abcd1234\r\n")
+        let withOrigin = try await hook("Host: 127.0.0.1:1\r\nX-Stand-Hook: hook5678\r\nOrigin: https://evil.example\r\n")
+        let rebound = try await hook("Host: evil.example:1\r\nX-Stand-Hook: hook5678\r\n")
+        let noHost = try await hook("X-Stand-Hook: hook5678\r\n")
         XCTAssertEqual([curl, ipv6, noHeader, wrongToken, withOrigin, rebound, noHost], [200, 200, 401, 401, 403, 403, 403])
     }
 
     func testInstalledHookCommandReadsTokenAtRuntime() {
-        XCTAssertTrue(ClaudeSettings.blockingCommand.contains(#"$(cat "$HOME/.config/duo-stand/token")"#))
+        XCTAssertTrue(ClaudeSettings.permissionCommand.contains(#"$(cat "$HOME/.config/duo-stand/token")"#))
         XCTAssertTrue(ClaudeSettings.asyncCommand.contains("x-stand-hook"))
     }
 
     func testRouteChecksTokenAndLoopback() async throws {
-        let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), token: "abcd1234", port: 1, hostName: "mac.local")
+        let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), deviceToken: "abcd1234", localToken: "hook5678", port: 1, hostName: "mac.local")
         let snapshot = "GET /snapshot HTTP/1.1\r\nAuthorization: Bearer abcd1234\r\n\r\n"
         let wrongToken = "GET /snapshot HTTP/1.1\r\nAuthorization: Bearer nope\r\n\r\n"
-        let hook = "POST /hook HTTP/1.1\r\nHost: 127.0.0.1:1\r\nX-Stand-Hook: abcd1234\r\nContent-Length: 2\r\n\r\n{}"
+        let hook = "POST /hook HTTP/1.1\r\nHost: 127.0.0.1:1\r\nX-Stand-Hook: hook5678\r\nContent-Length: 2\r\n\r\n{}"
         let ok = await server.route(try XCTUnwrap(HTTPRequest.parse(Data(snapshot.utf8))), fromLoopback: false).0
         let unauthorized = await server.route(try XCTUnwrap(HTTPRequest.parse(Data(wrongToken.utf8))), fromLoopback: false).0
         let remoteHook = await server.route(try XCTUnwrap(HTTPRequest.parse(Data(hook.utf8))), fromLoopback: false).0
         let localHook = await server.route(try XCTUnwrap(HTTPRequest.parse(Data(hook.utf8))), fromLoopback: true).0
         XCTAssertEqual([ok, unauthorized, remoteHook, localHook], [200, 401, 403, 200])
+    }
+
+    func testLocalAndDeviceTokensAreNotInterchangeable() async throws {
+        let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), deviceToken: "abcd1234", localToken: "hook5678", port: 1, hostName: "mac.local")
+        func send(_ method: String, _ path: String, _ auth: String, body: String = "{}") async throws -> Int {
+            let raw = "\(method) \(path) HTTP/1.1\r\nHost: 127.0.0.1:1\r\n\(auth)\r\nContent-Length: \(body.utf8.count)\r\n\r\n\(body)"
+            return await server.route(try XCTUnwrap(HTTPRequest.parse(Data(raw.utf8))), fromLoopback: true).0
+        }
+        let local = "Authorization: Bearer hook5678"
+        let device = "Authorization: Bearer abcd1234"
+        let standWithLocal = [
+            try await send("GET", "/snapshot", local),
+            try await send("POST", "/answer", local, body: #"{"questionId":"q","decision":"allow"}"#),
+            try await send("POST", "/reply", local, body: #"{"sessionId":"s1","text":"ja"}"#),
+            try await send("POST", "/focus", local, body: #"{"sessionId":"s1"}"#),
+        ]
+        XCTAssertEqual(standWithLocal, [401, 401, 401, 401])
+        let crossed = [
+            try await send("POST", "/hook", "X-Stand-Hook: abcd1234"),
+            try await send("POST", "/hook/await", "X-Stand-Hook: abcd1234"),
+            try await send("GET", "/studio/widgets", device),
+            try await send("GET", "/studio/widgets", local),
+        ]
+        XCTAssertEqual(crossed, [401, 401, 401, 404])
+    }
+
+    func testDeviceTokenLivesInKeychainAndIsStable() throws {
+        let service = "at.lab73.amberlight.bridge.tests.\(UUID().uuidString)"
+        defer { SecItemDelete([kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: service] as CFDictionary) }
+        let planted = try BridgeIdentity.loadDeviceToken(service: service, reset: false)
+        let first = try BridgeIdentity.loadDeviceToken(service: service, reset: true)
+        let second = try BridgeIdentity.loadDeviceToken(service: service, reset: false)
+        XCTAssertTrue(first.created)
+        XCTAssertNotEqual(first.token, planted.token)
+        XCTAssertFalse(second.created)
+        XCTAssertEqual(first.token, second.token)
+        XCTAssertEqual(first.token.count, 64)
     }
 
     func testHookPayloadTagsAgentAndPid() throws {
@@ -75,9 +113,9 @@ final class HTTPRequestTests: XCTestCase {
 
     func testCodexHookRouteRegistersSession() async throws {
         let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)),
-                                  token: "abcd1234", port: 1, hostName: "mac.local")
+                                  deviceToken: "abcd1234", localToken: "hook5678", port: 1, hostName: "mac.local")
         let body = #"{"hook_event_name":"UserPromptSubmit","session_id":"c1","cwd":"/x/shop","prompt":"los"}"#
-        let raw = "POST /hook?agent=codex&pid=\(getpid()) HTTP/1.1\r\nHost: 127.0.0.1:1\r\nX-Stand-Hook: abcd1234\r\nContent-Length: \(body.utf8.count)\r\n\r\n\(body)"
+        let raw = "POST /hook?agent=codex&pid=\(getpid()) HTTP/1.1\r\nHost: 127.0.0.1:1\r\nX-Stand-Hook: hook5678\r\nContent-Length: \(body.utf8.count)\r\n\r\n\(body)"
         let status = await server.route(try XCTUnwrap(HTTPRequest.parse(Data(raw.utf8))), fromLoopback: true).0
         XCTAssertEqual(status, 200)
         XCTAssertEqual(server.board.session("c1")?["agent"] as? String, "codex")
@@ -89,7 +127,7 @@ final class HTTPRequestTests: XCTestCase {
         try FileManager.default.createDirectory(at: dir.appending(path: "sessions"), withIntermediateDirectories: true)
         let entry: JSON = ["pid": Int(getpid()), "sessionId": "s1", "cwd": "/x/app", "entrypoint": "cli"]
         try JSONSerialization.data(withJSONObject: entry).write(to: dir.appending(path: "sessions/1.json"))
-        let server = BridgeServer(board: Board(claudeDir: dir), token: "abcd1234", port: 1, hostName: "mac.local")
+        let server = BridgeServer(board: Board(claudeDir: dir), deviceToken: "abcd1234", localToken: "hook5678", port: 1, hostName: "mac.local")
         var focused: [String] = []
         server.focus = { entry in
             focused.append(entry["sessionId"] as? String ?? "")

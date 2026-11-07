@@ -26,14 +26,78 @@ final class ClaudeSettingsTests: XCTestCase {
 
         let hooks = installed["hooks"] as! JSON
         let postToolUse = hooks["PostToolUse"] as! [JSON]
-        XCTAssertEqual(postToolUse.map { $0["matcher"] as? String }, ["Write|Edit", "AskUserQuestion|mcp__ccd_turn__wrap_up"])
+        XCTAssertEqual(postToolUse.map { $0["matcher"] as? String }, ["Write|Edit", nil])
         XCTAssertEqual(command(postToolUse[1]), ClaudeSettings.asyncCommand)
         XCTAssertEqual((hooks["SessionStart"] as! [JSON]).count, 1)
-        let preToolUse = hooks["PreToolUse"] as! [JSON]
-        XCTAssertEqual(preToolUse.count, 1)
-        XCTAssertEqual(command(preToolUse[0]), ClaudeSettings.blockingCommand)
-        XCTAssertEqual((hooks["PermissionRequest"] as! [JSON]).count, 1)
-        XCTAssertNil((hooks["PermissionRequest"] as! [JSON])[0]["matcher"])
+        XCTAssertNil(hooks["PreToolUse"])
+        let permission = hooks["PermissionRequest"] as! [JSON]
+        XCTAssertEqual(permission.count, 1)
+        XCTAssertNil(permission[0]["matcher"])
+        XCTAssertEqual(command(permission[0]), ClaudeSettings.permissionCommand)
+        XCTAssertEqual((permission[0]["hooks"] as? [JSON])?.first?["timeout"] as? Int, 3600)
+        let stop = (hooks["Stop"] as! [JSON])
+        XCTAssertEqual(stop.count, 1)
+        let stopHook = (stop[0]["hooks"] as? [JSON])?.first
+        XCTAssertEqual(stopHook?["command"] as? String, ClaudeSettings.awaitCommand)
+        XCTAssertEqual(stopHook?["asyncRewake"] as? Bool, true)
+        XCTAssertEqual(stopHook?["timeout"] as? Int, 28800)
+        XCTAssertNotNil(stopHook?["rewakeSummary"] as? String)
+    }
+
+    func testPreviousInstallsAreOutdatedAndReinstallCleanly() {
+        let blockingStop = "curl -s -m 140 -H 'Expect:' \(ClaudeSettings.hookHeader) --data-binary @- \(ClaudeSettings.hookURL) || true"
+        var oldInstall = ClaudeSettings.installingHooks([:])
+        var hooks = oldInstall["hooks"] as! JSON
+        hooks["Stop"] = [["hooks": [["type": "command", "command": blockingStop, "timeout": 150]]]]
+        oldInstall["hooks"] = hooks
+        XCTAssertEqual(ClaudeSettings.hookState(oldInstall), .outdated)
+
+        var withPreToolUse = ClaudeSettings.installingHooks([:])
+        hooks = withPreToolUse["hooks"] as! JSON
+        hooks["PreToolUse"] = [["matcher": "AskUserQuestion", "hooks": [["type": "command", "command": blockingStop, "timeout": 150]]]]
+        withPreToolUse["hooks"] = hooks
+        XCTAssertEqual(ClaudeSettings.hookState(withPreToolUse), .outdated)
+
+        var asyncStop = ClaudeSettings.installingHooks([:])
+        hooks = asyncStop["hooks"] as! JSON
+        hooks["Stop"] = [["hooks": [["type": "command", "command": ClaudeSettings.awaitCommand, "timeout": 28800]]]]
+        asyncStop["hooks"] = hooks
+        XCTAssertEqual(ClaudeSettings.hookState(asyncStop), .outdated)
+
+        var matchedPostToolUse = ClaudeSettings.installingHooks([:])
+        hooks = matchedPostToolUse["hooks"] as! JSON
+        hooks["PostToolUse"] = [["matcher": "AskUserQuestion|mcp__ccd_turn__wrap_up", "hooks": [["type": "command", "command": ClaudeSettings.asyncCommand, "async": true]]]]
+        matchedPostToolUse["hooks"] = hooks
+        XCTAssertEqual(ClaudeSettings.hookState(matchedPostToolUse), .outdated)
+
+        for old in [oldInstall, withPreToolUse, asyncStop, matchedPostToolUse] {
+            let reinstalled = ClaudeSettings.installingHooks(old)
+            XCTAssertEqual(ClaudeSettings.hookState(reinstalled), .installed)
+            XCTAssertNil((reinstalled["hooks"] as! JSON)["PreToolUse"])
+        }
+    }
+
+    func testAwaitCommandWakesOnlyWithText() throws {
+        func run(_ reply: String) throws -> (Int32, String) {
+            let command = ClaudeSettings.awaitCommand.replacingOccurrences(of: "curl -sf -m 28790 -H 'Expect:' \(ClaudeSettings.hookHeader) --data-binary @- \(ClaudeSettings.awaitURL)", with: "printf '%s' '\(reply)'")
+            guard !command.contains("curl") else {
+                XCTFail("await command changed")
+                return (-1, "")
+            }
+            let process = Process()
+            process.executableURL = URL(fileURLWithPath: "/bin/sh")
+            process.arguments = ["-c", command]
+            let stderr = Pipe()
+            process.standardError = stderr
+            try process.run()
+            process.waitUntilExit()
+            return (process.terminationStatus, String(decoding: stderr.fileHandleForReading.readDataToEndOfFile(), as: UTF8.self))
+        }
+        let woken = try run("Ja")
+        let quiet = try run("")
+        XCTAssertEqual(woken.0, 2)
+        XCTAssertEqual(woken.1, "Ja\n")
+        XCTAssertEqual(quiet.0, 0)
     }
 
     func testRemoveLeavesOnlyForeignHooks() {

@@ -73,11 +73,9 @@ final class MacReplyTests: XCTestCase {
         let file = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString).appending(path: "token")
         try FileManager.default.createDirectory(at: file.deletingLastPathComponent(), withIntermediateDirectories: true)
         try "bbde706d".write(to: file, atomically: true, encoding: .utf8)
-        XCTAssertTrue(BridgeIdentity.isLegacyToken(at: file))
         let token = try BridgeIdentity.loadToken(at: file)
         XCTAssertEqual(token.count, 64)
         XCTAssertTrue(token.allSatisfy(\.isHexDigit))
-        XCTAssertFalse(BridgeIdentity.isLegacyToken(at: file))
         XCTAssertEqual(try BridgeIdentity.loadToken(at: file), token)
         XCTAssertNotEqual(try BridgeIdentity.randomToken(), try BridgeIdentity.randomToken())
     }

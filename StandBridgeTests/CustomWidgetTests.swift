@@ -638,7 +638,7 @@ final class CustomWidgetTests: XCTestCase {
         await store.refreshDue(now: Date(timeIntervalSince1970: 61))
         XCTAssertEqual(calls, 2, "Intervall noch nicht abgelaufen")
 
-        let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), token: "abcd1234", port: 1, hostName: "mac.local")
+        let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), deviceToken: "abcd1234", localToken: "hook5678", port: 1, hostName: "mac.local")
         server.custom = { store.feedJSON(only: $0) }
         func get(_ path: String, token: String) throws -> HTTPRequest {
             try XCTUnwrap(HTTPRequest.parse(Data("GET \(path) HTTP/1.1\r\nAuthorization: Bearer \(token)\r\nContent-Length: 0\r\n\r\n".utf8)))

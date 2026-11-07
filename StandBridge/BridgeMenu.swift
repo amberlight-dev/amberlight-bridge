@@ -92,7 +92,7 @@ struct BridgeMenu: View {
                 .background(.white, in: .rect(cornerRadius: 12))
                 .accessibilityLabel("QR-Code zum Koppeln")
             if model.tokenRenewed {
-                StatusLabel(text: String(localized: "Neuer Kopplungscode – iPhone bitte neu koppeln"), symbol: "exclamationmark.triangle.fill", tint: .yellow)
+                StatusLabel(text: String(localized: "Kopplungscode erneuert – Stand einmal neu koppeln."), symbol: "exclamationmark.triangle.fill", tint: .yellow)
                     .font(.caption)
             }
             Text("In der Amberlight-App beim Einrichten oder unter Einstellungen „Neu koppeln“ scannen.")

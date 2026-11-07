@@ -46,8 +46,8 @@ enum MacReply {
         return nil
     }
 
-    static func record(sessionId: String, option: Int) -> String {
-        let line = "\(Date.now.formatted(date: .omitted, time: .standard)) · \(sessionId) · Option \(option + 1)"
+    static func record(sessionId: String, option: Int?) -> String {
+        let line = "\(Date.now.formatted(date: .omitted, time: .standard)) · \(sessionId) · \(option.map { "Option \($0 + 1)" } ?? "Text")"
         log.notice("Direkt gesendet: \(line, privacy: .public)")
         return line
     }

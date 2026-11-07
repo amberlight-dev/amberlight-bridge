@@ -24,7 +24,9 @@ final class BridgeModel {
     private(set) var nodeURL: URL?
     private(set) var message: String?
     var availableUpdate: String?
-    let tokenRenewed = BridgeIdentity.isLegacyToken()
+    var tokenRenewed: Bool {
+        server?.lastClient == nil && UserDefaults.standard.bool(forKey: BridgeIdentity.repairPendingKey)
+    }
 
     private static func adoptDefaults(from formerBundleID: String) {
         let defaults = UserDefaults.standard
@@ -41,8 +43,13 @@ final class BridgeModel {
         layout = LayoutStore(file: Self.isTestHost ? nil : LayoutStore.file(forPort: port))
         customWidgets = CustomWidgetStore(file: Self.isTestHost ? nil : CustomWidgetStore.file(forPort: port))
         do {
-            let token = try BridgeIdentity.loadToken()
-            server = BridgeServer(board: Board(claudeDir: Self.claudeDir), layout: layout, token: token, port: port, hostName: BridgeIdentity.localHostName)
+            let wasPaired = FileManager.default.fileExists(atPath: BridgeIdentity.tokenFile.path)
+            let localToken = try BridgeIdentity.loadToken()
+            let issued = UserDefaults.standard.bool(forKey: BridgeIdentity.deviceTokenIssuedKey)
+            let device = Self.isTestHost ? (token: try BridgeIdentity.randomToken(), created: false) : try BridgeIdentity.loadDeviceToken(reset: !issued)
+            if device.created && wasPaired { UserDefaults.standard.set(true, forKey: BridgeIdentity.repairPendingKey) }
+            if !Self.isTestHost { UserDefaults.standard.set(true, forKey: BridgeIdentity.deviceTokenIssuedKey) }
+            server = BridgeServer(board: Board(claudeDir: Self.claudeDir), layout: layout, deviceToken: device.token, localToken: localToken, port: port, hostName: BridgeIdentity.localHostName)
             server?.custom = { [customWidgets] in customWidgets.feedJSON(only: $0) }
             server?.studio = { [customWidgets] in await CustomStudioAPI.handle($0, store: customWidgets) }
             if !Self.isTestHost {
@@ -57,7 +64,10 @@ final class BridgeModel {
             message = String(localized: "Token konnte nicht angelegt werden: \(error.localizedDescription)")
         }
         refresh()
-        if !Self.isTestHost { refreshOutdatedMcpEntry() }
+        if !Self.isTestHost {
+            refreshOutdatedMcpEntry()
+            refreshOutdatedHooks()
+        }
     }
 
     private static var launchSection: BridgeSidebarItem? {
@@ -74,7 +84,7 @@ final class BridgeModel {
 
     var pairingLink: String? {
         server.map { server in
-            BridgeIdentity.pairingLink(baseURL: server.baseURL, fallbackURL: BridgeIdentity.lanIPv4.map { "http://\($0):\(server.port)" }, token: server.token)
+            BridgeIdentity.pairingLink(baseURL: server.baseURL, fallbackURL: BridgeIdentity.lanIPv4.map { "http://\($0):\(server.port)" }, token: server.deviceToken)
         }
     }
 
@@ -98,6 +108,12 @@ final class BridgeModel {
         refresh()
     }
 
+    private func refreshOutdatedHooks() {
+        guard hookState == .outdated else { return }
+        _ = try? ClaudeSettings.update(Self.settingsFile, ClaudeSettings.installingHooks)
+        refresh()
+    }
+
     func setLoginItem(_ enabled: Bool) {
         perform {
             if enabled { try SMAppService.mainApp.register() } else { try SMAppService.mainApp.unregister() }
@@ -118,7 +134,7 @@ final class BridgeModel {
 
     func installHooks() {
         guard confirm(String(localized: "Claude-Code-Hooks installieren?"),
-                      String(localized: "Schreibt sechs Hooks in \(Self.settingsFile.path), die Fragen und Freigaben per curl an Amberlight Bridge melden. Alte stand_hook.py-Einträge werden ersetzt, alles andere bleibt. Vorher wird eine Sicherungskopie angelegt.")) else { return }
+                      String(localized: "Schreibt fünf Hooks in \(Self.settingsFile.path), die Fragen und Freigaben per curl an Amberlight Bridge melden. Alte stand_hook.py-Einträge werden ersetzt, alles andere bleibt. Vorher wird eine Sicherungskopie angelegt.")) else { return }
         updateSettings(Self.settingsFile, ClaudeSettings.installingHooks)
     }
 
@@ -143,7 +159,7 @@ final class BridgeModel {
     func installMcp() {
         guard let script = McpSettings.bundledScript else { return }
         guard confirm(String(localized: "Widget-MCP für Claude Code einrichten?"),
-                      String(localized: "Trägt den Server \(McpSettings.serverName) in \(McpSettings.configFile.path) ein. Er startet das mitgelieferte Skript mit Node und spricht nur mit dieser Bridge auf 127.0.0.1; den Kopplungscode liest er selbst aus ~/.config/duo-stand/token. Vorher wird eine Sicherungskopie angelegt.\n\nClaude Code danach neu starten.")) else { return }
+                      String(localized: "Trägt den Server \(McpSettings.serverName) in \(McpSettings.configFile.path) ein. Er startet das mitgelieferte Skript mit Node und spricht nur mit dieser Bridge auf 127.0.0.1; den lokalen Schlüssel liest er selbst aus ~/.config/duo-stand/token. Vorher wird eine Sicherungskopie angelegt.\n\nClaude Code danach neu starten.")) else { return }
         updateSettings(McpSettings.configFile) { McpSettings.installing($0, script: script.path) }
     }
 

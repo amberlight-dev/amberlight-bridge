@@ -18,7 +18,7 @@ final class ReplyRouteTests: XCTestCase {
                                     "tool_input": ["ask": "Committen?", "actions": [["label": "Ja", "message": "Ja, bitte committen"]]]])
         let sessions = board.snapshot(standAnswers: false)["sessions"] as? [JSON]
         noteId = (sessions?.first?["waiting"] as? JSON)?["id"] as? String ?? ""
-        server = BridgeServer(board: board, layout: LayoutStore(file: dir.appending(path: "layout.json")), token: "abcd1234", port: 1, hostName: "mac.local")
+        server = BridgeServer(board: board, layout: LayoutStore(file: dir.appending(path: "layout.json")), deviceToken: "abcd1234", localToken: "hook5678", port: 1, hostName: "mac.local")
         replies = []
         server.reply = { [unowned self] text, entry in
             replies.append((text, entry["sessionId"] as? String ?? ""))
@@ -41,23 +41,97 @@ final class ReplyRouteTests: XCTestCase {
         XCTAssertTrue(replies.isEmpty)
     }
 
-    func testSendsTheOfferedMessageOnceAndLogsIt() async throws {
+    func testSendsTheOfferedLabelOnceAndLogsIt() async throws {
         let body = "{\"sessionId\":\"s1\",\"noteId\":\"\(noteId)\",\"option\":0}"
         let (status, payload) = try await post(body)
         let again = try await post(body).0
         XCTAssertEqual([status, again], [200, 404])
         XCTAssertEqual(payload["sent"] as? Bool, true)
-        XCTAssertEqual(replies.map(\.0), ["Ja, bitte committen"])
+        XCTAssertEqual(replies.map(\.0), ["Ja"])
         XCTAssertEqual(server.replyLog.count, 1)
     }
 
-    func testRejectsUnknownOptionsSessionsNotesAndFreeText() async throws {
+    func testRejectsUnknownOptionsSessionsNotesAndBadText() async throws {
         let wrongOption = try await post("{\"sessionId\":\"s1\",\"noteId\":\"\(noteId)\",\"option\":3}").0
         let wrongSession = try await post("{\"sessionId\":\"s2\",\"noteId\":\"\(noteId)\",\"option\":0}").0
         let staleNote = try await post("{\"sessionId\":\"s1\",\"noteId\":\"old\",\"option\":0}").0
-        let freeText = try await post("{\"sessionId\":\"s1\",\"text\":\"rm -rf /\"}").0
-        XCTAssertEqual([wrongOption, wrongSession, staleNote, freeText], [404, 404, 404, 404])
+        let blank = try await post("{\"sessionId\":\"s1\",\"text\":\"   \"}").0
+        let tooLong = try await post("{\"sessionId\":\"s1\",\"text\":\"\(String(repeating: "x", count: 4001))\"}").0
+        let unknownSession = try await post("{\"sessionId\":\"s2\",\"text\":\"hallo\"}").0
+        XCTAssertEqual([wrongOption, wrongSession, staleNote, blank, tooLong, unknownSession], [404, 404, 404, 400, 400, 404])
         XCTAssertTrue(replies.isEmpty)
+    }
+
+    func testRefusesPasteWhileSessionHasOpenAsk() async throws {
+        let board = server.board
+        let ask = Task { @MainActor in
+            _ = await board.handleHook(["hook_event_name": "PermissionRequest", "session_id": "s1", "tool_name": "Bash", "tool_input": ["command": "ls"]])
+        }
+        try await Task.sleep(for: .milliseconds(50))
+        let (status, payload) = try await post("{\"sessionId\":\"s1\",\"noteId\":\"\(noteId)\",\"option\":0}")
+        XCTAssertEqual(status, 200)
+        XCTAssertEqual(payload as NSDictionary, ["sent": false, "copied": false])
+        XCTAssertTrue(replies.isEmpty)
+        _ = await board.handleHook(["hook_event_name": "UserPromptSubmit", "session_id": "s1"])
+        await ask.value
+    }
+
+    private func awaitStop() -> Task<(Int, String), Never> {
+        let body = #"{"hook_event_name":"Stop","session_id":"s1","last_assistant_message":"Fertig."}"#
+        let raw = "POST /hook/await HTTP/1.1\r\nHost: 127.0.0.1:1\r\nX-Stand-Hook: hook5678\r\nContent-Length: \(body.utf8.count)\r\n\r\n\(body)"
+        let server = server!
+        return Task { @MainActor in
+            let (status, payload) = await server.route(HTTPRequest.parse(Data(raw.utf8))!, fromLoopback: true)
+            return (status, payload["text"] as? String ?? "?")
+        }
+    }
+
+    private func waitForCanReply() async throws {
+        for _ in 0..<50 {
+            let session = (server.board.snapshot(standAnswers: false)["sessions"] as? [JSON])?.first
+            if session?["canReply"] as? Bool == true { return }
+            try await Task.sleep(for: .milliseconds(20))
+        }
+        XCTFail("park never appeared")
+    }
+
+    func testFreeTextGoesToParkedStopAsPlainText() async throws {
+        let parked = awaitStop()
+        try await waitForCanReply()
+        let (status, payload) = try await post(#"{"sessionId":"s1","text":"  Nein, erst testen  "}"#)
+        XCTAssertEqual(status, 200)
+        XCTAssertEqual(payload as NSDictionary, ["sent": true, "copied": false])
+        let (hookStatus, text) = await parked.value
+        XCTAssertEqual(hookStatus, 200)
+        XCTAssertEqual(text, "Antwort des Users über Amberlight auf „Committen?“:\nNein, erst testen")
+        XCTAssertTrue(replies.isEmpty)
+        XCTAssertEqual(server.replyLog.count, 1)
+    }
+
+    func testOptionGoesToParkedStop() async throws {
+        let parked = awaitStop()
+        try await waitForCanReply()
+        let status = try await post("{\"sessionId\":\"s1\",\"noteId\":\"\(noteId)\",\"option\":0}").0
+        XCTAssertEqual(status, 200)
+        let text = await parked.value.1
+        XCTAssertEqual(text, "Ja")
+        XCTAssertTrue(replies.isEmpty)
+    }
+
+    func testSupersededParkAnswersEmpty() async throws {
+        let parked = awaitStop()
+        try await waitForCanReply()
+        _ = await server.board.handleHook(["hook_event_name": "UserPromptSubmit", "session_id": "s1"])
+        let (status, text) = await parked.value
+        XCTAssertEqual([status], [200])
+        XCTAssertEqual(text, "")
+    }
+
+    func testFreeTextWithoutParkFallsBackToMacReply() async throws {
+        let (status, payload) = try await post(#"{"sessionId":"s1","text":"Weiter"}"#)
+        XCTAssertEqual(status, 200)
+        XCTAssertEqual(payload["sent"] as? Bool, true)
+        XCTAssertEqual(replies.map(\.0), ["Antwort des Users über Amberlight auf „Committen?“:\nWeiter"])
     }
 
     func testConstantTimeEqualsIsCorrect() {

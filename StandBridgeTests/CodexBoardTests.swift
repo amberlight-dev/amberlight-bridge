@@ -9,7 +9,7 @@ final class CodexBoardTests: XCTestCase {
     override func setUp() async throws {
         dir = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
         try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        board = Board(claudeDir: dir, standWaitSeconds: 2, doneDelay: 0.2)
+        board = Board(claudeDir: dir, doneDelay: 0.2)
     }
 
     override func tearDown() async throws {
@@ -93,12 +93,11 @@ final class CodexBoardTests: XCTestCase {
         XCTAssertEqual(output as NSDictionary, ["hookSpecificOutput": ["hookEventName": "PermissionRequest", "decision": ["behavior": "allow"]]])
     }
 
-    func testPermissionAtMacClearsAfterToolRan() async {
+    func testPermissionWithoutStandIsNotKept() async {
         let request = hook("PermissionRequest", ["tool_name": "apply_patch", "tool_input": ["command": "*** Begin Patch"]])
         let result = await board.handleHook(request)
         XCTAssertTrue(result.isEmpty)
-        XCTAssertEqual(sessions().first?["state"] as? String, "waitingForYou")
-        _ = await board.handleHook(hook("PostToolUse", ["tool_name": "apply_patch"]))
+        XCTAssertTrue(sessions().first?["question"] is NSNull)
         XCTAssertEqual(sessions().first?["state"] as? String, "working")
     }
 
@@ -118,7 +117,7 @@ final class CodexBoardTests: XCTestCase {
     private func waitForQuestion() async throws -> JSON {
         for _ in 0..<50 {
             let question = (board.snapshot(standAnswers: true)["sessions"] as? [JSON])?.first?["question"] as? JSON
-            if let question, question["atMac"] as? Bool == false { return question }
+            if let question { return question }
             try await Task.sleep(for: .milliseconds(20))
         }
         XCTFail("question never appeared")

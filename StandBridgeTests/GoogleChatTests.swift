@@ -329,7 +329,7 @@ final class GoogleChatTests: XCTestCase {
         func request(_ path: String, token: String) throws -> HTTPRequest {
             try XCTUnwrap(HTTPRequest.parse(Data("GET \(path) HTTP/1.1\r\nAuthorization: Bearer \(token)\r\nContent-Length: 0\r\n\r\n".utf8)))
         }
-        let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), token: "abcd1234", port: 1, hostName: "mac.local")
+        let server = BridgeServer(board: Board(claudeDir: FileManager.default.temporaryDirectory), deviceToken: "abcd1234", localToken: "hook5678", port: 1, hostName: "mac.local")
         var previews: [Bool] = []
         server.googleChat = { preview in
             previews.append(preview)

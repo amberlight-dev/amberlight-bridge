@@ -12,11 +12,13 @@ final class BridgeServer {
 
     static let serviceType = "_duostand._tcp"
     static let maxRequestBytes = 4 << 20
-    static let maxConnections = 64
+    static let maxConnections = 256
+    static let awaitPath = "/hook/await"
 
     let board: Board
     let layout: LayoutStore
-    let token: String
+    let deviceToken: String
+    let localToken: String
     let port: UInt16
     let hostName: String
     private(set) var status = Status.starting
@@ -46,10 +48,11 @@ final class BridgeServer {
     @ObservationIgnored private var readingConnections: Set<ObjectIdentifier> = []
     private var listener: NWListener?
 
-    init(board: Board, layout: LayoutStore = LayoutStore(file: nil), token: String, port: UInt16, hostName: String) {
+    init(board: Board, layout: LayoutStore = LayoutStore(file: nil), deviceToken: String, localToken: String, port: UInt16, hostName: String) {
         self.board = board
         self.layout = layout
-        self.token = token
+        self.deviceToken = deviceToken
+        self.localToken = localToken
         self.port = port
         self.hostName = hostName
     }
@@ -139,8 +142,9 @@ final class BridgeServer {
         let fromLoopback = Self.isLoopback(connection.endpoint)
         let (status, payload) = await route(request, fromLoopback: fromLoopback)
         record(request, status: status, from: connection.endpoint, loopback: fromLoopback)
-        let body = (try? JSONSerialization.data(withJSONObject: payload)) ?? Data("{}".utf8)
-        let head = "HTTP/1.1 \(status) \(status == 200 ? "OK" : "Error")\r\nContent-Type: application/json\r\nContent-Length: \(body.count)\r\nConnection: close\r\n\r\n"
+        let plain = request.path == Self.awaitPath
+        let body = plain ? Data((payload["text"] as? String ?? "").utf8) : (try? JSONSerialization.data(withJSONObject: payload)) ?? Data("{}".utf8)
+        let head = "HTTP/1.1 \(status) \(status == 200 ? "OK" : "Error")\r\nContent-Type: \(plain ? "text/plain; charset=utf-8" : "application/json")\r\nContent-Length: \(body.count)\r\nConnection: close\r\n\r\n"
         connection.send(content: Data(head.utf8) + body, completion: .contentProcessed { _ in connection.cancel() })
     }
 
@@ -166,17 +170,31 @@ final class BridgeServer {
             return (layout.storeDeviceBackup(json: request.json) ? 200 : 400, [:])
         case ("POST", "/hook"):
             guard fromLoopback, isLoopbackRequest(request) else { return (403, [:]) }
-            guard Self.constantTimeEquals(request.headers[ClaudeSettings.hookHeaderName] ?? "", token) else { return (401, [:]) }
+            guard isHookAuthorized(request) else { return (401, [:]) }
             return (200, await board.handleHook(Self.hookPayload(request)))
+        case ("POST", Self.awaitPath):
+            guard fromLoopback, isLoopbackRequest(request) else { return (403, [:]) }
+            guard isHookAuthorized(request) else { return (401, [:]) }
+            return (200, ["text": await board.awaitReply(Self.hookPayload(request))])
         case ("POST", "/answer"):
             guard isAuthorized(request) else { return (401, [:]) }
             return (board.answer(request.json) ? 200 : 409, [:])
         case ("POST", "/reply"):
             guard isAuthorized(request) else { return (401, [:]) }
-            guard let sessionId = request.json["sessionId"] as? String, let entry = board.session(sessionId),
-                  let noteId = request.json["noteId"] as? String, let option = request.json["option"] as? Int,
-                  let text = board.redeemReply(of: sessionId, noteId: noteId, option: option) else { return (404, [:]) }
-            let result = board.deliverHeldReply(text, to: sessionId) ? ["sent": true, "copied": false] : await reply(text, entry)
+            guard let sessionId = request.json["sessionId"] as? String, let entry = board.session(sessionId) else { return (404, [:]) }
+            guard !board.hasPendingAsk(sessionId) else { return (200, ["sent": false, "copied": false]) }
+            let text: String
+            let option = request.json["option"] as? Int
+            if let raw = request.json["text"] as? String {
+                let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard (1...4000).contains(trimmed.count) else { return (400, [:]) }
+                text = board.freeTextReply(of: sessionId, text: trimmed)
+            } else {
+                guard let noteId = request.json["noteId"] as? String, let option,
+                      let redeemed = board.redeemReply(of: sessionId, noteId: noteId, option: option) else { return (404, [:]) }
+                text = redeemed
+            }
+            let result = await deliver(text, to: sessionId, entry: entry)
             if result["sent"] as? Bool == true {
                 replyLog = (replyLog + [MacReply.record(sessionId: sessionId, option: option)]).suffix(20)
             }
@@ -215,7 +233,7 @@ final class BridgeServer {
             return (await nowPlayingControl(request.json) ? 200 : 400, [:])
         case (_, let path) where path.hasPrefix("/studio/"):
             guard fromLoopback, isLoopbackRequest(request) else { return (403, [:]) }
-            guard isAuthorized(request) else { return (401, [:]) }
+            guard isLocalAuthorized(request) else { return (401, [:]) }
             return await studio(request)
         case ("GET", "/custom"):
             guard isAuthorized(request) else { return (401, [:]) }
@@ -234,6 +252,10 @@ final class BridgeServer {
         }
     }
 
+    private func deliver(_ text: String, to sessionId: String, entry: JSON) async -> JSON {
+        board.resolveParked(of: sessionId, with: text) ? ["sent": true, "copied": false] : await reply(text, entry)
+    }
+
     static func hookPayload(_ request: HTTPRequest) -> JSON {
         var payload = request.json
         payload["agent"] = request.query["agent"] == "codex" ? "codex" : "claude"
@@ -243,7 +265,15 @@ final class BridgeServer {
     }
 
     private func isAuthorized(_ request: HTTPRequest) -> Bool {
-        Self.constantTimeEquals(request.headers["authorization"] ?? "", "Bearer \(token)")
+        Self.constantTimeEquals(request.headers["authorization"] ?? "", "Bearer \(deviceToken)")
+    }
+
+    private func isLocalAuthorized(_ request: HTTPRequest) -> Bool {
+        Self.constantTimeEquals(request.headers["authorization"] ?? "", "Bearer \(localToken)")
+    }
+
+    private func isHookAuthorized(_ request: HTTPRequest) -> Bool {
+        Self.constantTimeEquals(request.headers[ClaudeSettings.hookHeaderName] ?? "", localToken)
     }
 
     private func isAllowedOpenTarget(_ target: JSON) -> Bool {
@@ -276,7 +306,10 @@ final class BridgeServer {
 
     func record(_ request: HTTPRequest, status: Int, host: String, loopback: Bool, at date: Date = .now) {
         if request.path == "/snapshot" {
-            if status == 200 && !loopback { lastClient = ClientContact(at: date, host: host) }
+            if status == 200 && !loopback {
+                lastClient = ClientContact(at: date, host: host)
+                UserDefaults.standard.removeObject(forKey: BridgeIdentity.repairPendingKey)
+            }
             return
         }
         guard !RequestLogEntry.quietPaths.contains(request.path) else { return }

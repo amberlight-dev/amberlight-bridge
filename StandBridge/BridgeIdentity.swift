@@ -5,6 +5,8 @@ import SystemConfiguration
 enum BridgeIdentity {
     static let tokenFile = FileManager.default.homeDirectoryForCurrentUser.appending(path: ".config/duo-stand/token")
     static let tokenBytes = 32
+    static let repairPendingKey = "deviceTokenRepairPending"
+    static let deviceTokenIssuedKey = "deviceTokenIssued"
 
     static func loadToken(at file: URL = tokenFile) throws -> String {
         if let existing = try? String(contentsOf: file, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines),
@@ -18,15 +20,29 @@ enum BridgeIdentity {
         return token
     }
 
+    // TODO: move the item to the data protection keychain (kSecUseDataProtectionKeychain) once signing carries keychain-access-groups.
+    static func loadDeviceToken(service: String = "at.lab73.amberlight.bridge", account: String = "device-token", reset: Bool) throws -> (token: String, created: Bool) {
+        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: service, kSecAttrAccount as String: account]
+        func stored() throws -> String? {
+            var result: AnyObject?
+            let status = SecItemCopyMatching(query.merging([kSecReturnData as String: true, kSecMatchLimit as String: kSecMatchLimitOne]) { $1 } as CFDictionary, &result)
+            guard status != errSecItemNotFound else { return nil }
+            guard status == errSecSuccess else { throw NSError(domain: NSOSStatusErrorDomain, code: Int(status)) }
+            return (result as? Data).flatMap { String(data: $0, encoding: .utf8) }
+        }
+        if !reset, let existing = try stored(), existing.count >= tokenBytes * 2 { return (existing, false) }
+        SecItemDelete(query as CFDictionary)
+        let token = try randomToken()
+        let item = query.merging([kSecValueData as String: Data(token.utf8), kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly]) { $1 }
+        let status = SecItemAdd(item as CFDictionary, nil)
+        guard status == errSecSuccess, try stored() == token else { throw NSError(domain: NSOSStatusErrorDomain, code: Int(status)) }
+        return (token, true)
+    }
+
     static func randomToken() throws -> String {
         var bytes = [UInt8](repeating: 0, count: tokenBytes)
         guard SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes) == errSecSuccess else { throw CocoaError(.featureUnsupported) }
         return bytes.map { String(format: "%02x", $0) }.joined()
-    }
-
-    static func isLegacyToken(at file: URL = tokenFile) -> Bool {
-        guard let existing = try? String(contentsOf: file, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines) else { return false }
-        return !existing.isEmpty && existing.count < tokenBytes * 2
     }
 
     static var localHostName: String {

@@ -17,7 +17,8 @@ final class LayoutTests: XCTestCase {
         BridgeServer(
             board: Board(claudeDir: FileManager.default.temporaryDirectory),
             layout: LayoutStore(file: file),
-            token: "abcd1234",
+            deviceToken: "abcd1234",
+            localToken: "hook5678",
             port: 1,
             hostName: "mac.local"
         )

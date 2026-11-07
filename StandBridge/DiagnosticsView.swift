@@ -129,7 +129,7 @@ struct DiagnosticsView: View {
                 if let server = model.server {
                     LabeledContent("Server") { ServerStatusLabel(status: server.status) }
                     LabeledContent("Port", value: "\(server.port)")
-                    LabeledContent("Kopplungscode", value: String(localized: "\(server.token.count) Zeichen"))
+                    LabeledContent("Kopplungscode", value: String(localized: "\(server.deviceToken.count) Zeichen"))
                 }
                 LabeledContent("Anordnung") {
                     Button("Im Finder zeigen") {
