@@ -5,6 +5,7 @@ typealias JSON = [String: Any]
 final class Board {
     private final class Ask {
         let id = UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased()
+        let createdAt = Date.now
         let kind: String
         let toolName: String
         let items: [JSON]
@@ -412,6 +413,9 @@ final class Board {
                 "kind": question.kind,
                 "items": question.items,
                 "detail": question.detail ?? NSNull(),
+                // NOTE: atMac/expiresAt only keep App 1.0 (15) decoding; drop once 1.1 is out.
+                "atMac": false,
+                "expiresAt": question.createdAt.addingTimeInterval(askSeconds).timeIntervalSince1970,
             ] } ?? NSNull(),
         ]
     }

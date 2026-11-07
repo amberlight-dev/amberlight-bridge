@@ -51,7 +51,8 @@ final class BoardTests: XCTestCase {
         let hook = startHook(Self.questionHook)
         let pending = try await waitForQuestion()
         XCTAssertEqual(pending["kind"] as? String, "question")
-        XCTAssertNil(pending["atMac"])
+        XCTAssertEqual(pending["atMac"] as? Bool, false)
+        XCTAssertNotNil(pending["expiresAt"] as? Double)
         XCTAssertFalse(board.answer(["questionId": pending["id"]!, "answers": ["Welches Framework?": "  "]]))
         XCTAssertTrue(board.answer(["questionId": pending["id"]!, "answers": ["Welches Framework?": "Svelte, weil klein"]]))
         let output = try await value(of: hook)["hookSpecificOutput"] as? JSON
