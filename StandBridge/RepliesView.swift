@@ -55,7 +55,7 @@ struct RepliesView: View {
             } header: {
                 Text("Session-Fenster")
             } footer: {
-                Text("Tippst du am iPhone auf eine Session, kommt ihr Fenster nach vorn. Für Terminal und iTerm fragt macOS einmal nach der Automation-Erlaubnis.")
+                Text("Tippst du am iPhone auf eine Session, kommt ihr Fenster nach vorn. Für Terminal und iTerm fragt macOS einmal nach der Automation-Erlaubnis, bei anderen Apps sucht die Bridge das passende Fenster über die Bedienungshilfen.")
             }
 
             Section("Zuletzt direkt gesendet") {

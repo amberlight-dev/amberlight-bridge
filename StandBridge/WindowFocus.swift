@@ -12,25 +12,84 @@ enum WindowFocus {
         if entry["entrypoint"] as? String == "claude-desktop" {
             return openDesktopSession(entry["hostSessionId"] as? String)
         }
-        guard let pid = entry["pid"] as? Int32, let app = owningApp(of: pid) else { return .missing }
-        guard let bundleId = app.bundleIdentifier, let tty = tty(of: pid),
-              let source = selectTabScript(bundleId: bundleId, tty: tty) else {
-            activate(app)
-            return .app
+        guard let pid = entry["pid"] as? Int32, let app = hostApp(of: pid) else { return .missing }
+        if let bundleId = app.bundleIdentifier, let tty = tty(of: pid),
+           let source = selectTabScript(bundleId: bundleId, tty: tty) {
+            guard await isAutomationAllowed(bundleId) else {
+                activate(app)
+                return .denied
+            }
+            var error: NSDictionary?
+            if NSAppleScript(source: source)?.executeAndReturnError(&error).booleanValue == true { return .window }
         }
-        guard await isAutomationAllowed(bundleId) else {
-            activate(app)
-            return .denied
-        }
-        var error: NSDictionary?
-        if NSAppleScript(source: source)?.executeAndReturnError(&error).booleanValue == true { return .window }
+        let raised = raiseWindow(of: app, matching: windowHints(for: entry))
         activate(app)
-        return .app
+        return raised ? .window : .app
     }
 
     static func frontmostBundleId(for entry: JSON) -> String? {
         if entry["entrypoint"] as? String == "claude-desktop" { return claudeBundleId }
-        return (entry["pid"] as? Int32).flatMap(owningApp)?.bundleIdentifier
+        return (entry["pid"] as? Int32).flatMap(hostApp)?.bundleIdentifier
+    }
+
+    static func windowHints(for entry: JSON) -> [String] {
+        let cwd = entry["cwd"] as? String ?? ""
+        let home = NSHomeDirectory()
+        let tildeCwd = cwd.hasPrefix(home) ? "~" + cwd.dropFirst(home.count) : ""
+        let hints = [entry["name"] as? String ?? "", cwd, tildeCwd, (cwd as NSString).lastPathComponent]
+        return hints.filter { $0.count > 1 }
+    }
+
+    static func bestWindowIndex(titles: [String], hints: [String]) -> Int? {
+        hints.lazy.compactMap { hint in titles.firstIndex { $0.localizedCaseInsensitiveContains(hint) } }.first
+    }
+
+    static func inheritedValue(_ key: String, inProcessArguments raw: [UInt8]) -> String? {
+        guard raw.count > 4 else { return nil }
+        let argc = raw.prefix(4).withUnsafeBytes { Int($0.loadUnaligned(as: Int32.self)) }
+        let prefix = key + "="
+        return raw.dropFirst(4).split(separator: 0).dropFirst(1 + argc)
+            .lazy.map { String(decoding: $0, as: UTF8.self) }
+            .first { $0.hasPrefix(prefix) }
+            .map { String($0.dropFirst(prefix.count)) }
+    }
+
+    private static func hostApp(of pid: pid_t) -> NSRunningApplication? {
+        owningApp(of: pid) ?? inheritedApp(of: pid)
+    }
+
+    private static func inheritedApp(of pid: pid_t) -> NSRunningApplication? {
+        guard let raw = processArguments(of: pid),
+              let bundleId = inheritedValue("__CFBundleIdentifier", inProcessArguments: raw) else { return nil }
+        return NSRunningApplication.runningApplications(withBundleIdentifier: bundleId).first { $0.activationPolicy == .regular }
+    }
+
+    private static func processArguments(of pid: pid_t) -> [UInt8]? {
+        var mib = [CTL_KERN, KERN_PROCARGS2, pid]
+        var size = 0
+        guard sysctl(&mib, u_int(mib.count), nil, &size, nil, 0) == 0, size > 0 else { return nil }
+        var buffer = [UInt8](repeating: 0, count: size)
+        guard sysctl(&mib, u_int(mib.count), &buffer, &size, nil, 0) == 0 else { return nil }
+        return Array(buffer.prefix(size))
+    }
+
+    private static func raiseWindow(of app: NSRunningApplication, matching hints: [String]) -> Bool {
+        guard AXIsProcessTrusted() else { return false }
+        let element = AXUIElementCreateApplication(app.processIdentifier)
+        var value: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(element, kAXWindowsAttribute as CFString, &value) == .success,
+              let windows = value as? [AXUIElement],
+              let index = bestWindowIndex(titles: windows.map(title), hints: hints) else { return false }
+        let window = windows[index]
+        AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, kCFBooleanFalse)
+        AXUIElementSetAttributeValue(window, kAXMainAttribute as CFString, kCFBooleanTrue)
+        return AXUIElementPerformAction(window, kAXRaiseAction as CFString) == .success
+    }
+
+    private static func title(of window: AXUIElement) -> String {
+        var value: CFTypeRef?
+        AXUIElementCopyAttributeValue(window, kAXTitleAttribute as CFString, &value)
+        return value as? String ?? ""
     }
 
     static func isForegroundOnTerminal(_ pid: pid_t) -> Bool {

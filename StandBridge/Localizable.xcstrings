@@ -6269,12 +6269,12 @@
         }
       }
     },
-    "Tippst du am iPhone auf eine Session, kommt ihr Fenster nach vorn. Für Terminal und iTerm fragt macOS einmal nach der Automation-Erlaubnis." : {
+    "Tippst du am iPhone auf eine Session, kommt ihr Fenster nach vorn. Für Terminal und iTerm fragt macOS einmal nach der Automation-Erlaubnis, bei anderen Apps sucht die Bridge das passende Fenster über die Bedienungshilfen." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "When you tap a session on the iPhone, its window comes to the front. For Terminal and iTerm, macOS asks once for Automation permission."
+            "value" : "When you tap a session on the iPhone, its window comes to the front. For Terminal and iTerm, macOS asks once for Automation permission; for other apps, the bridge finds the matching window via Accessibility."
           }
         }
       }
