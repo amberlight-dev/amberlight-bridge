@@ -30,6 +30,7 @@ final class CustomWidgetStore {
     }
 
     private(set) var definitions: [CustomWidgetDefinition] = []
+    @ObservationIgnored private(set) var revision = 0
     private(set) var displays: [UUID: CustomWidgetDisplay] = [:]
     @ObservationIgnored private(set) var history: [UUID: [CustomWidgetDisplay.Sample]] = [:]
     @ObservationIgnored var fetch: Fetch = { request throws(CustomRequestError) in try await CustomFetcher.fetch(request) }
@@ -77,6 +78,7 @@ final class CustomWidgetStore {
         }
         fetchedAt[definition.id] = nil
         displays[definition.id] = nil
+        revision += 1
         persist()
     }
 
@@ -88,6 +90,7 @@ final class CustomWidgetStore {
         history[id] = nil
         fetchedAt[id] = nil
         lastResults[id] = nil
+        revision += 1
         persist()
     }
 
@@ -118,6 +121,7 @@ final class CustomWidgetStore {
             vault.delete(key)
         }
         fetchedAt[definition.id] = nil
+        revision += 1
     }
 
     func hasSecret(_ definition: CustomWidgetDefinition) -> Bool {
@@ -187,6 +191,7 @@ final class CustomWidgetStore {
             display = failed
         }
         guard self.definition(id) == definition else { return display }
+        if displays[id] != display { revision += 1 }
         displays[id] = display
         return display
     }

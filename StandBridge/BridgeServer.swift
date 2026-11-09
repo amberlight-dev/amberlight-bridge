@@ -38,6 +38,7 @@ final class BridgeServer {
     @ObservationIgnored var gitlab: @MainActor () async -> JSON = { await GitLabClient.cachedReport() }
     @ObservationIgnored var googleChat: @MainActor (Bool) async -> JSON = { await GoogleChatClient.cachedReport(preview: $0) }
     @ObservationIgnored var custom: @MainActor (UUID?) -> JSON = { _ in ["widgets": [JSON]()] }
+    @ObservationIgnored var customRevision: @MainActor () -> Int = { 0 }
     @ObservationIgnored var studio: @MainActor (HTTPRequest) async -> (Int, JSON) = { _ in (404, [:]) }
     @ObservationIgnored var customAction: @MainActor (JSON) async -> (Int, JSON) = { _ in (404, [:]) }
     @ObservationIgnored var codexUsage: @MainActor () -> JSON? = { BridgeModel.isTestHost ? nil : CodexUsage.cachedProvider(in: CodexSettings.sessionsDir) }
@@ -155,6 +156,7 @@ final class BridgeServer {
             guard isAuthorized(request) else { return (401, [:]) }
             var snapshot = board.snapshot(standAnswers: request.query["answer"] == "1")
             snapshot["layoutRevision"] = layout.revision
+            snapshot["customRevision"] = customRevision()
             snapshot["providers"] = Usage.providers([board.statuslineUsage(), codexUsage()])
             return (200, snapshot)
         case ("GET", "/layout"):

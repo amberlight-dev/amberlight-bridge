@@ -66,7 +66,12 @@ final class CustomScriptTests: XCTestCase {
 
         var approved = saved
         approved.confirmAll()
+        let before = store.revision
         store.save(approved)
+        XCTAssertGreaterThan(store.revision, before, "Freigabe meldet sich beim Stand über den Snapshot")
+        let afterSave = store.revision
+        await store.refresh(saved.id)
+        XCTAssertGreaterThan(store.revision, afterSave, "neue Daten ebenso")
         XCTAssertEqual(store.definition(saved.id)?.runnableActionNames, ["stop"])
         _ = await studio("POST", "/studio/widgets", ["definition": ["id": saved.id.uuidString, "actions": [["name": "stop", "script": "return 2"]]]], store: store)
         XCTAssertEqual(store.definition(saved.id)?.runnableActionNames, [], "geändertes Aktions-Skript braucht eine neue Freigabe")
