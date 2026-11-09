@@ -39,7 +39,8 @@ enum CustomFetcher {
         }
         if status == 401 || status == 403 { throw .unauthorized }
         guard (200..<300).contains(status) else { throw .status(status) }
-        guard let json = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) else { throw .notJSON }
+        let parsed: Any? = data.isEmpty ? NSNull() : try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+        guard let json = parsed else { throw .notJSON }
         return Response(json: json, data: data)
     }
 

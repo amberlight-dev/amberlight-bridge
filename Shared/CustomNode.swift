@@ -55,6 +55,7 @@ nonisolated struct CustomNode: Codable, Equatable, Hashable {
     var priority: Int?
     var color: String?
     var ref: String?
+    var action: String?
 }
 
 nonisolated extension CustomNode {

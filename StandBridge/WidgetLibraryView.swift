@@ -106,6 +106,7 @@ struct WidgetLibraryView: View {
     private func subtitle(_ definition: CustomWidgetDefinition) -> String {
         if !definition.isConfirmed { return String(localized: "Freigabe fehlt") }
         if !store.hasSecret(definition) { return "Zugangsdaten fehlen" }
+        if !definition.unconfirmedActions.isEmpty { return String(localized: "Aktion nicht freigegeben") }
         return store.displays[definition.id]?.error ?? definition.origin.flatMap { URL(string: $0)?.host() } ?? ""
     }
 

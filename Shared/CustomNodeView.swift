@@ -20,7 +20,14 @@ struct CustomNodeEditing {
     var drop: (String, String?) -> Bool
 }
 
+struct CustomNodeAction {
+    var running: String?
+    var failed: String?
+    var perform: (String) -> Void
+}
+
 extension EnvironmentValues {
+    @Entry var customNodeAction: CustomNodeAction?
     @Entry var customNodeEditing: CustomNodeEditing?
     @Entry var rendersStill = false
 }
@@ -36,6 +43,7 @@ struct CustomNodeView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.standAccent) private var standAccent
     @Environment(\.customNodeEditing) private var editing
+    @Environment(\.customNodeAction) private var nodeAction
     @State private var targeted = false
 
     var body: some View {
@@ -53,6 +61,18 @@ struct CustomNodeView: View {
                     .dropDestination(for: String.self) { items, _ in
                         items.first.map { editing.drop($0, ref) } ?? false
                     } isTargeted: { targeted = $0 }
+            } else if let action = node.action, let nodeAction {
+                Button { nodeAction.perform(action) } label: { content.contentShape(.rect) }
+                    .buttonStyle(.plain)
+                    .disabled(nodeAction.running != nil)
+                    .opacity(nodeAction.running == action ? 0.45 : 1)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 8 * scale, style: .continuous)
+                            .fill(WidgetInk.alarm.opacity(nodeAction.failed == action ? 0.45 : 0))
+                            .padding(-4 * scale)
+                            .allowsHitTesting(false)
+                    }
+                    .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: nodeAction.failed)
             } else {
                 content
             }

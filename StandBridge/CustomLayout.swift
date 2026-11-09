@@ -6,11 +6,13 @@ nonisolated enum CustomLayout {
         var text: [String: String] = [:]
         var mainTone: CustomWidgetDisplay.Tone?
         var placeholders = false
+        var actions: Set<String> = []
     }
 
     static func scope(for definition: CustomWidgetDefinition, json: Any, at date: Date) -> Scope {
         let main = CustomEvaluator.selectedValue(definition.selection, in: json)
         var scope = Scope()
+        scope.actions = definition.runnableActionNames
         scope.raw["value"] = main
         scope.raw["now"] = date.formatted(.iso8601)
         scope.text["value"] = CustomEvaluator.formatted(main, display: definition.display)
@@ -42,6 +44,7 @@ nonisolated enum CustomLayout {
         out.plus = nil
         out.plusUnit = nil
         out.toneWhen = nil
+        out.action = node.action.flatMap { scope.actions.contains($0) ? $0 : nil }
         let rule = node.toneWhen?.first { holds($0.when, scope) }
         out.tone = rule?.tone ?? node.tone ?? inheritedTone(node.type, scope)
         if node.color == "status" {

@@ -616,6 +616,10 @@ final class CustomWidgetTests: XCTestCase {
         } catch {
             XCTAssertEqual(error, .notJSON)
         }
+
+        CustomStubProtocol.body = Data()
+        let empty = try await CustomFetcher.fetch(request, session: session, limit: 64)
+        XCTAssertTrue(empty.json is NSNull, "leere Antwort, etwa 204 nach einer Aktion, ist kein Fehler")
     }
 
     func testRefreshBuildsHistoryAndRouteNeedsToken() async throws {

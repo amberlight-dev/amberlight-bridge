@@ -76,7 +76,7 @@ nonisolated enum CustomScriptRunner {
     }
 
     @MainActor
-    static func run(_ definition: CustomWidgetDefinition, now: Date = .now, secret: @escaping (String) -> CustomSecret?,
+    static func run(_ definition: CustomWidgetDefinition, now: Date = .now, last: Any? = nil, secret: @escaping (String) -> CustomSecret?,
                     fetch: CustomWidgetStore.Fetch) async -> Run {
         guard let executable = Bundle.main.url(forAuxiliaryExecutable: executableName) else { return Run(result: .failure(.runnerMissing), logs: []) }
         let scrub = scrubber(for: definition.scriptHosts.compactMap { $0.origin.flatMap(secret) })
@@ -134,7 +134,9 @@ nonisolated enum CustomScriptRunner {
 
         let reader = output.fileHandleForReading
         defer { reader.readabilityHandler = nil }
-        send(["script": definition.script ?? "", "vars": variables(of: definition, now: now), "seconds": Int(timeout) + 1])
+        var vars: [String: Any] = variables(of: definition, now: now)
+        if let last { vars["last"] = last }
+        send(["script": definition.script ?? "", "vars": vars, "seconds": Int(timeout) + 1])
         var buffer = Data()
         for await chunk in chunks(of: reader) {
             guard Date.now < deadline else { return finish(.failure(.scriptTimeout)) }

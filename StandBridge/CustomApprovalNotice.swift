@@ -25,7 +25,7 @@ nonisolated enum CustomApprovalNotice {
         guard !BridgeModel.isTestHost else { return }
         let identifier = "approval-\(definition.id.uuidString)"
         let center = UNUserNotificationCenter.current()
-        let hosts = unapprovedOrigins(of: definition)
+        let hosts = unapprovedOrigins(of: definition) + definition.unconfirmedActions.map { String(localized: "Aktion „\($0.name)“") }
         let missingSecrets = !store.missingSecrets(definition).isEmpty
         guard !hosts.isEmpty || missingSecrets else {
             center.removeDeliveredNotifications(withIdentifiers: [identifier])

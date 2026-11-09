@@ -52,6 +52,7 @@ final class BridgeModel {
             server = BridgeServer(board: Board(claudeDir: Self.claudeDir), layout: layout, deviceToken: device.token, localToken: localToken, port: port, hostName: BridgeIdentity.localHostName)
             server?.custom = { [customWidgets] in customWidgets.feedJSON(only: $0) }
             server?.studio = { [customWidgets] in await CustomStudioAPI.handle($0, store: customWidgets) }
+            server?.customAction = { [customWidgets] in await CustomStudioAPI.perform($0, store: customWidgets) }
             if !Self.isTestHost {
                 server?.start()
                 Task { [customWidgets] in await customWidgets.run() }

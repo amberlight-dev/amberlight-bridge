@@ -45,6 +45,86 @@ final class CustomScriptTests: XCTestCase {
         XCTAssertTrue(try XCTUnwrap(store.definition(saved.id)).isConfirmed, "Patch kann Freigaben weder setzen noch löschen")
     }
 
+    private func actions(in node: CustomNode?) -> Set<String> {
+        guard let node else { return [] }
+        return (node.children ?? []).reduce(Set([node.action].compactMap(\.self))) { $0.union(actions(in: $1)) }
+    }
+
+    func testStudioCannotApproveActionsAndScriptEditsDropApproval() async throws {
+        let store = CustomWidgetStore(file: nil, vault: .memory())
+        let stop = ["name": "stop", "script": "return 1"]
+        let (status, json) = await studio("POST", "/studio/widgets", [
+            "definition": ["script": "return 1", "hosts": [], "actions": [stop], "confirmedActions": [stop]],
+        ], store: store)
+        XCTAssertEqual(status, 200)
+        let saved = try XCTUnwrap(store.definitions.first)
+        XCTAssertNil(saved.confirmedActions)
+        XCTAssertEqual(saved.unconfirmedActions.map(\.name), ["stop"])
+        XCTAssertTrue((json["pending"] as? [String])?.contains { $0.contains("Aktion „stop“") } == true, "\(json)")
+        let (blocked, _) = await studio("POST", "/studio/run", ["id": saved.id.uuidString, "action": "stop"], store: store)
+        XCTAssertEqual(blocked, 403)
+
+        var approved = saved
+        approved.confirmAll()
+        store.save(approved)
+        XCTAssertEqual(store.definition(saved.id)?.runnableActionNames, ["stop"])
+        _ = await studio("POST", "/studio/widgets", ["definition": ["id": saved.id.uuidString, "actions": [["name": "stop", "script": "return 2"]]]], store: store)
+        XCTAssertEqual(store.definition(saved.id)?.runnableActionNames, [], "geändertes Aktions-Skript braucht eine neue Freigabe")
+
+        let (unknown, _) = await studio("POST", "/studio/run", ["id": saved.id.uuidString, "action": "nope"], store: store)
+        XCTAssertEqual(unknown, 404)
+        let (duplicate, _) = await studio("POST", "/studio/widgets", ["definition": ["id": saved.id.uuidString, "actions": [stop, stop]]], store: store)
+        XCTAssertEqual(duplicate, 400)
+    }
+
+    func testActionsRunOnlyOnTapWithLastValuesThenRefetch() async throws {
+        let store = CustomWidgetStore(file: nil, vault: .memory())
+        let moco = CustomWidgetDefinition.ScriptHost(url: "https://x.mocoapp.com", writes: true)
+        var definition = scripted(#"const a = http.get("https://x.mocoapp.com/api/v1/activities").json; return {running: a.running, runningId: a.id}"#, hosts: [moco], confirmed: false)
+        definition.actions = [.init(name: "stop", script: #"http.patch("https://x.mocoapp.com/api/v1/activities/" + vars.last.runningId + "/stop_timer"); return true"#)]
+        definition.values = [.init(name: "running", selection: .init(valuePath: "running"))]
+        definition.selection.valuePath = "running"
+        definition.display.layout = CustomNode(type: .pill, text: "Stop", when: "running >= 1", action: "stop")
+        store.save(definition)
+
+        var running = 1
+        var writes: [String] = []
+        store.fetch = { request throws(CustomRequestError) in
+            if request.httpMethod == "PATCH" {
+                writes.append(request.url?.path ?? "")
+                running = 0
+                return CustomFetcher.Response(json: [:], data: Data("{}".utf8))
+            }
+            return CustomFetcher.Response(json: [:], data: Data(#"{"running": \#(running), "id": 7}"#.utf8))
+        }
+
+        var approvedHostsOnly = definition
+        approvedHostsOnly.confirmedHosts = approvedHostsOnly.scriptHosts
+        store.save(approvedHostsOnly)
+        let unapproved = await store.refresh(definition.id)
+        XCTAssertEqual(actions(in: unapproved?.root), [], "nicht freigegebene Aktion ist nicht tippbar")
+
+        store.confirm(definition.id)
+        let before = await store.refresh(definition.id)
+        await store.refreshDue(now: .now.addingTimeInterval(86_400))
+        XCTAssertEqual(actions(in: before?.root), ["stop"])
+        XCTAssertEqual(writes, [], "Abruf im Intervall schreibt nie")
+
+        let id = definition.id
+        let taps = (0..<2).map { _ in
+            Task {
+                let tap = await store.runAction(id, named: "stop")
+                return (error: tap.run.result.failureValue, text: tap.display?.text, showsStop: tap.display?.root != nil)
+            }
+        }
+        var results: [(error: CustomRequestError?, text: String?, showsStop: Bool)] = []
+        for tap in taps { results.append(await tap.value) }
+        XCTAssertEqual(writes, ["/api/v1/activities/7/stop_timer"], "IDs kommen aus vars.last, Doppel-Tap schreibt nur einmal")
+        XCTAssertEqual(results.map(\.error), [nil, .actionBusy])
+        XCTAssertEqual(results.first?.text, "0", "nach der Aktion wird sofort neu abgerufen")
+        XCTAssertEqual(results.first?.showsStop, false, "when blendet Stop aus")
+    }
+
     func testStudioAcceptsPartialValueSelectionsAndNamesSchemaErrors() async throws {
         let store = CustomWidgetStore(file: nil, vault: .memory())
         let (status, _) = await studio("POST", "/studio/widgets", ["definition": ["script": "return {a: {b: 1}}", "hosts": [], "values": [["name": "b", "selection": ["valuePath": "a.b"]]]]], store: store)
@@ -189,6 +269,7 @@ final class CustomScriptTests: XCTestCase {
         let definition = scripted("return 1")
         let imported = try CustomWidgetShare.decode(CustomWidgetShare.export(definition))
         XCTAssertNil(imported.confirmedHosts)
+        XCTAssertNil(imported.confirmedActions)
         XCTAssertFalse(imported.isConfirmed)
         XCTAssertEqual(imported.script, "return 1")
     }
@@ -201,5 +282,11 @@ final class CustomScriptTests: XCTestCase {
         XCTAssertThrowsError(try CustomRequest.validate(definition)) { XCTAssertEqual($0 as? CustomRequestError, .insecureScheme) }
         definition.hosts = (0...CustomWidgetDefinition.maxHosts).map { .init(url: "https://h\($0).example.com") }
         XCTAssertThrowsError(try CustomRequest.validate(definition)) { XCTAssertEqual($0 as? CustomRequestError, .tooManyHosts) }
+    }
+}
+
+private extension Result {
+    var failureValue: Failure? {
+        if case .failure(let error) = self { error } else { nil }
     }
 }

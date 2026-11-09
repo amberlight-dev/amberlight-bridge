@@ -65,6 +65,7 @@ enum CustomStudioAPI {
         }
         definition.confirmedOrigin = base.confirmedOrigin
         definition.confirmedHosts = base.confirmedHosts
+        definition.confirmedActions = base.confirmedActions
         do {
             try CustomRequest.validate(definition)
         } catch {
@@ -82,10 +83,39 @@ enum CustomStudioAPI {
         let hosts = CustomApprovalNotice.unapprovedOrigins(of: definition).map { writers.contains($0) ? "\($0) (auch schreibend)" : $0 }
         return hosts.map { "Host \($0) muss der Mensch am Mac freigeben: \(place)" }
             + store.missingSecrets(definition).map { "Zugangsdaten für \($0) trägt der Mensch am Mac ein: \(place)" }
+            + definition.unconfirmedActions.map { "Aktion „\($0.name)“ muss der Mensch am Mac freigeben: \(place)" }
+    }
+
+    static func perform(_ body: JSON, store: CustomWidgetStore) async -> (Int, JSON) {
+        guard let id = (body["id"] as? String).flatMap(UUID.init(uuidString:)), let name = body["action"] as? String else { return (400, ["error": "id und action fehlen"]) }
+        let (run, display) = await store.runAction(id, named: name)
+        var result: JSON = ["logs": run.logs, "display": display.flatMap(encoded) ?? NSNull()]
+        switch run.result {
+        case .success(let output):
+            result["output"] = output
+            return (200, result)
+        case .failure(let error):
+            result["error"] = error.message
+            return (status(of: error), result)
+        }
+    }
+
+    private static func status(of error: CustomRequestError) -> Int {
+        switch error {
+        case .unknownAction: 404
+        case .actionNotAllowed, .unconfirmed, .hostNotAllowed, .writeNotAllowed: 403
+        case .actionBusy: 409
+        default: 502
+        }
     }
 
     private static func run(_ body: JSON, store: CustomWidgetStore) async -> (Int, JSON) {
         guard let id = (body["id"] as? String).flatMap(UUID.init(uuidString:)), var definition = store.definition(id) else { return (404, ["error": "Widget nicht gefunden"]) }
+        if body["action"] is String {
+            var (status, result) = await perform(body, store: store)
+            result["pending"] = pending(definition, store: store)
+            return (status == 502 ? 200 : status, result)
+        }
         if let script = body["script"] as? String { definition.script = script }
         guard definition.isScripted else { return (400, ["error": "Widget hat kein Skript"]) }
         let run = await store.runScript(definition)

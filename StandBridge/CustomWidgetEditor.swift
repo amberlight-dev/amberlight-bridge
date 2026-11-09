@@ -224,6 +224,7 @@ struct CustomWidgetEditor: View {
             decoded.id = draft.id
             decoded.confirmedOrigin = decoded.origin == draft.origin ? draft.confirmedOrigin : nil
             decoded.confirmedHosts = draft.confirmedHosts
+            decoded.confirmedActions = draft.confirmedActions
             codeError = nil
             if decoded != draft { draft = decoded }
         } catch {

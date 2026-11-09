@@ -9,6 +9,7 @@ nonisolated enum CustomRequestError: Error, Equatable {
     case invalidURL, insecureScheme, userInfo, sensitiveName(String), missingSecret, unconfirmed
     case layoutTooComplex, tooLarge, timeout, unreachable, unauthorized, status(Int), notJSON, redirected
     case scriptTooLarge, tooManyHosts, hostNotAllowed(String), writeNotAllowed(String), tooManyRequests, scriptTimeout, scriptFailed(String), runnerMissing
+    case invalidActions, unknownAction(String), actionNotAllowed(String), actionBusy
 
     var message: String {
         switch self {
@@ -34,6 +35,10 @@ nonisolated enum CustomRequestError: Error, Equatable {
         case .scriptTimeout: String(localized: "Skript nach \(Int(CustomScriptRunner.timeout)) s abgebrochen")
         case .scriptFailed(let reason): String(localized: "Skriptfehler: \(reason)")
         case .runnerMissing: String(localized: "Skript-Umgebung fehlt im App-Bundle")
+        case .invalidActions: String(localized: "Aktionen brauchen ein Skript-Widget, eindeutige Namen und höchstens \(CustomWidgetDefinition.maxActions) Stück")
+        case .unknownAction(let name): String(localized: "Aktion „\(name)“ gibt es nicht")
+        case .actionNotAllowed(let name): String(localized: "Aktion „\(name)“ ist nicht freigegeben – am Mac bestätigen")
+        case .actionBusy: String(localized: "Eine Aktion läuft noch")
         }
     }
 }
@@ -82,6 +87,7 @@ nonisolated enum CustomRequest {
 
     static func validate(_ definition: CustomWidgetDefinition) throws(CustomRequestError) {
         if definition.isScripted { return try validateScripted(definition) }
+        guard (definition.actions ?? []).isEmpty else { throw .invalidActions }
         try validateHost(definition.baseURL)
         guard let components = URLComponents(string: definition.baseURL.trimmingCharacters(in: .whitespaces)) else { throw .invalidURL }
         if [definition.display.layout, definition.display.compact, definition.display.wide].contains(where: { $0?.isTooComplex == true }) { throw .layoutTooComplex }
@@ -97,7 +103,15 @@ nonisolated enum CustomRequest {
         guard (definition.script ?? "").utf8.count <= CustomWidgetDefinition.maxScriptBytes else { throw .scriptTooLarge }
         guard definition.scriptHosts.count <= CustomWidgetDefinition.maxHosts else { throw .tooManyHosts }
         for host in definition.scriptHosts { try validateHost(host.url) }
+        try validateActions(definition)
         if [definition.display.layout, definition.display.compact, definition.display.wide].contains(where: { $0?.isTooComplex == true }) { throw .layoutTooComplex }
+    }
+
+    static func validateActions(_ definition: CustomWidgetDefinition) throws(CustomRequestError) {
+        let actions = definition.actions ?? []
+        let names = actions.map { $0.name.trimmingCharacters(in: .whitespaces) }
+        guard actions.count <= CustomWidgetDefinition.maxActions, !names.contains(""), Set(names).count == names.count else { throw .invalidActions }
+        guard actions.allSatisfy({ !$0.script.isEmpty && $0.script.utf8.count <= CustomWidgetDefinition.maxScriptBytes }) else { throw .scriptTooLarge }
     }
 
     static func validateHost(_ url: String) throws(CustomRequestError) {

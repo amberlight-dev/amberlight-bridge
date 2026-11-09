@@ -39,6 +39,7 @@ final class BridgeServer {
     @ObservationIgnored var googleChat: @MainActor (Bool) async -> JSON = { await GoogleChatClient.cachedReport(preview: $0) }
     @ObservationIgnored var custom: @MainActor (UUID?) -> JSON = { _ in ["widgets": [JSON]()] }
     @ObservationIgnored var studio: @MainActor (HTTPRequest) async -> (Int, JSON) = { _ in (404, [:]) }
+    @ObservationIgnored var customAction: @MainActor (JSON) async -> (Int, JSON) = { _ in (404, [:]) }
     @ObservationIgnored var codexUsage: @MainActor () -> JSON? = { BridgeModel.isTestHost ? nil : CodexUsage.cachedProvider(in: CodexSettings.sessionsDir) }
     @ObservationIgnored var nowPlaying: @MainActor () async -> JSON = { BridgeModel.isTestHost ? [:] : await MacNowPlaying.info() }
     @ObservationIgnored var nowPlayingArtwork: @MainActor (String?) -> JSON? = MacNowPlaying.artworkPayload
@@ -240,6 +241,9 @@ final class BridgeServer {
             guard let raw = request.query["id"] else { return (200, custom(nil)) }
             guard let id = UUID(uuidString: raw) else { return (200, ["widgets": [JSON]()]) }
             return (200, custom(id))
+        case ("POST", "/custom/action"):
+            guard isAuthorized(request) else { return (401, [:]) }
+            return await customAction(request.json)
         case ("POST", "/open"):
             guard isAuthorized(request) else { return (401, [:]) }
             if let link = request.json["url"] as? String, layout.folderLinks.contains(link) {

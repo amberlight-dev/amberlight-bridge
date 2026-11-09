@@ -37,6 +37,8 @@ final class CustomWidgetStore {
     @ObservationIgnored private let vault: SecretVault
     @ObservationIgnored private var fetchedAt: [UUID: Date] = [:]
     @ObservationIgnored private var inFlight: Set<UUID> = []
+    @ObservationIgnored private var actionsInFlight: Set<UUID> = []
+    @ObservationIgnored private var lastResults: [UUID: Any] = [:]
 
     private struct Saved: Codable {
         var definitions: [CustomWidgetDefinition]
@@ -85,6 +87,7 @@ final class CustomWidgetStore {
         displays[id] = nil
         history[id] = nil
         fetchedAt[id] = nil
+        lastResults[id] = nil
         persist()
     }
 
@@ -136,14 +139,14 @@ final class CustomWidgetStore {
         }
     }
 
-    func runScript(_ definition: CustomWidgetDefinition, typed: [String: CustomSecret] = [:], now: Date = .now) async -> CustomScriptRunner.Run {
+    func runScript(_ definition: CustomWidgetDefinition, typed: [String: CustomSecret] = [:], now: Date = .now, last: Any? = nil) async -> CustomScriptRunner.Run {
         guard definition.isConfirmed else { return CustomScriptRunner.Run(result: .failure(.unconfirmed), logs: []) }
         do {
             try CustomRequest.validate(definition)
         } catch {
             return CustomScriptRunner.Run(result: .failure(error), logs: [])
         }
-        return await CustomScriptRunner.run(definition, now: now, secret: { origin in
+        return await CustomScriptRunner.run(definition, now: now, last: last, secret: { origin in
             guard let entered = typed[origin], !entered.value.isEmpty else { return self.secret(id: definition.id, origin: origin) }
             return entered
         }, fetch: fetch)
@@ -171,6 +174,7 @@ final class CustomWidgetStore {
         let display: CustomWidgetDisplay
         switch await test(definition, now: now) {
         case .success(let response):
+            lastResults[id] = response.json
             var evaluated = CustomEvaluator.display(for: definition, json: response.json, at: now)
             if let value = CustomEvaluator.selectedValue(definition.selection, in: response.json).flatMap(JSONPath.number) {
                 record(value, for: id, at: now)
@@ -185,6 +189,18 @@ final class CustomWidgetStore {
         guard self.definition(id) == definition else { return display }
         displays[id] = display
         return display
+    }
+
+    func runAction(_ id: UUID, named name: String) async -> (run: CustomScriptRunner.Run, display: CustomWidgetDisplay?) {
+        func failed(_ error: CustomRequestError) -> (run: CustomScriptRunner.Run, display: CustomWidgetDisplay?) { (CustomScriptRunner.Run(result: .failure(error), logs: []), nil) }
+        guard var definition = definition(id), let action = definition.action(named: name) else { return failed(.unknownAction(name)) }
+        guard definition.runnableActionNames.contains(name) else { return failed(.actionNotAllowed(name)) }
+        guard actionsInFlight.insert(id).inserted else { return failed(.actionBusy) }
+        defer { actionsInFlight.remove(id) }
+        definition.script = action.script
+        let run = await runScript(definition, last: lastResults[id])
+        while inFlight.contains(id) { try? await Task.sleep(for: .milliseconds(100)) }
+        return (run, await refresh(id))
     }
 
     func refreshDue(now: Date = .now) async {

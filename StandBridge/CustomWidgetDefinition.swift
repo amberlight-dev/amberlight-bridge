@@ -63,6 +63,11 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
         }
     }
 
+    struct Action: Codable, Hashable {
+        var name: String
+        var script: String
+    }
+
     enum Method: String, Codable, CaseIterable, Identifiable {
         case get = "GET", post = "POST"
 
@@ -239,6 +244,8 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
     var script: String?
     var hosts: [ScriptHost]?
     var confirmedHosts: [ScriptHost]?
+    var actions: [Action]?
+    var confirmedActions: [Action]?
     var template: String?
     var repairVersion: Int?
 
@@ -246,6 +253,7 @@ nonisolated struct CustomWidgetDefinition: Codable, Hashable, Identifiable {
     static let maximumInterval = 86_400
     static let maxScriptBytes = 64 << 10
     static let maxHosts = 8
+    static let maxActions = 8
 }
 
 nonisolated extension CustomWidgetDefinition.Selection {
@@ -273,6 +281,15 @@ nonisolated extension CustomWidgetDefinition {
     var needsSecret: Bool { isScripted ? scriptHosts.contains(where: \.needsSecret) : auth.kind != .none }
     var unconfirmedHosts: [ScriptHost] { scriptHosts.filter { host in !(confirmedHosts ?? []).contains { $0.covers(host) } } }
     var isConfirmed: Bool { isScripted ? unconfirmedHosts.isEmpty : origin != nil && confirmedOrigin == origin }
+    var unconfirmedActions: [Action] { (actions ?? []).filter { !(confirmedActions ?? []).contains($0) } }
+    var runnableActionNames: Set<String> {
+        guard isScripted, isConfirmed else { return [] }
+        return Set((actions ?? []).filter { (confirmedActions ?? []).contains($0) }.map(\.name))
+    }
+
+    func action(named name: String) -> Action? {
+        actions?.first { $0.name == name }
+    }
 
     var secretOrigins: Set<String> {
         Set([origin].compactMap(\.self) + (hosts ?? []).compactMap(\.origin))
@@ -285,11 +302,13 @@ nonisolated extension CustomWidgetDefinition {
     mutating func confirmAll() {
         confirmedOrigin = origin
         confirmedHosts = isScripted ? scriptHosts : nil
+        confirmedActions = isScripted ? actions : nil
     }
 
     mutating func clearConfirmations() {
         confirmedOrigin = nil
         confirmedHosts = nil
+        confirmedActions = nil
     }
     var clampedInterval: Int { min(max(interval, Self.minimumInterval), Self.maximumInterval) }
 }
