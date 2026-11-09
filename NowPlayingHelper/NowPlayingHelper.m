@@ -22,6 +22,13 @@ static NSString *argument(void) {
     return value ? @(value) : @"";
 }
 
+static BOOL sendAndAwaitDelivery(int command, NSDictionary *options) {
+    SendCommandFunction send = mediaRemoteSymbol("MRMediaRemoteSendCommand");
+    if (send == NULL || !send(command, options)) return NO;
+    [NSThread sleepForTimeInterval:0.5];
+    return YES;
+}
+
 static double currentElapsed(NSDictionary *info, BOOL playing) {
     double elapsed = [info[@"kMRMediaRemoteNowPlayingInfoElapsedTime"] doubleValue];
     NSDate *timestamp = info[@"kMRMediaRemoteNowPlayingInfoTimestamp"];
@@ -77,12 +84,10 @@ void np_info(void) {
 }
 
 void np_command(void) {
-    SendCommandFunction send = mediaRemoteSymbol("MRMediaRemoteSendCommand");
-    emit(@{ @"ok": @(send != NULL && send(argument().intValue, nil)) });
+    emit(@{ @"ok": @(sendAndAwaitDelivery(argument().intValue, nil)) });
 }
 
 void np_seek(void) {
-    SendCommandFunction send = mediaRemoteSymbol("MRMediaRemoteSendCommand");
     NSDictionary *options = @{ @"kMRMediaRemoteOptionPlaybackPosition": @(argument().doubleValue) };
-    emit(@{ @"ok": @(send != NULL && send(24, options)) });
+    emit(@{ @"ok": @(sendAndAwaitDelivery(24, options)) });
 }
