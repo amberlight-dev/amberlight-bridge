@@ -7,6 +7,7 @@ final class ReplyRouteTests: XCTestCase {
     private var server: BridgeServer!
     private var noteId = ""
     private var replies: [(String, String)] = []
+    private var pasteSucceeds = true
 
     override func setUp() async throws {
         dir = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
@@ -20,9 +21,11 @@ final class ReplyRouteTests: XCTestCase {
         noteId = (sessions?.first?["waiting"] as? JSON)?["id"] as? String ?? ""
         server = BridgeServer(board: board, layout: LayoutStore(file: dir.appending(path: "layout.json")), deviceToken: "abcd1234", localToken: "hook5678", port: 1, hostName: "mac.local")
         replies = []
+        pasteSucceeds = true
+        server.directReply = { false }
         server.reply = { [unowned self] text, entry in
             replies.append((text, entry["sessionId"] as? String ?? ""))
-            return ["sent": true, "copied": false]
+            return ["sent": pasteSucceeds, "copied": !pasteSucceeds]
         }
     }
 
@@ -131,7 +134,32 @@ final class ReplyRouteTests: XCTestCase {
         let (status, payload) = try await post(#"{"sessionId":"s1","text":"Weiter"}"#)
         XCTAssertEqual(status, 200)
         XCTAssertEqual(payload["sent"] as? Bool, true)
-        XCTAssertEqual(replies.map(\.0), ["Antwort des Users über Amberlight auf „Committen?“:\nWeiter"])
+        XCTAssertEqual(replies.map(\.0), ["Weiter"])
+    }
+
+    func testDirectReplyTypesIntoSessionBeforeParkedStop() async throws {
+        server.directReply = { true }
+        let parked = awaitStop()
+        try await waitForCanReply()
+        let (status, payload) = try await post(#"{"sessionId":"s1","text":"Ja, releasen"}"#)
+        XCTAssertEqual(status, 200)
+        XCTAssertEqual(payload as NSDictionary, ["sent": true, "copied": false])
+        XCTAssertEqual(replies.map(\.0), ["Ja, releasen"])
+        _ = await server.board.handleHook(["hook_event_name": "UserPromptSubmit", "session_id": "s1"])
+        let text = await parked.value.1
+        XCTAssertEqual(text, "")
+    }
+
+    func testFailedDirectReplyFallsBackToParkedStop() async throws {
+        server.directReply = { true }
+        pasteSucceeds = false
+        let parked = awaitStop()
+        try await waitForCanReply()
+        let (status, payload) = try await post(#"{"sessionId":"s1","text":"Ja"}"#)
+        XCTAssertEqual(status, 200)
+        XCTAssertEqual(payload as NSDictionary, ["sent": true, "copied": false])
+        let text = await parked.value.1
+        XCTAssertEqual(text, "Antwort des Users über Amberlight auf „Committen?“:\nJa")
     }
 
     func testConstantTimeEqualsIsCorrect() {

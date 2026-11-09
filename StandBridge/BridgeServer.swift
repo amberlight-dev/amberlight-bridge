@@ -30,6 +30,7 @@ final class BridgeServer {
     @ObservationIgnored var reply: @MainActor (String, JSON) async -> JSON = { text, entry in
         await MacReply.send(text, to: entry, via: SystemReplyDesk(), direct: MacReply.isDirectReplyEnabled)
     }
+    @ObservationIgnored var directReply: @MainActor () -> Bool = { MacReply.isDirectReplyEnabled }
     @ObservationIgnored var apps: @MainActor () -> [JSON] = MacLauncher.apps
     @ObservationIgnored var icon: @MainActor (String) -> Data? = { MacLauncher.icon(bundleId: $0) }
     @ObservationIgnored var open: @MainActor (JSON) async -> Bool = MacLauncher.open
@@ -187,17 +188,20 @@ final class BridgeServer {
             guard let sessionId = request.json["sessionId"] as? String, let entry = board.session(sessionId) else { return (404, [:]) }
             guard !board.hasPendingAsk(sessionId) else { return (200, ["sent": false, "copied": false]) }
             let text: String
+            let hookText: String
             let option = request.json["option"] as? Int
             if let raw = request.json["text"] as? String {
                 let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
                 guard (1...4000).contains(trimmed.count) else { return (400, [:]) }
-                text = board.freeTextReply(of: sessionId, text: trimmed)
+                text = trimmed
+                hookText = board.freeTextReply(of: sessionId, text: trimmed)
             } else {
                 guard let noteId = request.json["noteId"] as? String, let option,
                       let redeemed = board.redeemReply(of: sessionId, noteId: noteId, option: option) else { return (404, [:]) }
                 text = redeemed
+                hookText = redeemed
             }
-            let result = await deliver(text, to: sessionId, entry: entry)
+            let result = await deliver(text, hookText: hookText, to: sessionId, entry: entry)
             if result["sent"] as? Bool == true {
                 replyLog = (replyLog + [MacReply.record(sessionId: sessionId, option: option)]).suffix(20)
             }
@@ -258,8 +262,14 @@ final class BridgeServer {
         }
     }
 
-    private func deliver(_ text: String, to sessionId: String, entry: JSON) async -> JSON {
-        board.resolveParked(of: sessionId, with: text) ? ["sent": true, "copied": false] : await reply(text, entry)
+    // NOTE: Claude nimmt Freigaben für Release & Co. nur als echte Eingabe an, nicht als Hook-Ausgabe – daher zuerst tippen.
+    private func deliver(_ text: String, hookText: String, to sessionId: String, entry: JSON) async -> JSON {
+        guard directReply() else {
+            return board.resolveParked(of: sessionId, with: hookText) ? ["sent": true, "copied": false] : await reply(text, entry)
+        }
+        let pasted = await reply(text, entry)
+        guard pasted["sent"] as? Bool != true, board.resolveParked(of: sessionId, with: hookText) else { return pasted }
+        return ["sent": true, "copied": false]
     }
 
     static func hookPayload(_ request: HTTPRequest) -> JSON {
